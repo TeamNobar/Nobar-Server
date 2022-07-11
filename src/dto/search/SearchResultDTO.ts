@@ -1,5 +1,5 @@
-import { Recipe } from "src/model/recipe/Recipe";
+import { RecipeDTO } from "../recipe/RecipeDTO";
 
 export interface SearchResultDTO {
-  recipes: Recipe[]
+  recipes: RecipeDTO[]
 }
