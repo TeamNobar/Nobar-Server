@@ -1,3 +1,5 @@
+import mongoose from "mongoose";
+
 export interface GuideDTO {
   id: string,
   title: string,
