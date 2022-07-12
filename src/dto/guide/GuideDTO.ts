@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 export interface GuideDTO {
-  id: string,
+  id: mongoose.Schema.Types.ObjectId;
   title: string,
   subtitle: string,
   content: string,
