@@ -5,7 +5,7 @@ import { ValidateError }                            from "tsoa";
 import { RegisterRoutes }                           from "../../build/routes";
 import Environment                                  from "../utils/Environment";
 import ErrorType                                    from "../utils/ErrorType";
-import { errorMessage }                             from "../utils/responseMessage";
+import { errorMessage }                             from "../utils/errorMessage";
 import ResponseWrapper                              from "../utils/ResponseWrapper";
 import StatusCode                                   from "../utils/StatusCode";
 import Logger                                       from "./Logger";
