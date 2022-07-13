@@ -6,7 +6,7 @@ const IngredientSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  engName: {
+  enName: {
     type: String,
     required: true,
   },

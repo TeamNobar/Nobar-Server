@@ -1,5 +1,7 @@
+import mongoose from "mongoose";
+
 export interface GlassDTO {
-  id: string,
+  id: mongoose.Schema.Types.ObjectId;
   name: string,
   url: string
 } 

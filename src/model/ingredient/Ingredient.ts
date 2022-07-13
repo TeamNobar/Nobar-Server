@@ -1,6 +1,6 @@
 export interface Ingredient {
   name: string,
-  engName: string,
+  enName: string,
   proof: number,
   category: string,
 }
