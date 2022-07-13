@@ -1,7 +1,5 @@
-import mongoose from "mongoose";
-
 export interface SkillDTO {
-  id: mongoose.Schema.Types.ObjectId;
+  id: string,
   name: string,
   url: string
 }
