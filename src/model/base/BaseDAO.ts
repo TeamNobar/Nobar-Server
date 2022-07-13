@@ -11,7 +11,7 @@ const BaseSchema = new mongoose.Schema({
     reqired: true
   },
   recipes: [{
-    type: [mongoose.Schema.Types.ObjectId],
+    type: mongoose.Schema.Types.ObjectId,
     ref: "Recipe",
   }]
 });
