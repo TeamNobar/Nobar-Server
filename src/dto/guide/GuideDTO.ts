@@ -1,7 +1,5 @@
-import mongoose from "mongoose";
-
 export interface GuideDTO {
-  id: mongoose.Schema.Types.ObjectId;
+  id: string;
   title: string,
   subtitle: string,
   content: string,
