@@ -1,3 +1,4 @@
+import { Ingredient } from "../ingredient/Ingredient";
 import mongoose from "mongoose";
 
 export interface Recipe {
@@ -16,7 +17,7 @@ export interface Recipe {
     name: string,
     url: string,
   },
-  ingredients: object[],
+  ingredients: Ingredient[],
   steps: string[],
 }
 
