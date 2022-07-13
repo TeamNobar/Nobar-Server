@@ -22,13 +22,12 @@ const RecipeSchema = new mongoose.Schema({
     required: true,
   },
   skill: {
-    id: { type: String },
-    name: { type: String },
-    required: true,
+    id: { type: String, required: true },
+    name: { type: String, required: true },
   },
   glass: {
-    id: { type: String },
-    name: { type: String },
+    id: { type: String, required: true },
+    name: { type: String, required: true },
     required: true,
   },
   ingredients: [{
