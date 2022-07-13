@@ -17,7 +17,7 @@ export interface Recipe {
     name: string,
     url: string,
   },
-  ingredients: Ingredient[],
+  ingredients: object[],
   steps: string[],
 }
 
