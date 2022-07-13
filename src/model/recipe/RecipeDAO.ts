@@ -14,7 +14,7 @@ const RecipeSchema = new mongoose.Schema({
     type: [String],
   },
   base: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
     required: true,
   },
   proof: {
