@@ -28,15 +28,16 @@ const RecipeSchema = new mongoose.Schema({
   glass: {
     id: { type: String, required: true },
     name: { type: String, required: true },
-    required: true,
   },
   ingredients: [{
     ingredient: { type: mongoose.Schema.Types.ObjectId, requried: true, ref: "Ingredient" },
     quantity: { type: Number, requried: true },
     unit: { type: String, requred: true }
   }],
-  steps: [String],  
-
+  steps: {
+    type: [String],
+    required: true  
+  }
 });
 
 export default mongoose.model<mongoose.Document & Recipe>("Recipe", RecipeSchema);
