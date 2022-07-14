@@ -12,6 +12,7 @@ const RecipeSchema = new mongoose.Schema({
   },
   defaultRecipe: {
     type: mongoose.Schema.Types.ObjectId,
+    default: null
   },
   version: {
     type: String,
