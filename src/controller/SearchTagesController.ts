@@ -5,13 +5,13 @@ import {
 } from "tsoa";
 import { SearchTagsService } from "../service/SearchTagsService";
 import StatusCode from "../utils/StatusCode";
-import { errorMessages } from "../utils/errorMessage";
+import { errorMessage } from "../utils/errorMessage";
 
 @Route("search")
 export class SearchTagsController extends Controller {
   
   @Get("") 
-  public async SearchTagsController() {
+  public async getSearchTags() {
     const foundTags = await new SearchTagsService().getSearchTags;
 
     if (foundTags === null) {
@@ -25,5 +25,7 @@ export class SearchTagsController extends Controller {
       return notFoundTags;
 
     }
+
+    return foundTags;
   }
 }
