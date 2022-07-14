@@ -12,9 +12,7 @@ const tastingNoteSchema = new mongoose.Schema({
     ref: "Recipe"
   },
   tastingTags: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-    ref: "NoteSeletedTag"
+    type: [Number]
   },
   tasteContent: {
     type: String,
