@@ -18,14 +18,15 @@ export class GuideRouter extends Controller {
   
   if (data === null) {
     
-    this.setStatus(400)
+    this.setStatus(400);
     
     return {
       status: StatusCode.BAD_REQUEST,
       messsage : errorMessage.BAD_REQUEST
-    }
+    };
   }
 
+  this.setStatus(200);
   return data;
 
   } 

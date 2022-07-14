@@ -1,22 +1,17 @@
-import mongoose from "mongoose";
+import mongoose         from "mongoose";
+import RecipeIngredient from "./RecipeIngredient";
 
 export interface Recipe {
   name: string,
   enName: string,
-  version: string[],
+  defaultRecipe: mongoose.Schema.Types.ObjectId | null,
+  version: string,
   base: mongoose.Schema.Types.ObjectId, 
   proof: number,
-  skill: {
-    id: string,
-    name: string,
-    url: string,
-  },
-  glass: {
-    id: string,
-    name: string,
-    url: string,
-  },
-  ingredients: object[],
+  proofIcon: string,
+  skill: number,
+  glass: number,
+  ingredients: RecipeIngredient[],
   steps: string[],
 }
 
