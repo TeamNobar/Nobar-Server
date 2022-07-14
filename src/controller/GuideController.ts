@@ -20,10 +20,12 @@ export class GuideRouter extends Controller {
     
     this.setStatus(400);
     
-    return {
+    const notFoundGuide =  {
       status: StatusCode.BAD_REQUEST,
-      messsage : errorMessage.BAD_REQUEST
+      message: errorMessage.BAD_REQUEST
     };
+
+    return notFoundGuide;
   }
 
   this.setStatus(200);
