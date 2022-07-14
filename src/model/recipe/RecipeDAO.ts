@@ -12,7 +12,8 @@ const RecipeSchema = new mongoose.Schema({
   },
   defaultRecipe: {
     type: mongoose.Schema.Types.ObjectId,
-    default: null
+    default: null,
+    ref: "Recipe"
   },
   version: {
     type: String,
@@ -20,6 +21,7 @@ const RecipeSchema = new mongoose.Schema({
   base: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
+    ref: "Base"
   },
   proof: {
     type: Number,
