@@ -10,9 +10,9 @@ import { errorMessage } from "../utils/errorMessage";
 @Route("search")
 export class SearchTagsController extends Controller {
   
-  @Get("") 
+  @Get("tag") 
   public async getSearchTags() {
-    const foundTags = await new SearchTagsService().getSearchTags;
+    const foundTags = await new SearchTagsService().getSearchTags();
 
     if (foundTags === null) {
       this.setStatus(400)
@@ -26,6 +26,7 @@ export class SearchTagsController extends Controller {
 
     }
 
+    this.setStatus(200);
     return foundTags;
   }
 }
