@@ -18,11 +18,13 @@ export class SearchRecipesController extends Controller {
 
     if (data === null) {
       this.setStatus(400);
-    
-      return {
+
+      const notFoundRecipes = {
         status: StatusCode.BAD_REQUEST,
         messsage : errorMessage.BAD_REQUEST
       };
+    
+      return notFoundRecipes;
   
     }
 

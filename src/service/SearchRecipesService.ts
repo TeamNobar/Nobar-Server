@@ -11,6 +11,7 @@ export class SearchRecipesService {
       return null;
     }
 
+    // default === null 인 친구들을 조건으로
     const foundRecipes = await Recipe.find({ base: foundBase._id });
 
     if (foundRecipes === null ){
@@ -24,3 +25,5 @@ export class SearchRecipesService {
     });
   }
 }
+
+
