@@ -4,4 +4,5 @@ export interface IngredientDTO {
   enName: string,
   proof: number,
   category: string,
+  quantity: string
 }
