@@ -1,4 +1,4 @@
-import mongoose         from "mongoose";
+import mongoose from "mongoose";
 import RecipeIngredient from "./RecipeIngredient";
 
 export interface Recipe {
