@@ -10,9 +10,10 @@ export interface RecipeDTO {
   version: string[],
   base: BaseDTO,
   proof: number,
-  proofId: string,  
+  proofIcon: string,  
   skill: SkillDTO,
   glass: GlassDTO,
   ingredients: IngredientDTO[],
-  steps: string[]
+  steps: string[],
+  defaultRecipe: string
 }
