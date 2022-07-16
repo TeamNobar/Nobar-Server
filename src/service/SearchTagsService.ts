@@ -1,4 +1,5 @@
 import Base from "../model/base/BaseDAO";
+import { BaseMapper } from "../mapper/BaseMapper";
 
 export class SearchTagsService {
   public async getSearchTags () {
@@ -8,8 +9,9 @@ export class SearchTagsService {
       return null;
     }
   
-    return foundTags.map(tag => {
-     return tag.url;
-    });
+    const base = BaseMapper.toBaseDTO(foundTags);
+    return {
+      base: base
+    };
   }
 }
