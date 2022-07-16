@@ -11,7 +11,7 @@ export class GuideService {
       return null
     }
 
-    const data = GuideMapper.toGuideDTO(foundGuide._id, foundGuide);
+    const data = GuideMapper.toGuideDTO(foundGuide);
     
     return data;
   }
