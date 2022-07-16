@@ -6,7 +6,7 @@
   <th>박진수 @jinsp_inary</th>
 	<th>임승하 @</th>
 	<tr>
-		<td><img width="500" src="https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F8b3f769d-d676-4ce1-a71b-9aa27544a3c3%2FUntitled.png?table=block&id=ab5eaf5e-ad04-4440-b6e4-f10893375080&spaceId=c2c49716-1bd9-4f10-a2ba-246e348c3fbd&width=2000&userId=d3a1ec4b-f86d-4b34-af10-22d2f5b804e7&cache=v2"></td>
+		<td><img width="500" src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/8b3f769d-d676-4ce1-a71b-9aa27544a3c3/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220713%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220713T164207Z&X-Amz-Expires=86400&X-Amz-Signature=93a77f32b5f33e5f5e0481dfbf6c6196cfabe6b551448e7d05c501026786ec30&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject"></td>
 		<td><img width="500" src="https://i.ibb.co/RpG6ZqW/image.jpg"></td>
 	</tr>
 <th> 역할</th>

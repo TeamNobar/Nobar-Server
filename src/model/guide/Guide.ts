@@ -1,6 +1,6 @@
 export interface Guide {
   title: string,
-  subtitle: string,
+  subtitle?: string,
   content: string,
   images: string[],
   thumbnail: string

@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-import { Recipe } from "./Recipe"; 
+import mongoose   from "mongoose";
+import { Recipe } from "./Recipe";
 
 const RecipeSchema = new mongoose.Schema({
   name: {
@@ -10,33 +10,54 @@ const RecipeSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  defaultRecipe: {
+    type: mongoose.Schema.Types.ObjectId,
+    default: null,
+    ref: "Recipe"
+  },
   version: {
-    type: [String],
+    type: String,
   },
   base: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
+    ref: "Base"
   },
   proof: {
     type: Number,
     required: true,
   },
+  proofIcon: {
+    type: String,
+    required: true
+  },
   skill: {
-    id: { type: String, required: true },
-    name: { type: String, required: true },
+    type: Number,
+    required: true
   },
   glass: {
-    id: { type: String, required: true },
-    name: { type: String, required: true },
+    type: Number,
+    required: true
   },
-  ingredients: [{
-    ingredient: { type: mongoose.Schema.Types.ObjectId, requried: true, ref: "Ingredient" },
-    quantity: { type: Number, requried: true },
-    unit: { type: String, requred: true }
-  }],
+  ingredients: [
+    {
+      ingredient: {
+        type: mongoose.Schema.Types.ObjectId,
+        requried: true,
+        ref: "Ingredient"
+      },
+      quantity: {
+        type: Number,
+        requried: true
+      },
+      unit: {
+        type: String,
+        requred: true
+      }
+    }],
   steps: {
     type: [String],
-    required: true  
+    required: true
   }
 });
 
