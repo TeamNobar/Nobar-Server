@@ -12,10 +12,10 @@ export class SearchRecipesByKeywordController extends Controller {
 
   @Get("keyword")
   public async searchRecipesByKeyword (
-    @Query() keyword: string
+    @Query() keyword?: string
   ) {
 
-    if (keyword === "") {
+    if (!keyword) { 
       this.setStatus(StatusCode.OK);
       return {
         recipes: []
