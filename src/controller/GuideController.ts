@@ -9,7 +9,7 @@ import StatusCode from "../utils/StatusCode";
 import { errorMessage } from "../utils/errorMessage";
 
 @Route("guide")
-export class GuideRouter extends Controller {
+export class GuideController extends Controller {
 
  @Get("{guideId}")
  public async findGuide( @Path() guideId: string ) {
@@ -18,7 +18,7 @@ export class GuideRouter extends Controller {
   
   if (data === null) {
     
-    this.setStatus(400);
+    this.setStatus(StatusCode.BAD_REQUEST);
     
     const notFoundGuide =  {
       status: StatusCode.BAD_REQUEST,
@@ -28,7 +28,7 @@ export class GuideRouter extends Controller {
     return notFoundGuide;
   }
 
-  this.setStatus(200);
+  this.setStatus(StatusCode.OK);
   return data;
 
   } 

@@ -4,11 +4,6 @@ import mongoose from "mongoose";
 
 interface GuideForMapper extends Guide {
   _id: mongoose.Schema.Types.ObjectId,
-  title: string,
-  subtitle: string,
-  content: string,
-  images: string[],
-  thumbnail: string,
 }
 
 export class GuideMapper {
