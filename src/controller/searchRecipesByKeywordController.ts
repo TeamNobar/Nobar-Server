@@ -4,33 +4,33 @@ import {
   Route,
   Query,
 } from "tsoa";
-import { SearchRecipesByKeywordService } from "../service/searchRecipesByKeywordService";
+import { SearchRecipesByKeywordService } from "../service/SearchRecipesByKeywordService";
 import StatusCode from "../utils/StatusCode";
 import { errorMessage } from "../utils/errorMessage";
 
 @Route("search")
 export class SearchRecipesByKeywordController extends Controller {
 
-  @Get("")
+  @Get("keyword")
   public async searchRecipesByKeyword (
     @Query() keyword: string
-
   ) {
 
-    const data = await new SearchRecipesByKeywordService().searchRecipesByKeyword(keyword);
+    const recipes = await new SearchRecipesByKeywordService().searchRecipesByKeyword(keyword);
 
-    if (data === null) {
+    if (recipes === null) {
       
-      this.setStatus(400)
+      this.setStatus(StatusCode.BAD_REQUEST);
 
       const notFoundRecipes = {
         status: StatusCode.BAD_REQUEST,
         messsage : errorMessage.BAD_REQUEST
-      }
+      };
     
       return notFoundRecipes;
     }
 
-    return data;
+    this.setStatus(StatusCode.OK);
+    return recipes;
   }
 }
