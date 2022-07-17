@@ -34,5 +34,14 @@ export class Glass extends EnumType<Glass>() {
     return glass;
   }
 
+  public static findGlassByName(name: string): Glass {
+    const glass = this.values().find(
+      (glass) => glass.hasGlassName(name)
+    );
+    if (!glass) {
+      return Glass.NotFound;
+    }
+    return glass;
+  }
 
 }
