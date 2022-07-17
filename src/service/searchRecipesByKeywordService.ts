@@ -1,4 +1,4 @@
-import Recipe from "../model/recipe/RecipeDAO";
+import RecipeDAO from "../model/recipe/RecipeDAO";
 import { RecipeMapper } from "../mapper/RecipeMapper";
 import BaseDAO from "../model/base/BaseDAO";
 import IngredientDAO from "../model/ingredient/IngredientDAO";
@@ -10,7 +10,7 @@ export class SearchRecipesByKeywordService {
 
     const keywordRegex = regex(keyword);
     
-    const foundRecipes = await Recipe.find({ name: { $regex: keywordRegex } })
+    const foundRecipes = await RecipeDAO.find({ name: { $regex: keywordRegex } })
                                      .populate({ path: "base", model: BaseDAO })
                                      .populate({ path: "ingredients.ingredient", model: IngredientDAO });
 
