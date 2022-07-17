@@ -4,17 +4,18 @@ import {
   Route,
   Get,
 } from "tsoa";
-import { SearchRecipesService } from "../service/SearchRecipesService";
+import { SearchRecipesByBaseService } from "../service/SearchRecipesByBaseService";
 import StatusCode from "../utils/StatusCode";
 import { errorMessage } from "../utils/errorMessage";
 
-@Route("/search")
-export class SearchRecipesController extends Controller {
-  @Get("")
+@Route("search")
+export class SearchRecipesByBaseController extends Controller {
+
+  @Get("base")
   public async findRecipesByBase(
     @Query() base: string
   ) {
-    const recipes = await new SearchRecipesService().findRecipesByBase(base);
+    const recipes = await new SearchRecipesByBaseService().findRecipesByBase(base);
 
     if (recipes === null) {
       this.setStatus(StatusCode.BAD_REQUEST);
