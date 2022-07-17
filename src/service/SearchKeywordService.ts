@@ -12,13 +12,13 @@ export class SearchKeywordService {
     const recommendRecipes = await RecommendDAO.find({ defaultRecipe: null })
                                                .populate("recipeId", "_id name", RecipeDAO ); 
 
-    const recommendData = await Promise.all(recommendRecipes.map((recommendRecipe: any) => {
-      const data = {               
+    const recommendsData = await Promise.all(recommendRecipes.map((recommendRecipe: any) => {
+      const recommendData = {               
         recipeId: recommendRecipe.recipeId._id,
         name: recommendRecipe.recipeId.name
       };
 
-      return data;
+      return recommendData;
     }));
   
     // 자동완성으로 쓸 레시피 이름 전부 가져오기
@@ -27,8 +27,8 @@ export class SearchKeywordService {
                                     .populate({ path: "ingredients.ingredient", model: IngredientDAO });
 
     const recipesData = recipes.map((recipe: any) => {
-      const data = RecipeMapper.toRecipeDTO(recipe, recipe.base, recipe.ingredients);
-      return data;
+      const recipeData = RecipeMapper.toRecipeDTO(recipe, recipe.base, recipe.ingredients);
+      return recipeData;
     })
 
     // 자동완성으로 쓸 재료 이름 전부 가져오기
@@ -36,15 +36,11 @@ export class SearchKeywordService {
     const ingredientsData = IngredientsMapper.toIngredientDTO(ingredients);
 
     // data 결합해서 최종적으로 반환
-    const data = {
-      recommends: recommendData,
+    return {
+      recommends: recommendsData,
       recipes: recipesData,
       ingredients: ingredientsData
     };
-
-    console.log(data);
-
-    return data;
 
   }
 }
