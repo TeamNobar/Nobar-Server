@@ -56,7 +56,7 @@ const RecipeSchema = new mongoose.Schema({
       }
     }],
   steps: {
-    type: String,
+    type: [String],
     required: true
   }
 });
