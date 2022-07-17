@@ -3,7 +3,7 @@ import RecommendDAO from "../model/recommend/RecommendDAO";
 import RecipeDAO from "../model/recipe/RecipeDAO";
 import BaseDAO from "../model/base/BaseDAO";
 import { RecipeMapper } from "../mapper/RecipeMapper";
-import { IngredientMapper } from "../mapper/IngredientMapper";
+import { IngredientsMapper } from "../mapper/IngredientsMapper";
 
 export class SearchKeywordService {
   public async getSearchKeywords() {
@@ -31,10 +31,9 @@ export class SearchKeywordService {
       return data;
     })
 
-    // 자동완성으로 쓸 레시피 이름 전부 가져오기
+    // 자동완성으로 쓸 재료 이름 전부 가져오기
     const ingredients = await IngredientDAO.find({});
-    const ingredientsData = IngredientMapper.toIngredientDTO(ingredients);
-
+    const ingredientsData = IngredientsMapper.toIngredientDTO(ingredients);
 
     // data 결합해서 최종적으로 반환
     const data = {

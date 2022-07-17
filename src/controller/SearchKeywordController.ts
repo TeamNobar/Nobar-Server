@@ -16,7 +16,7 @@ export class SearchKeywordController extends Controller{
 
     if (keywords === null){
 
-      this.setStatus(400);
+      this.setStatus(StatusCode.BAD_REQUEST);
     
       const notFoundKeywords = {
         status: StatusCode.BAD_REQUEST,
@@ -26,7 +26,7 @@ export class SearchKeywordController extends Controller{
       return notFoundKeywords;
     }
 
-    this.setStatus(200);
+    this.setStatus(StatusCode.OK);
     return keywords;
   }
 }

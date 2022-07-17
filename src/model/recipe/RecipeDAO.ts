@@ -16,7 +16,7 @@ const RecipeSchema = new mongoose.Schema({
     ref: "Recipe"
   },
   version: {
-    type: [String],
+    type: String,
   },
   base: {
     type: mongoose.Schema.Types.ObjectId,

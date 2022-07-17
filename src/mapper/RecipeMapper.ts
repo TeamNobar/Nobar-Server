@@ -1,7 +1,6 @@
-import { IngredientMapper } from "./IngredientMapper";
+import { IngredientsMapper } from "./IngredientsMapper";
 import mongoose from "mongoose";
 import { Base } from "../model/base/Base";
-import { RecipeDTO } from "../dto/recipe/RecipeDTO";
 import { Ingredient } from "../model/ingredient/Ingredient";
 import { Skill } from "../model/recipe/Skill";
 
@@ -24,7 +23,7 @@ interface RecipeForMapper {
   name: string;
   enName: string;
   defaultRecipe: mongoose.Schema.Types.ObjectId | null;
-  version: string[];
+  version: string;
   base: BaseForMapper;
   proof: number;
   proofIcon: string;
@@ -39,16 +38,14 @@ export class RecipeMapper {
     recipe: RecipeForMapper, 
     base: BaseForMapper, 
     ingredients: IngredientsDetailForMapper[]
-  ): RecipeDTO {
+  ) {
 
-    const ingredientData = IngredientMapper.toIngredientDetailDTO(ingredients);
+    const ingredientData = IngredientsMapper.toIngredientDetailDTO(ingredients);
     
-    console.log("skill ", recipe.skill, "type ", typeof recipe.skill);
     return {
       id: recipe._id as unknown as string,
       name: recipe.name,
       enName: recipe.enName,
-      version: recipe.version,
       base: {
         id: base._id as unknown as string,
         name: base.name,

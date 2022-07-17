@@ -13,27 +13,27 @@ interface IngredientsDetailForMapper {
   unit: string;
 }
 
-export class IngredientMapper {
+export class IngredientsMapper {
   // RecipeDAO에서 찾은 Ingredients
   public static toIngredientDetailDTO(ingredients: IngredientsDetailForMapper[]): IngredientDetailDTO[] {
 
-    const ingredientsDetailData = ingredients.map((elem: IngredientsDetailForMapper) => {
+    const ingredientsDetailData = ingredients.map((ingredient: IngredientsDetailForMapper) => {
 
-      let quantityData = elem.unit; 
-      if (elem.quantity !== 0) {
-        quantityData = elem.quantity + quantityData; 
+      let quantityData = ingredient.unit; 
+      if (ingredient.quantity !== 0) {
+        quantityData = ingredient.quantity + quantityData; 
       }
 
-      const rst = {
-        id: elem.ingredient._id as unknown as string,
-        name: elem.ingredient.name,
-        enName: elem.ingredient.enName,
-        proof: elem.ingredient.proof,
-        category: elem.ingredient.category,
+      const ingredientDetailData = {
+        id: ingredient.ingredient._id as unknown as string,
+        name: ingredient.ingredient.name,
+        enName: ingredient.ingredient.enName,
+        proof: ingredient.ingredient.proof,
+        category: ingredient.ingredient.category,
         quantity: quantityData 
       }
 
-      return rst; 
+      return ingredientDetailData; 
     });
 
     return ingredientsDetailData;
@@ -42,13 +42,13 @@ export class IngredientMapper {
   public static toIngredientDTO(ingredients: IngredientsForMapper[]): IngredientDTO[] {
 
     // IngredientDAO에서 찾은 Ingredients
-    const ingredientsData = ingredients.map((elem: IngredientsForMapper) => (
+    const ingredientsData = ingredients.map((ingredient: IngredientsForMapper) => (
       {
-        id: elem._id as unknown as string,
-        name: elem.name,
-        enName: elem.enName,
-        proof: elem.proof,
-        category: elem.category,
+        id: ingredient._id as unknown as string,
+        name: ingredient.name,
+        enName: ingredient.enName,
+        proof: ingredient.proof,
+        category: ingredient.category,
       }
     ));
 

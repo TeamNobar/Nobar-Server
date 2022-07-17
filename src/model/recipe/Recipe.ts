@@ -5,7 +5,7 @@ export interface Recipe {
   name: string,
   enName: string,
   defaultRecipe: mongoose.Schema.Types.ObjectId | null,
-  version: string[],
+  version: string,
   base: mongoose.Schema.Types.ObjectId, 
   proof: number,
   proofIcon: string,

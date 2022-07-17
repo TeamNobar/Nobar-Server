@@ -15,30 +15,28 @@ export class Skill extends EnumType<Skill>() {
     super();
   }
 
-  public hasSkillId(id: number) {
+  public hasSkillId(id: number): boolean {
     return this.id === id;
   }
 
-  public hasSkillName(name: string) {
+  public hasSkillName(name: string): boolean {
     return this.name === name;
   }
 
-  static findSkillById(id: number): Skill {
-    const skill = this.values().find(skill => {
-      skill.hasSkillId(id);
-    });
+  public static findSkillById(id: number): Skill {
+    const skill = this.find(id)
     if (!skill) {
-      return Skill.NotFound
+      return Skill.NotFound;
     }
-    return skill
+    return skill;
   }
 
   static findSkillByName(name: string): Skill {
-    const skill = this.values().find(skill => {
-      skill.hasSkillName(name);
-    })
-    if (typeof skill === "undefined") {
-      return Skill.NotFound
+    const skill = this.values().find(
+      (skill) => skill.hasSkillName(name)
+    );
+    if (!skill) {
+      return Skill.NotFound;
     }
     return skill
   }
