@@ -9,7 +9,7 @@ export class SearchKeywordService {
   public async getSearchKeywords() {
 
     // 추천 검색어로 뜬 레시피 가져오기 - 일단 기본 레시피만 뜨도록
-    const recommendRecipes = await RecommendDAO.find({ defaultRecipe: null })
+    const recommendRecipes = await RecommendDAO.find({})
                                                .populate("recipeId", "_id name", RecipeDAO ); 
 
     const recommendsData = await Promise.all(recommendRecipes.map((recommendRecipe: any) => {
@@ -22,7 +22,7 @@ export class SearchKeywordService {
     }));
   
     // 자동완성으로 쓸 레시피 이름 전부 가져오기
-    const recipes = await RecipeDAO.find({ defaultRecipe: null })
+    const recipes = await RecipeDAO.find({})
                                     .populate({ path: "base", model: BaseDAO })
                                     .populate({ path: "ingredients.ingredient", model: IngredientDAO });
 
