@@ -20,6 +20,7 @@ export class SearchRecipesService {
 
     // 이후에 mapper 추가해서 api 명세 규격대로 반환
 
+    console.log("foundRecipes ", foundRecipes);
     return foundRecipes.map(foundRecipe => {
       return foundRecipe.name
     });

@@ -14,10 +14,10 @@ export class SearchRecipesController extends Controller {
   public async findRecipesByBase(
     @Query() base: string
   ) {
-    const data = await new SearchRecipesService().findRecipesByBase(base);
+    const recipes = await new SearchRecipesService().findRecipesByBase(base);
 
-    if (data === null) {
-      this.setStatus(400);
+    if (recipes === null) {
+      this.setStatus(StatusCode.BAD_REQUEST);
 
       const notFoundRecipes = {
         status: StatusCode.BAD_REQUEST,
@@ -28,6 +28,7 @@ export class SearchRecipesController extends Controller {
   
     }
 
-    return data;
+    this.setStatus(StatusCode.OK);
+    return recipes;
   }
 } 
