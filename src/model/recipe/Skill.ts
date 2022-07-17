@@ -32,11 +32,11 @@ export class Skill extends EnumType<Skill>() {
   }
 
   static findSkillByName(name: string): Skill {
-    const skill = this.values().find(skill => {
-      skill.hasSkillName(name);
-    })
-    if (typeof skill === "undefined") {
-      return Skill.NotFound
+    const skill = this.values().find(
+      (skill) => skill.hasSkillName(name)
+    );
+    if (!skill) {
+      return Skill.NotFound;
     }
     return skill
   }
