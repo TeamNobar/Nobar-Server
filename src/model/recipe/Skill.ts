@@ -19,7 +19,7 @@ export class Skill extends EnumType<Skill>() {
     return this.id === id;
   }
 
-  public hasSkillName(name: string): boolean {
+  private hasSkillName(name: string): boolean {
     return this.name === name;
   }
 
