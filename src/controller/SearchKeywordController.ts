@@ -9,7 +9,8 @@ import { errorMessage } from "../utils/errorMessage";
 
 @Route("search")
 export class SearchKeywordController extends Controller{
-  @Get("")
+  
+  @Get("base")
   public async getSearchKeywords() {
 
     const keywords = await new SearchKeywordService().getSearchKeywords();
