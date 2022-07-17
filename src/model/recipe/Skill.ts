@@ -15,7 +15,7 @@ export class Skill extends EnumType<Skill>() {
     super();
   }
 
-  public hasSkillId(id: number) {
+  public hasSkillId(id: number):boolean {
     return this.id === id;
   }
 
