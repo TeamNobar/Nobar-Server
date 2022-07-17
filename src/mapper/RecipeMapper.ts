@@ -3,6 +3,8 @@ import mongoose from "mongoose";
 import { Base } from "../model/base/Base";
 import { Ingredient } from "../model/ingredient/Ingredient";
 import { Skill } from "../model/recipe/Skill";
+import { Glass } from "../model/recipe/Glass";
+
 
 interface BaseForMapper extends Base {
   _id: mongoose.Schema.Types.ObjectId;
@@ -41,7 +43,7 @@ export class RecipeMapper {
   ) {
 
     const ingredientData = IngredientsMapper.toIngredientDetailDTO(ingredients);
-    
+
     return {
       id: recipe._id as unknown as string,
       name: recipe.name,
@@ -58,8 +60,8 @@ export class RecipeMapper {
         url: Skill.findSkillById(recipe.skill).url
       },
       glass: {
-        name: Skill.findSkillById(recipe.skill).name,
-        url: Skill.findSkillById(recipe.skill).url
+        name: Glass.findGlassById(recipe.glass).name,
+        url: Glass.findGlassById(recipe.glass).url
       },
       steps: recipe.steps,
       ingredients: ingredientData,
