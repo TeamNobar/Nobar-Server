@@ -6,10 +6,6 @@ import IngredientDAO from "../model/ingredient/IngredientDAO";
 export class SearchRecipesByKeywordService {
   public async searchRecipesByKeyword (keyword: string) {
 
-    if (keyword === "") {
-      return []
-    }
-
     const regex = (pattern: string) => new RegExp(`.*${pattern}.*`);
 
     const keywordRegex = regex(keyword);
