@@ -7,11 +7,13 @@ export interface RecipeDTO {
   id: string,
   name: string,
   enName: string,
-  version: string,
+  version: string[],
   base: BaseDTO,
   proof: number,
+  proofIcon: string,  
   skill: SkillDTO,
   glass: GlassDTO,
   ingredients: IngredientDTO[],
-  steps: string[]
+  steps: string[],
+  defaultRecipe: string
 }
