@@ -9,11 +9,7 @@ const BaseSchema = new mongoose.Schema({
   url: {
     type: String,
     reqired: true
-  },
-  recipes: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Recipe",
-  }]
+  }
 });
 
 export default mongoose.model<mongoose.Document & Base>("Base", BaseSchema);
