@@ -1,5 +1,6 @@
-import { EnumType } from "ts-jenum";
+import { Enum, EnumType } from "ts-jenum";
 
+@Enum("id")
 export class Skill extends EnumType<Skill>() {
   static readonly NotFound = new Skill(0, "", "");
   static readonly Shake = new Skill(1, "쉐이크", "");
