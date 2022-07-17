@@ -8,7 +8,8 @@ import StatusCode from "../utils/StatusCode";
 import { errorMessage } from "../utils/errorMessage";
 
 @Route("search")
-export class SearchKeywordController extends Controller{
+export class SearchKeywordController extends Controller {
+  
   @Get("")
   public async getSearchKeywords() {
 

@@ -43,7 +43,7 @@ export class RecipeMapper {
   ) {
 
     const ingredientData = IngredientsMapper.toIngredientDetailDTO(ingredients);
-    
+
     return {
       id: recipe._id as unknown as string,
       name: recipe.name,

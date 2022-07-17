@@ -36,7 +36,7 @@ export class SearchKeywordService {
     const ingredientsData = IngredientsMapper.toIngredientDTO(ingredients);
 
     // data 결합해서 최종적으로 반환
-    return {
+   return {
       recommends: recommendsData,
       recipes: recipesData,
       ingredients: ingredientsData
