@@ -10,7 +10,7 @@ export default class ResponseWrapper {
     }
   }
 
-  static failureOf<T>(status: number, messgae: string, data?: T): ResponseWrapDTO<T> {
+  static failureOf<T>(status: number, messgae: string | object, data?: T): ResponseWrapDTO<T> {
     return {
       status: status,
       message: messgae,
