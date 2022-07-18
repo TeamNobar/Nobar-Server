@@ -1,5 +1,5 @@
 export default interface ErrorType {
   status: number,
-  message: string,
+  message: string | object,
   detail?: object
 }
