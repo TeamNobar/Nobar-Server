@@ -3,11 +3,13 @@ import express, { NextFunction, Request, Response } from "express";
 import morgan                                       from "morgan";
 import { ValidateError }                            from "tsoa";
 import { RegisterRoutes }                           from "../../build/routes";
+import NobarError                                   from "../error/NobarError";
 import Environment                                  from "../utils/Environment";
-import ErrorType                                    from "../utils/ErrorType";
 import { errorMessage }                             from "../utils/errorMessage";
+import ErrorType                                    from "../utils/ErrorType";
 import ResponseWrapper                              from "../utils/ResponseWrapper";
 import StatusCode                                   from "../utils/StatusCode";
+import logger                                       from "./Logger";
 import Logger                                       from "./Logger";
 
 export default class ExpressLoader {
@@ -36,11 +38,15 @@ export default class ExpressLoader {
       Logger.warn(`Caught Validation Error for ${req.path}: \n ${err.fields}`);
       const validateError: ErrorType = {
         status: StatusCode.VALIDATION_FAILED,
-        message: errorMessage.VALIDATION_FAILED,
-        detail: err?.fields,
+        message: err?.fields,
       };
       next(validateError);
       return;
+    }
+    if (err instanceof NobarError) {
+      logger.warn(`Caught Error for ${req.path}: \n ${err.message}`)
+      _res.status(Math.floor(err.status / 10))
+        .json(err);
     }
     next(err);
     return;
@@ -56,8 +62,7 @@ export default class ExpressLoader {
     res.locals.error = req.app.get("env") === Environment.PRODUCTION ? err : {};
     const responseData = ResponseWrapper.failureOf(
       err.status || StatusCode.INTERNAL_SERVER_ERROR,
-      err.message || errorMessage.INTERNAL_SERVER_ERROR,
-      err.detail || null
+      err.message || errorMessage.INTERNAL_SERVER_ERROR
     );
     res.status(err.status || StatusCode.INTERNAL_SERVER_ERROR)
       .json(responseData);
@@ -83,7 +88,7 @@ export default class ExpressLoader {
   }
 
   private setUpDefaultMiddleware(): void {
-    this.app.use(express.urlencoded({ extended: true }));
+    this.app.use(express.urlencoded({extended: true}));
     this.app.use(express.json());
   }
 
