@@ -1,7 +1,7 @@
 import {
   Get, 
   Route,
-  Controller
+  Controller,
 } from "tsoa";
 import { SearchKeywordService } from "../service/SearchKeywordService";
 import StatusCode from "../utils/StatusCode";

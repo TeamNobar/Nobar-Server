@@ -16,28 +16,28 @@ export class SearchRecipesByBaseController extends Controller {
     @Query() base?: string
   ) {
 
-      if (!base) { 
-        this.setStatus(StatusCode.OK);
-        return {
-          recipes: []
-        };
-      }
-      
-      const recipes = await new SearchRecipesByBaseService().findRecipesByBase(base);
-
-      if (recipes === null) {
-        this.setStatus(StatusCode.BAD_REQUEST);
-
-        const notFoundRecipes = {
-          status: StatusCode.BAD_REQUEST,
-          messsage : errorMessage.BAD_REQUEST
-        };
-      
-        return notFoundRecipes;
-    
-      }
-
+    if (!base) { 
       this.setStatus(StatusCode.OK);
-      return recipes;
+      return {
+        recipes: []
+      };
+    }
+      
+    const recipes = await new SearchRecipesByBaseService().findRecipesByBase(base);
+
+    if (recipes === null) {
+      this.setStatus(StatusCode.BAD_REQUEST);
+
+      const notFoundRecipes = {
+        status: StatusCode.BAD_REQUEST,
+        messsage : errorMessage.BAD_REQUEST
+      };
+      
+      return notFoundRecipes;
+    
+    }
+
+    this.setStatus(StatusCode.OK);
+    return recipes;
   }
 } 
