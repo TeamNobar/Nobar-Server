@@ -9,7 +9,7 @@ import BaseEntity            from "../model/base/entity/BaseEntity";
 import { Ingredient }        from "../model/ingredient/Ingredient";
 import IngredientEntity      from "../model/ingredient/IngredientEntity";
 import RecipeEntity          from "../model/recipe/entity/RecipeEntity";
-import RecipeIngredientEmbed from "../model/recipe/mapper/RecipeImgredientEmbed";
+import RecipeIngredientEmbed from "../model/recipe/mapper/RecipeIngredientEmbed";
 import RecipeMapper          from "../model/recipe/mapper/RecipeMapper";
 import { Recipe }            from "../model/recipe/Recipe";
 import RecipeIngredient      from "../model/recipe/RecipeIngredient";
