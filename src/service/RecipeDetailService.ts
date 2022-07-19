@@ -1,21 +1,22 @@
-import { Document, Model } from "mongoose";
-import { RecipeDetailDTO } from "../dto/RecipeDetailDTO";
-import NobarError          from "../error/NobarError";
-import { NobarErrorCode }  from "../error/NobarErrorCode";
-import NobarErrorMessage   from "../error/NobarErrorMessage";
-import logger              from "../loaders/Logger";
-import { Base }            from "../model/base/Base";
-import BaseEntity          from "../model/base/entity/BaseEntity";
-import { Ingredient }      from "../model/ingredient/Ingredient";
-import IngredientEntity    from "../model/ingredient/IngredientEntity";
-import RecipeEntity        from "../model/recipe/entity/RecipeEntity";
-import { Recipe }          from "../model/recipe/Recipe";
+import mongoose, { Model } from "mongoose";
+import { type }     from "os";
+import RecipeMapper from "src/model/recipe/mapper/RecipeMapper";
+import NobarError   from "../error/NobarError";
+import { NobarErrorCode } from "../error/NobarErrorCode";
+import NobarErrorMessage from "../error/NobarErrorMessage";
+import logger from "../loaders/Logger";
+import { Base } from "../model/base/Base";
+import BaseEntity from "../model/base/entity/BaseEntity";
+import { Ingredient } from "../model/ingredient/Ingredient";
+import IngredientEntity from "../model/ingredient/IngredientEntity";
+import RecipeEntity from "../model/recipe/entity/RecipeEntity";
+import { Recipe } from "../model/recipe/Recipe";
 
 export default class RecipeDetailService {
   constructor(
-    private readonly recipeDAO: Model<Recipe & Document>,
-    private readonly baseDAO: Model<Base & Document>,
-    private readonly ingredientDAO: Model<Ingredient & Document>
+    private readonly recipeDAO: Model<Recipe & mongoose.Document>,
+    private readonly baseDAO: Model<Base & mongoose.Document>,
+    private readonly ingredientDAO: Model<Ingredient & mongoose.Document>
   ) {
   }
 
@@ -26,13 +27,11 @@ export default class RecipeDetailService {
         .populate({path: "base", model: BaseDAO})
         .populate({path: "ingredients.ingredient", model: IngredientDAO});*/
       const recipe: RecipeEntity = await this.findRecipeById(recipeId);
-      const base: BaseEntity = await this.findBaseById(recipe.base.valueOf().toString())
-      const ingredients: IngredientEntity[] = Promise.all(recipe.ingredients.map(async (value) => {
-        await this.findIngredientById(value.ingredient.valueOf().toString());
-      }));
-      const RecipeDetailResponse: RecipeDetailDTO =
+      const base: BaseEntity = await this.findBaseById(recipe.base.valueOf().toString());
+      const recipeVersions: RecipeEntity[] | null = await this.findRecipeVersionNames(recipeId);
+      RecipeMapper.toRecipeDetailDTO(recipe, base, recipeVersions)
       return {
-        id: recipe._id.valueOf().toString(),
+        id: versionNames
       };
     } catch (error) {
       logger.error(error);
@@ -43,7 +42,7 @@ export default class RecipeDetailService {
   private async findRecipeById(recipeId: string): Promise<RecipeEntity> {
     const recipe: RecipeEntity | null = await this.recipeDAO.findById(recipeId);
     if (!recipe) {
-      throw new NobarError(NobarErrorCode.BAD_REQUST, NobarErrorMessage.NOT_FOUND_RECIPE);
+      throw new NobarError(NobarErrorCode.BAD_REQUEST, NobarErrorMessage.NOT_FOUND_RECIPE);
     }
     return recipe;
   }
@@ -51,15 +50,19 @@ export default class RecipeDetailService {
   private async findBaseById(baseId: string): Promise<BaseEntity> {
     const base: BaseEntity | null = await this.baseDAO.findById(baseId);
     if (!base) {
-      throw new NobarError(NobarErrorCode.BAD_REQUST, NobarErrorMessage.NOT_FOUND_BASE);
+      throw new NobarError(NobarErrorCode.BAD_REQUEST, NobarErrorMessage.NOT_FOUND_BASE);
     }
     return base;
+  }
+
+  private async findRecipeVersionNames(defaultRecipeId: string): Promise<RecipeEntity[] | null> {
+    return this.recipeDAO.find({defaultRecipe: defaultRecipeId});
   }
 
   private async findIngredientById(ingredientId: string) {
     const ingredient: IngredientEntity | null = await this.ingredientDAO.findById(ingredientId);
     if (!ingredient) {
-      throw new NobarError(NobarErrorCode.BAD_REQUST, NobarErrorMessage.NOT_FOUND_BASE);
+      throw new NobarError(NobarErrorCode.BAD_REQUEST, NobarErrorMessage.NOT_FOUND_BASE);
     }
   }
 }
