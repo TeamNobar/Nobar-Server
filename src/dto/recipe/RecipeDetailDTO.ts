@@ -1,7 +1,7 @@
-import RecipeIngredient from "../../model/recipe/RecipeIngredient";
-import { BaseDTO }      from "../base/BaseDTO";
-import { GlassDTO }     from "./GlassDTO";
-import { SkillDTO }     from "./SkillDTO";
+import { BaseDTO }         from "../base/BaseDTO";
+import { GlassDTO }        from "./GlassDTO";
+import RecipeIngredientDTO from "./RecipeIngredientDTO";
+import { SkillDTO }        from "./SkillDTO";
 
 export interface RecipeDetailDTO {
   id: string
@@ -13,7 +13,7 @@ export interface RecipeDetailDTO {
   proofIcon: string,
   skill: SkillDTO,
   glass: GlassDTO,
-  ingredients: RecipeIngredient[],
+  ingredients: RecipeIngredientDTO[],
   steps: string[],
   isScrap: boolean
 }
