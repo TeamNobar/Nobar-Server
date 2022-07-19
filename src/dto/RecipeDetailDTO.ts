@@ -1,10 +1,10 @@
 import RecipeIngredient from "../model/recipe/RecipeIngredient";
 
 export interface RecipeDetailDTO {
+  id: string
   name: string,
   enName: string,
-  defaultRecipe: string | null,
-  version: string,
+  version: string[],
   base: string,
   proof: number,
   proofIcon: string,
