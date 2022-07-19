@@ -7,7 +7,8 @@ const GuideSchema = new mongoose.Schema({
     required: true
   },
   subtitle: {
-    type: String
+    type: String,
+    required: true
   },
   content: {
     type: String,
