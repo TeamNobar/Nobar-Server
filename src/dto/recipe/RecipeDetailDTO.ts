@@ -1,7 +1,7 @@
-import RecipeIngredient from "../model/recipe/RecipeIngredient";
-import { BaseDTO }      from "./base/BaseDTO";
-import { GlassDTO }     from "./recipe/GlassDTO";
-import { SkillDTO }     from "./recipe/SkillDTO";
+import RecipeIngredient from "../../model/recipe/RecipeIngredient";
+import { BaseDTO }      from "../base/BaseDTO";
+import { GlassDTO }     from "./GlassDTO";
+import { SkillDTO }     from "./SkillDTO";
 
 export interface RecipeDetailDTO {
   id: string
