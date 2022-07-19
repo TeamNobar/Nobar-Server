@@ -10,6 +10,6 @@ export class RecipeDetailController extends Controller {
   public async getRecipeDetail(
     @Path() recipeId: string
   ) {
-    return this.recipeDetailService.getRecipeDetail(recipeId);
+    return await this.recipeDetailService.getRecipeDetail(recipeId);
   }
 }
