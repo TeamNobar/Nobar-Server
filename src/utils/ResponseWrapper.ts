@@ -5,7 +5,6 @@ export default class ResponseWrapper {
     return {
       status: status,
       message: messgae,
-      success: true,
       data: data
     }
   }
@@ -14,7 +13,6 @@ export default class ResponseWrapper {
     return {
       status: status,
       message: messgae,
-      success: false,
       data: data
     }
   }

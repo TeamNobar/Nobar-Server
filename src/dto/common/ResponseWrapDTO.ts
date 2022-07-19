@@ -1,6 +1,5 @@
 export default interface ResponseWrapDTO<T> {
   status: number,
-  message: string,
-  success: boolean,
+  message: string | object,
   data?: T;
 }
