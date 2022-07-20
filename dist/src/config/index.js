@@ -25,5 +25,7 @@ exports.default = {
      */
     mongoURI: process.env.MONGODB_URI,
     apipath: `${apiConfig.prefix}/v${apiConfig.version}`,
+    jwtSecret: process.env.JWT_SECRET,
+    jwtAlgo: process.env.JWT_ALGO
 };
 //# sourceMappingURL=index.js.map
