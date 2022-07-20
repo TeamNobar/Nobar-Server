@@ -1,0 +1,1 @@
+{"version":3,"file":"BaseMapper.js","sourceRoot":"","sources":["../../../../../src/model/base/mapper/BaseMapper.ts"],"names":[],"mappings":";;AAGA,MAAqB,UAAU;IAC7B,MAAM,CAAC,SAAS,CAAC,UAAsB;QACrC,OAAiB;YACf,EAAE,EAAE,UAAU,CAAC,GAAG,CAAC,OAAO,EAAE,CAAC,QAAQ,EAAE;YACvC,IAAI,EAAE,UAAU,CAAC,IAAI;YACrB,GAAG,EAAE,UAAU,CAAC,GAAG;SACpB,CAAA;IACH,CAAC;CACF;AARD,6BAQC"}
