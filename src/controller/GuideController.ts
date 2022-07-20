@@ -22,7 +22,7 @@ export class GuideController extends Controller {
     
     const notFoundGuide =  {
       status: StatusCode.BAD_REQUEST,
-      message: errorMessage.BAD_REQUEST
+      message: errorMessage.BAD_REQUEST    
     };
 
     return notFoundGuide;
