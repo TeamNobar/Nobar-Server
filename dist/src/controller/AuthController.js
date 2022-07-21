@@ -26,6 +26,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthController = void 0;
 const tsoa_1 = require("tsoa");
+const jwtHandler_1 = __importDefault(require("../auth/jwtHandler"));
 const ServiceInjector_1 = __importDefault(require("../service/ServiceInjector"));
 let AuthController = class AuthController extends tsoa_1.Controller {
     constructor() {
@@ -34,7 +35,10 @@ let AuthController = class AuthController extends tsoa_1.Controller {
     }
     createUser(requestBody) {
         return __awaiter(this, void 0, void 0, function* () {
-            //return await this.authService.authUser(requestBody);
+            const userId = yield this.authService.authUser(requestBody);
+            return {
+                accesstoken: (0, jwtHandler_1.default)(userId)
+            };
         });
     }
 };

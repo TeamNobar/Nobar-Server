@@ -15,17 +15,19 @@ class AuthService {
     }
     authUser(userParam) {
         return __awaiter(this, void 0, void 0, function* () {
-            const user = this.userDAO.findOne({ nickname: userParam.nickname });
-            /*if (!user) {
-              return await this.addUser(userParam);
-            } else {
-              return user
-            }*/
+            const user = yield this.findOneUser(userParam.nickname);
+            if (!user) {
+                const createdUser = yield this.addUser(userParam);
+                return createdUser._id.valueOf().toString();
+            }
+            else {
+                return user._id.valueOf().toString();
+            }
         });
     }
-    findOneUser(nickName) {
+    findOneUser(nickname) {
         return __awaiter(this, void 0, void 0, function* () {
-            return this.userDAO.find;
+            return this.userDAO.findOne({ nickname: nickname });
         });
     }
     addUser(userParam) {

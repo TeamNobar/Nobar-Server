@@ -1,5 +1,4 @@
 import jwt               from "jsonwebtoken";
-import * as mongoose     from "mongoose";
 import config            from "../config";
 import { JwtPayloadDTO } from "../dto/auth/JwtPayloadDTO";
 
@@ -13,7 +12,7 @@ const getToken = (userId: string): string => {
   return jwt.sign(
     payload,
     config.jwtSecret,
-    {expiresIn : "99y"}
+    {expiresIn: "99y"}
   )
 }
 
