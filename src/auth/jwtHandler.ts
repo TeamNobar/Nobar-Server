@@ -3,7 +3,7 @@ import * as mongoose     from "mongoose";
 import config            from "../config";
 import { JwtPayloadDTO } from "../dto/auth/JwtPayloadDTO";
 
-const getToken = (userId: mongoose.Schema.Types.ObjectId): string => {
+const getToken = (userId: string): string => {
   const payload: JwtPayloadDTO = {
     user: {
       id: userId
