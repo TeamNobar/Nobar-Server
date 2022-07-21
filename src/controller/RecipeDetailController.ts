@@ -1,10 +1,10 @@
 import { Controller, Get, Path, Route } from "tsoa";
-import RecipeDetailService              from "../service/RecipeDetailService";
+import RecipeService                    from "../service/RecipeService";
 import ServiceInjector                  from "../service/ServiceInjector";
 
 @Route("recipe")
 export class RecipeDetailController extends Controller {
-  private readonly recipeDetailService: RecipeDetailService = ServiceInjector.recipeDetail
+  private readonly recipeDetailService: RecipeService = ServiceInjector.recipe
 
   @Get("{recipeId}")
   public async getRecipeDetail(

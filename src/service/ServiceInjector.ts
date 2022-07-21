@@ -1,15 +1,17 @@
-import BaseDAO             from "../model/base/BaseDAO";
-import IngredientDAO       from "../model/ingredient/IngredientDAO";
-import RecipeDAO           from "../model/recipe/RecipeDAO";
-import TastingNoteDAO      from "../model/tastingNote/TastingNoteDAO";
-import UserDAO             from "../model/user/UserDAO";
-import AuthService         from "./AuthService";
-import RecipeDetailService from "./RecipeDetailService";
-import TastingNoteService  from "./TastingNoteService";
+import BaseDAO            from "../model/base/BaseDAO";
+import IngredientDAO      from "../model/ingredient/IngredientDAO";
+import recipeDAO          from "../model/recipe/RecipeDAO";
+import RecipeDAO          from "../model/recipe/RecipeDAO";
+import TastingNoteDAO     from "../model/tastingNote/TastingNoteDAO";
+import userDAO            from "../model/user/UserDAO";
+import UserDAO            from "../model/user/UserDAO";
+import AuthService        from "./AuthService";
+import RecipeService      from "./RecipeService";
+import TastingNoteService from "./TastingNoteService";
 
 export default class ServiceInjector {
-  public static get recipeDetail() {
-    return new RecipeDetailService(
+  public static get recipe() {
+    return new RecipeService(
       RecipeDAO,
       BaseDAO,
       IngredientDAO
@@ -24,7 +26,11 @@ export default class ServiceInjector {
 
   public static get tastingNote() {
     return new TastingNoteService(
-      TastingNoteDAO
+      userDAO,
+      TastingNoteDAO,
+      recipeDAO,
+      BaseDAO,
+      IngredientDAO
     )
   }
 }

@@ -1,7 +1,8 @@
 import { Controller, Get, Path, Post, Request, Route, Security } from "tsoa";
+import { JwtPayloadDTO }                                         from "../dto/auth/JwtPayloadDTO";
 import CreateTastingNoteParam                                    from "../dto/tastingnote/CreateTastingNoteParam";
-import ServiceInjector                                  from "../service/ServiceInjector";
-import StatusCode                                       from "../utils/StatusCode";
+import ServiceInjector                                           from "../service/ServiceInjector";
+import StatusCode                                                from "../utils/StatusCode";
 
 @Route("note")
 export class TastingNoteController extends Controller {
@@ -14,7 +15,6 @@ export class TastingNoteController extends Controller {
   }
 
   @Get("{tastingNoteId}")
-  //@Security("jwt", ["admin"])
   public async getTastingNote(
     @Path() tastingNoteId: string,
   ) {
@@ -27,8 +27,10 @@ export class TastingNoteController extends Controller {
   public async postTastingNote(
     @Request() request: any
   ) {
+    const token: JwtPayloadDTO = await Promise.resolve(request.user);
+    const userId: string = token.user.id
     const tastingNoteParam: CreateTastingNoteParam = request.body;
     this.setStatus(StatusCode.CREATED);
-    return this.tastingNoteService.postTastingNote(tastingNoteParam);
+    return this.tastingNoteService.postTastingNote(userId, tastingNoteParam);
   }
 }

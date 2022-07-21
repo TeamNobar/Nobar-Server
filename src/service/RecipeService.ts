@@ -1,5 +1,6 @@
 import mongoose, { Model }   from "mongoose";
 import { RecipeDetailDTO }   from "../dto/recipe/RecipeDetailDTO";
+import { RecipeDTO }         from "../dto/recipe/RecipeDTO";
 import NobarError            from "../error/NobarError";
 import { NobarErrorCode }    from "../error/NobarErrorCode";
 import NobarErrorMessage     from "../error/NobarErrorMessage";
@@ -14,12 +15,26 @@ import RecipeMapper          from "../model/recipe/mapper/RecipeMapper";
 import { Recipe }            from "../model/recipe/Recipe";
 import RecipeIngredient      from "../model/recipe/RecipeIngredient";
 
-export default class RecipeDetailService {
+export default class RecipeService {
   constructor(
     private readonly recipeDAO: Model<Recipe & mongoose.Document>,
     private readonly baseDAO: Model<Base & mongoose.Document>,
     private readonly ingredientDAO: Model<Ingredient & mongoose.Document>
   ) {
+  }
+
+  public async getRecipes(recipeIds: string[]): Promise<RecipeDTO[]> {
+    return Promise.all(
+      recipeIds.map(async value => await this.getOneRecipe(value))
+    );
+  }
+
+  public async getOneRecipe(recipeId: string): Promise<RecipeDTO> {
+    const recipe: RecipeEntity = await this.findRecipeById(recipeId);
+    const base: BaseEntity = await this.findBaseById(recipe.base.valueOf().toString());
+    const embededIngredient: RecipeIngredientEmbed[] = await this.embedAllIngredient(recipe.ingredients);
+    return RecipeMapper.toRecipeDTO(recipe, base, embededIngredient);
+
   }
 
   public async getRecipeDetail(recipeId: string): Promise<RecipeDetailDTO> {

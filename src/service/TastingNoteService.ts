@@ -1,5 +1,5 @@
-import { Document, Model }    from "mongoose";
-import { RecipeDTO }          from "../dto/recipe/RecipeDTO";
+import mongoose, { Document, Model } from "mongoose";
+import { RecipeDTO }                 from "../dto/recipe/RecipeDTO";
 import CreateTastingNoteParam from "../dto/tastingnote/CreateTastingNoteParam";
 import TastingNoteDTO         from "../dto/tastingnote/TastingNoteDTO";
 import TastingNoteTagDTO      from "../dto/tastingnote/TastingNoteTagDTO";
@@ -9,10 +9,10 @@ import NobarErrorMessage      from "../error/NobarErrorMessage";
 import { Base }               from "../model/base/Base";
 import BaseEntity             from "../model/base/entity/BaseEntity";
 import { Ingredient }         from "../model/ingredient/Ingredient";
-import IngredientEntity       from "../model/ingredient/IngredientEntity";
-import RecipeEntity           from "../model/recipe/entity/RecipeEntity";
-import RecipeIngredientEmbed  from "../model/recipe/mapper/RecipeIngredientEmbed";
-import RecipeMapper           from "../model/recipe/mapper/RecipeMapper";
+import IngredientEntity      from "../model/ingredient/IngredientEntity";
+import RecipeEntity          from "../model/recipe/entity/RecipeEntity";
+import RecipeIngredientEmbed from "../model/recipe/mapper/RecipeIngredientEmbed";
+import RecipeMapper          from "../model/recipe/mapper/RecipeMapper";
 import { Recipe }            from "../model/recipe/Recipe";
 import RecipeIngredient      from "../model/recipe/RecipeIngredient";
 import TastingNoteEntity     from "../model/tastingNote/entity/TastingNoteEntity";
@@ -20,9 +20,11 @@ import TastingNoteMapper     from "../model/tastingNote/mapper/TastingNoteMapper
 import TastingTagMapper      from "../model/tastingNote/mapper/TastingTagMapper";
 import TastingNote           from "../model/tastingNote/TastingNote";
 import { TastingNoteTag }    from "../model/tastingNote/TastingNoteTag";
+import User                  from "../model/user/User";
 
 export default class TastingNoteService {
   constructor(
+    private readonly userDAO: Model<User & Document>,
     private readonly tastingNoteDAO: Model<TastingNote & Document>,
     private readonly recipeDAO: Model<Recipe & Document>,
     private readonly baseDAO: Model<Base & Document>,
@@ -36,6 +38,12 @@ export default class TastingNoteService {
     );
   }
 
+  public async getTastingNotes(tastingNoteIds: string[]): Promise<TastingNoteDTO[]> {
+    return Promise.all(
+      tastingNoteIds.map(async value => await this.getTastingNote(value))
+    );
+  }
+
   public async getTastingNote(tastingNoteId: string):Promise<TastingNoteDTO> {
     const tastingNote: TastingNoteEntity = await this.findTastingNote(tastingNoteId);
     const recipe: RecipeEntity = await this.findRecipeById(tastingNote.recipe.valueOf().toString());
@@ -46,9 +54,15 @@ export default class TastingNoteService {
     return tastingNoteDTO
   }
 
-  public async postTastingNote(tastingNote: CreateTastingNoteParam): Promise<TastingNoteDTO> {
+  public async postTastingNote(userId: string, tastingNote: CreateTastingNoteParam): Promise<TastingNoteDTO> {
     const note: TastingNoteEntity = await this.saveTastingNote(tastingNote);
+    await this.saveUserTastingNote(userId, note._id);
     return await this.getTastingNote(note._id.valueOf().toString());
+  }
+
+  private async saveUserTastingNote(userId: string, tastingNoteId: mongoose.Schema.Types.ObjectId) {
+    await this.userDAO.findByIdAndUpdate(userId,{$push: {tastingNotes: tastingNoteId}})
+      .exec()
   }
 
   private async saveTastingNote(noteParam: CreateTastingNoteParam) {
