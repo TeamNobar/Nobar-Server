@@ -276,27 +276,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"anyOf": [
-										{
-											"properties": {
-												"message": {
-													"type": "string"
-												},
-												"status": {
-													"type": "number",
-													"format": "double"
-												}
-											},
-											"required": [
-												"message",
-												"status"
-											],
-											"type": "object"
-										},
-										{
-											"$ref": "#/components/schemas/GuideDTO"
-										}
-									]
+									"$ref": "#/components/schemas/GuideDTO"
 								}
 							}
 						}
