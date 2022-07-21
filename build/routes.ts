@@ -16,6 +16,9 @@ import { SearchRecipesByBaseController } from './../src/controller/SearchRecipes
 import { SearchRecipesByKeywordController } from './../src/controller/SearchRecipesByKeywordController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { SearchTagsController } from './../src/controller/SearchTagsController';
+import { expressAuthentication } from './../src/auth/authentication';
+// @ts-ignore - no great way to install types from subpackage
+const promiseAny = require('promise.any');
 import type { RequestHandler } from 'express';
 import * as express from 'express';
 
