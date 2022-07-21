@@ -9,4 +9,9 @@ export default class TastingNoteService {
   ) {
   }
 
+  public async getAllTag() {
+    TastingNoteTag.getAllTags().map(
+      (value) => TastingTagMapper.toTagDTO(value, false)
+    );
+  }
 };
