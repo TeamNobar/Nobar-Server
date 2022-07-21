@@ -1,5 +1,5 @@
 export default interface TastingNoteTagDTO {
-  id: string,
+   id: number,
   content: string,
   isSelected: boolean
 }
