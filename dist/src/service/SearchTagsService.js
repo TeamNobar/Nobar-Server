@@ -19,9 +19,6 @@ class SearchTagsService {
     getSearchTags() {
         return __awaiter(this, void 0, void 0, function* () {
             const foundTags = yield BaseDAO_1.default.find({});
-            if (foundTags === null) {
-                return null;
-            }
             const base = BaseMapper_1.BaseMapper.toBaseDTO(foundTags);
             return {
                 base: base

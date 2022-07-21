@@ -25,6 +25,10 @@ exports.default = {
      */
     mongoURI: process.env.MONGODB_URI,
     apipath: `${apiConfig.prefix}/v${apiConfig.version}`,
+    /**
+     * webhook URI
+     */
+    webhookURL: process.env.SLACK_WEBHOOK,
     jwtSecret: process.env.JWT_SECRET,
     jwtAlgo: process.env.JWT_ALGO
 };

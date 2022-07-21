@@ -2,6 +2,9 @@ import RecipeDAO from "../model/recipe/RecipeDAO";
 import BaseDAO from "../model/base/BaseDAO";
 import IngredientDAO from "../model/ingredient/IngredientDAO";
 import { RecipeMapper } from "../mapper/RecipeMapper";
+import NobarError            from "../error/NobarError";
+import { NobarErrorCode }    from "../error/NobarErrorCode";
+import NobarErrorMessage     from "../error/NobarErrorMessage";
 
 export class SearchRecipesByBaseService {
  
@@ -9,8 +12,8 @@ export class SearchRecipesByBaseService {
 
     const foundBase = await BaseDAO.findOne({ name: base });
 
-    if (foundBase === null) {
-      return null;
+    if (!foundBase) {
+      throw new NobarError(NobarErrorCode.BAD_REQUEST, NobarErrorMessage.NOT_FOUND_BASE);
     }
 
     const foundRecipes = await RecipeDAO.find({ base: foundBase._id })
@@ -21,7 +24,6 @@ export class SearchRecipesByBaseService {
       const recipeData = RecipeMapper.toRecipeDTO(foundRecipe, foundRecipe.base, foundRecipe.ingredients);
       return recipeData;
     });
-
 
     return {
       recipes: recipesData

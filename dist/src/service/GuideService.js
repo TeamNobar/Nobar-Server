@@ -15,12 +15,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.GuideService = void 0;
 const GuideDAO_1 = __importDefault(require("../model/guide/GuideDAO"));
 const GuideMapper_1 = require("../mapper/GuideMapper");
+const NobarError_1 = __importDefault(require("../error/NobarError"));
+const NobarErrorCode_1 = require("../error/NobarErrorCode");
+const NobarErrorMessage_1 = __importDefault(require("../error/NobarErrorMessage"));
 class GuideService {
     findGuide(guideId) {
         return __awaiter(this, void 0, void 0, function* () {
             const foundGuide = yield GuideDAO_1.default.findById(guideId);
-            if (foundGuide === null) {
-                return null;
+            if (!foundGuide) {
+                throw new NobarError_1.default(NobarErrorCode_1.NobarErrorCode.BAD_REQUEST, NobarErrorMessage_1.default.NOT_FOUND_GUIDE);
             }
             const data = GuideMapper_1.GuideMapper.toGuideDTO(foundGuide);
             return data;

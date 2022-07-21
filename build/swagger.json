@@ -6,6 +6,18 @@
 		"requestBodies": {},
 		"responses": {},
 		"schemas": {
+			"CreateUserParam": {
+				"properties": {
+					"nickname": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"nickname"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"GuideDTO": {
 				"properties": {
 					"id": {
@@ -255,7 +267,13 @@
 				"additionalProperties": false
 			}
 		},
-		"securitySchemes": {}
+		"securitySchemes": {
+			"jwt": {
+				"type": "http",
+				"scheme": "bearer",
+				"bearerFormat": "JWT"
+			}
+		}
 	},
 	"info": {
 		"title": "nodeProjectTemplate",
@@ -267,6 +285,43 @@
 	},
 	"openapi": "3.0.0",
 	"paths": {
+		"/auth": {
+			"post": {
+				"operationId": "CreateUser",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"accesstoken": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"accesstoken"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateUserParam"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/guide/{guideId}": {
 			"get": {
 				"operationId": "FindGuide",
@@ -276,27 +331,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"anyOf": [
-										{
-											"properties": {
-												"message": {
-													"type": "string"
-												},
-												"status": {
-													"type": "number",
-													"format": "double"
-												}
-											},
-											"required": [
-												"message",
-												"status"
-											],
-											"type": "object"
-										},
-										{
-											"$ref": "#/components/schemas/GuideDTO"
-										}
-									]
+									"$ref": "#/components/schemas/GuideDTO"
 								}
 							}
 						}
@@ -538,100 +573,65 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"anyOf": [
-										{
-											"properties": {
-												"messsage": {
-													"type": "string"
-												},
-												"status": {
-													"type": "number",
-													"format": "double"
-												}
-											},
-											"required": [
-												"messsage",
-												"status"
-											],
-											"type": "object"
-										},
-										{
-											"properties": {
-												"recipes": {
-													"items": {
+									"properties": {
+										"recipes": {
+											"items": {
+												"properties": {
+													"defaultRecipe": {
+														"type": "string"
+													},
+													"ingredients": {
+														"items": {
+															"$ref": "#/components/schemas/IngredientDetailDTO"
+														},
+														"type": "array"
+													},
+													"steps": {
+														"items": {
+															"type": "string"
+														},
+														"type": "array"
+													},
+													"glass": {
 														"properties": {
-															"defaultRecipe": {
+															"url": {
 																"type": "string"
 															},
-															"ingredients": {
-																"items": {
-																	"$ref": "#/components/schemas/IngredientDetailDTO"
-																},
-																"type": "array"
-															},
-															"steps": {
-																"items": {
-																	"type": "string"
-																},
-																"type": "array"
-															},
-															"glass": {
-																"properties": {
-																	"url": {
-																		"type": "string"
-																	},
-																	"name": {
-																		"type": "string"
-																	}
-																},
-																"required": [
-																	"url",
-																	"name"
-																],
-																"type": "object"
-															},
-															"skill": {
-																"properties": {
-																	"url": {
-																		"type": "string"
-																	},
-																	"name": {
-																		"type": "string"
-																	}
-																},
-																"required": [
-																	"url",
-																	"name"
-																],
-																"type": "object"
-															},
-															"proofIcon": {
+															"name": {
+																"type": "string"
+															}
+														},
+														"required": [
+															"url",
+															"name"
+														],
+														"type": "object"
+													},
+													"skill": {
+														"properties": {
+															"url": {
 																"type": "string"
 															},
-															"proof": {
-																"type": "number",
-																"format": "double"
-															},
-															"base": {
-																"properties": {
-																	"url": {
-																		"type": "string"
-																	},
-																	"name": {
-																		"type": "string"
-																	},
-																	"id": {
-																		"type": "string"
-																	}
-																},
-																"required": [
-																	"url",
-																	"name",
-																	"id"
-																],
-																"type": "object"
-															},
-															"enName": {
+															"name": {
+																"type": "string"
+															}
+														},
+														"required": [
+															"url",
+															"name"
+														],
+														"type": "object"
+													},
+													"proofIcon": {
+														"type": "string"
+													},
+													"proof": {
+														"type": "number",
+														"format": "double"
+													},
+													"base": {
+														"properties": {
+															"url": {
 																"type": "string"
 															},
 															"name": {
@@ -642,29 +642,44 @@
 															}
 														},
 														"required": [
-															"defaultRecipe",
-															"ingredients",
-															"steps",
-															"glass",
-															"skill",
-															"proofIcon",
-															"proof",
-															"base",
-															"enName",
+															"url",
 															"name",
 															"id"
 														],
 														"type": "object"
 													},
-													"type": "array"
-												}
+													"enName": {
+														"type": "string"
+													},
+													"name": {
+														"type": "string"
+													},
+													"id": {
+														"type": "string"
+													}
+												},
+												"required": [
+													"defaultRecipe",
+													"ingredients",
+													"steps",
+													"glass",
+													"skill",
+													"proofIcon",
+													"proof",
+													"base",
+													"enName",
+													"name",
+													"id"
+												],
+												"type": "object"
 											},
-											"required": [
-												"recipes"
-											],
-											"type": "object"
+											"type": "array"
 										}
-									]
+									},
+									"required": [
+										"recipes"
+									],
+									"type": "object"
 								}
 							}
 						}
@@ -826,38 +841,18 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"anyOf": [
-										{
-											"properties": {
-												"messsage": {
-													"type": "string"
-												},
-												"status": {
-													"type": "number",
-													"format": "double"
-												}
+									"properties": {
+										"base": {
+											"items": {
+												"$ref": "#/components/schemas/BaseDTO"
 											},
-											"required": [
-												"messsage",
-												"status"
-											],
-											"type": "object"
-										},
-										{
-											"properties": {
-												"base": {
-													"items": {
-														"$ref": "#/components/schemas/BaseDTO"
-													},
-													"type": "array"
-												}
-											},
-											"required": [
-												"base"
-											],
-											"type": "object"
+											"type": "array"
 										}
-									]
+									},
+									"required": [
+										"base"
+									],
+									"type": "object"
 								}
 							}
 						}

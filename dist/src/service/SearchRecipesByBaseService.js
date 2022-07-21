@@ -17,12 +17,15 @@ const RecipeDAO_1 = __importDefault(require("../model/recipe/RecipeDAO"));
 const BaseDAO_1 = __importDefault(require("../model/base/BaseDAO"));
 const IngredientDAO_1 = __importDefault(require("../model/ingredient/IngredientDAO"));
 const RecipeMapper_1 = require("../mapper/RecipeMapper");
+const NobarError_1 = __importDefault(require("../error/NobarError"));
+const NobarErrorCode_1 = require("../error/NobarErrorCode");
+const NobarErrorMessage_1 = __importDefault(require("../error/NobarErrorMessage"));
 class SearchRecipesByBaseService {
     findRecipesByBase(base) {
         return __awaiter(this, void 0, void 0, function* () {
             const foundBase = yield BaseDAO_1.default.findOne({ name: base });
-            if (foundBase === null) {
-                return null;
+            if (!foundBase) {
+                throw new NobarError_1.default(NobarErrorCode_1.NobarErrorCode.BAD_REQUEST, NobarErrorMessage_1.default.NOT_FOUND_BASE);
             }
             const foundRecipes = yield RecipeDAO_1.default.find({ base: foundBase._id })
                 .populate({ path: "base", model: BaseDAO_1.default })

@@ -28,7 +28,6 @@ exports.SearchRecipesByBaseController = void 0;
 const tsoa_1 = require("tsoa");
 const SearchRecipesByBaseService_1 = require("../service/SearchRecipesByBaseService");
 const StatusCode_1 = __importDefault(require("../utils/StatusCode"));
-const errorMessage_1 = require("../utils/errorMessage");
 let SearchRecipesByBaseController = class SearchRecipesByBaseController extends tsoa_1.Controller {
     findRecipesByBase(base) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -39,15 +38,14 @@ let SearchRecipesByBaseController = class SearchRecipesByBaseController extends 
                 };
             }
             const recipes = yield new SearchRecipesByBaseService_1.SearchRecipesByBaseService().findRecipesByBase(base);
-            if (recipes === null) {
-                this.setStatus(StatusCode_1.default.BAD_REQUEST);
-                const notFoundRecipes = {
-                    status: StatusCode_1.default.BAD_REQUEST,
-                    messsage: errorMessage_1.errorMessage.BAD_REQUEST
-                };
-                return notFoundRecipes;
-            }
-            this.setStatus(StatusCode_1.default.OK);
+            // if (recipes === null) {
+            //   this.setStatus(StatusCode.BAD_REQUEST);
+            //   const notFoundRecipes = {
+            //     status: StatusCode.BAD_REQUEST,
+            //     messsage : errorMessage.BAD_REQUEST
+            //   };
+            //   return notFoundRecipes;
+            // }
             return recipes;
         });
     }
