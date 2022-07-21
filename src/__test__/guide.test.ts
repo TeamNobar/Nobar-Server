@@ -3,7 +3,8 @@
 // import mongoose from "mongoose";
 import supertest from "supertest";
 import GuideDAO from "../model/guide/GuideDAO";
-import { app } from "../index";
+import { app } from "../index"; 
+import { NobarErrorCode } from "../error/NobarErrorCode"
 
 // app 수정해라
 // const app = express();
@@ -18,7 +19,7 @@ describe("guide", () => {
       const guideId = "62cd8b819f626834bbe7d6a9"; // 62cd8b819f626834bbe7d6a9
       const { statusCode } = await supertest(app)
         .get(`/guide/${guideId}`);
-      expect(statusCode).toBe(400);
+      expect(statusCode).toBe(NobarErrorCode.BAD_REQUEST);
     })
   });
 
@@ -38,9 +39,6 @@ describe("guide", () => {
 
       await newGuide.save();
       const newGuideId = newGuide._id as unknown as string; 
-
-      console.log("newGuideUrl ", `/guide/${newGuideId}`);
-      console.log("newguideId ", newGuideId);
 
       const { statusCode } = await supertest(app)
         .get(`/guide/${newGuideId}`);

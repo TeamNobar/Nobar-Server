@@ -12,6 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.app = void 0;
 const express_1 = __importDefault(require("express"));
 require("reflect-metadata");
 const config_1 = __importDefault(require("./config"));
@@ -22,11 +23,11 @@ const SERVER_START_MESSAGE = `
      🛡️ Server listening on port ${config_1.default.port} 🛡️
     ################################################
  `;
+exports.app = (0, express_1.default)();
 function startServer() {
     return __awaiter(this, void 0, void 0, function* () {
-        const app = (0, express_1.default)();
-        yield loaders_1.default.initalize(app);
-        app.listen(config_1.default.port, () => {
+        yield loaders_1.default.initalize(exports.app);
+        exports.app.listen(config_1.default.port, () => {
             Logger_1.default.info(SERVER_START_MESSAGE);
         }).on("error", (err) => {
             Logger_1.default.error(err);
