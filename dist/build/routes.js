@@ -1,4 +1,13 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RegisterRoutes = void 0;
 /* tslint:disable */
@@ -12,6 +21,8 @@ const GuideController_1 = require("./../src/controller/GuideController");
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 const MockController_1 = require("./../src/controller/MockController");
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+const MyPageController_1 = require("./../src/controller/MyPageController");
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 const RecipeDetailController_1 = require("./../src/controller/RecipeDetailController");
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 const SearchKeywordController_1 = require("./../src/controller/SearchKeywordController");
@@ -21,6 +32,9 @@ const SearchRecipesByBaseController_1 = require("./../src/controller/SearchRecip
 const SearchRecipesByKeywordController_1 = require("./../src/controller/SearchRecipesByKeywordController");
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 const SearchTagsController_1 = require("./../src/controller/SearchTagsController");
+const expressAuthentication_1 = require("./../src/auth/expressAuthentication");
+// @ts-ignore - no great way to install types from subpackage
+const promiseAny = require('promise.any');
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 const models = {
     "CreateUserParam": {
@@ -186,6 +200,23 @@ function RegisterRoutes(app) {
         }
     });
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    app.get('/mypage', authenticateMiddleware([{ "jwt": ["admin"] }]), ...((0, runtime_1.fetchMiddlewares)(MyPageController_1.MyPageController)), ...((0, runtime_1.fetchMiddlewares)(MyPageController_1.MyPageController.prototype.getMypage)), function MyPageController_getMypage(request, response, next) {
+        const args = {
+            request: { "in": "request", "name": "request", "required": true, "dataType": "object" },
+        };
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        let validatedArgs = [];
+        try {
+            validatedArgs = getValidatedArgs(args, request, response);
+            const controller = new MyPageController_1.MyPageController();
+            const promise = controller.getMypage.apply(controller, validatedArgs);
+            promiseHandler(controller, promise, response, undefined, next);
+        }
+        catch (err) {
+            return next(err);
+        }
+    });
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     app.get('/recipe/:recipeId', ...((0, runtime_1.fetchMiddlewares)(RecipeDetailController_1.RecipeDetailController)), ...((0, runtime_1.fetchMiddlewares)(RecipeDetailController_1.RecipeDetailController.prototype.getRecipeDetail)), function RecipeDetailController_getRecipeDetail(request, response, next) {
         const args = {
             recipeId: { "in": "path", "name": "recipeId", "required": true, "dataType": "string" },
@@ -268,6 +299,53 @@ function RegisterRoutes(app) {
     });
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    function authenticateMiddleware(security = []) {
+        return function runAuthenticationMiddleware(request, _response, next) {
+            return __awaiter(this, void 0, void 0, function* () {
+                // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+                // keep track of failed auth attempts so we can hand back the most
+                // recent one.  This behavior was previously existing so preserving it
+                // here
+                const failedAttempts = [];
+                const pushAndRethrow = (error) => {
+                    failedAttempts.push(error);
+                    throw error;
+                };
+                const secMethodOrPromises = [];
+                for (const secMethod of security) {
+                    if (Object.keys(secMethod).length > 1) {
+                        const secMethodAndPromises = [];
+                        for (const name in secMethod) {
+                            secMethodAndPromises.push((0, expressAuthentication_1.expressAuthentication)(request, name, secMethod[name])
+                                .catch(pushAndRethrow));
+                        }
+                        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+                        secMethodOrPromises.push(Promise.all(secMethodAndPromises)
+                            .then(users => { return users[0]; }));
+                    }
+                    else {
+                        for (const name in secMethod) {
+                            secMethodOrPromises.push((0, expressAuthentication_1.expressAuthentication)(request, name, secMethod[name])
+                                .catch(pushAndRethrow));
+                        }
+                    }
+                }
+                // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+                try {
+                    request['user'] = yield promiseAny(secMethodOrPromises);
+                    next();
+                }
+                catch (err) {
+                    // Show most recent error as response
+                    const error = failedAttempts.pop();
+                    error.status = error.status || 401;
+                    next(error);
+                }
+                // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+            });
+        };
+    }
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     function isController(object) {
         return 'getHeaders' in object && 'getStatus' in object && 'setStatus' in object;
