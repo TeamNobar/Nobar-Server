@@ -12,9 +12,9 @@ export class GuideController extends Controller {
  @Get("{guideId}")
  public async findGuide( @Path() guideId: string ) {
 
-  const data = await new GuideService().findGuide(guideId);
+    const data = await new GuideService().findGuide(guideId);
 
-  return data;
+    return data;
 
   } 
 }
