@@ -18,7 +18,9 @@ export function expressAuthentication(
       throw new NobarError(NobarErrorCode.NOT_FOUND_TOKEN, NobarErrorMessage.NOT_FOUND_TOKEN);
     }
     try {
-      return jwt.verify(token, config.jwtSecret);
+      const decode = jwt.verify(token, config.jwtSecret);
+      request.body.user = (decode as any).user;
+      return;
     } catch (error) {
       logger.error(error);
       throw error;
