@@ -7,7 +7,6 @@ export interface RecipeDTO {
   id: string,
   name: string,
   enName: string,
-  version: string[],
   base: BaseDTO,
   proof: number,
   proofIcon: string,  
