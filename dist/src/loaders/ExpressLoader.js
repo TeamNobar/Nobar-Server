@@ -6,6 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const dotenv_1 = require("dotenv");
 const express_1 = __importDefault(require("express"));
 const morgan_1 = __importDefault(require("morgan"));
+const returnToSlackMessage_1 = require("../utils/returnToSlackMessage");
+const SlackAPI_1 = require("../utils/SlackAPI");
 const tsoa_1 = require("tsoa");
 const routes_1 = require("../../build/routes");
 const NobarError_1 = __importDefault(require("../error/NobarError"));
@@ -18,21 +20,27 @@ const Logger_2 = __importDefault(require("./Logger"));
 class ExpressLoader {
     constructor(app) {
         this.app = app;
-        this.notFoundHandler = (_req, _res, next) => {
+        this.notFoundHandler = (err, req, _res, next) => {
+            var _a;
             const notFoundError = {
                 status: StatusCode_1.default.NOT_FOUND,
                 message: errorMessage_1.errorMessage.NOT_FOUND,
             };
+            const errorMessageForSlack = (0, returnToSlackMessage_1.slackMessage)(req.method.toUpperCase(), req.originalUrl, err, (_a = req.body.user) === null || _a === void 0 ? void 0 : _a.id);
+            (0, SlackAPI_1.sendMessageToSlack)(errorMessageForSlack);
             next(notFoundError);
             return;
         };
         this.validateErrorHandler = (err, req, _res, next) => {
+            var _a, _b;
             if (err instanceof tsoa_1.ValidateError) {
                 Logger_2.default.warn(`Caught Validation Error for ${req.path}: \n ${err.fields}`);
                 const validateError = {
                     status: StatusCode_1.default.VALIDATION_FAILED,
                     message: err === null || err === void 0 ? void 0 : err.fields,
                 };
+                const errorMessageForSlack = (0, returnToSlackMessage_1.slackMessage)(req.method.toUpperCase(), req.originalUrl, err, (_a = req.body.user) === null || _a === void 0 ? void 0 : _a.id);
+                (0, SlackAPI_1.sendMessageToSlack)(errorMessageForSlack);
                 next(validateError);
                 return;
             }
@@ -41,15 +49,20 @@ class ExpressLoader {
                 _res.status(Math.floor(err.status / 10))
                     .json(err);
             }
+            const errorMessageForSlack = (0, returnToSlackMessage_1.slackMessage)(req.method.toUpperCase(), req.originalUrl, err, (_b = req.body.user) === null || _b === void 0 ? void 0 : _b.id);
+            (0, SlackAPI_1.sendMessageToSlack)(errorMessageForSlack);
             next(err);
             return;
         };
         this.catchAllErrorHandler = (err, req, res, next) => {
+            var _a;
             res.locals.message = err.message;
             res.locals.error = req.app.get("env") === Environment_1.default.PRODUCTION ? err : {};
             const responseData = ResponseWrapper_1.default.failureOf(err.status || StatusCode_1.default.INTERNAL_SERVER_ERROR, err.message || errorMessage_1.errorMessage.INTERNAL_SERVER_ERROR);
             res.status(err.status || StatusCode_1.default.INTERNAL_SERVER_ERROR)
                 .json(responseData);
+            const errorMessageForSlack = (0, returnToSlackMessage_1.slackMessage)(req.method.toUpperCase(), req.originalUrl, err, (_a = req.body.user) === null || _a === void 0 ? void 0 : _a.id);
+            (0, SlackAPI_1.sendMessageToSlack)(errorMessageForSlack);
             next(err);
         };
         (0, dotenv_1.config)();
