@@ -524,100 +524,65 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"anyOf": [
-										{
-											"properties": {
-												"messsage": {
-													"type": "string"
-												},
-												"status": {
-													"type": "number",
-													"format": "double"
-												}
-											},
-											"required": [
-												"messsage",
-												"status"
-											],
-											"type": "object"
-										},
-										{
-											"properties": {
-												"recipes": {
-													"items": {
+									"properties": {
+										"recipes": {
+											"items": {
+												"properties": {
+													"defaultRecipe": {
+														"type": "string"
+													},
+													"ingredients": {
+														"items": {
+															"$ref": "#/components/schemas/IngredientDetailDTO"
+														},
+														"type": "array"
+													},
+													"steps": {
+														"items": {
+															"type": "string"
+														},
+														"type": "array"
+													},
+													"glass": {
 														"properties": {
-															"defaultRecipe": {
+															"url": {
 																"type": "string"
 															},
-															"ingredients": {
-																"items": {
-																	"$ref": "#/components/schemas/IngredientDetailDTO"
-																},
-																"type": "array"
-															},
-															"steps": {
-																"items": {
-																	"type": "string"
-																},
-																"type": "array"
-															},
-															"glass": {
-																"properties": {
-																	"url": {
-																		"type": "string"
-																	},
-																	"name": {
-																		"type": "string"
-																	}
-																},
-																"required": [
-																	"url",
-																	"name"
-																],
-																"type": "object"
-															},
-															"skill": {
-																"properties": {
-																	"url": {
-																		"type": "string"
-																	},
-																	"name": {
-																		"type": "string"
-																	}
-																},
-																"required": [
-																	"url",
-																	"name"
-																],
-																"type": "object"
-															},
-															"proofIcon": {
+															"name": {
+																"type": "string"
+															}
+														},
+														"required": [
+															"url",
+															"name"
+														],
+														"type": "object"
+													},
+													"skill": {
+														"properties": {
+															"url": {
 																"type": "string"
 															},
-															"proof": {
-																"type": "number",
-																"format": "double"
-															},
-															"base": {
-																"properties": {
-																	"url": {
-																		"type": "string"
-																	},
-																	"name": {
-																		"type": "string"
-																	},
-																	"id": {
-																		"type": "string"
-																	}
-																},
-																"required": [
-																	"url",
-																	"name",
-																	"id"
-																],
-																"type": "object"
-															},
-															"enName": {
+															"name": {
+																"type": "string"
+															}
+														},
+														"required": [
+															"url",
+															"name"
+														],
+														"type": "object"
+													},
+													"proofIcon": {
+														"type": "string"
+													},
+													"proof": {
+														"type": "number",
+														"format": "double"
+													},
+													"base": {
+														"properties": {
+															"url": {
 																"type": "string"
 															},
 															"name": {
@@ -628,29 +593,44 @@
 															}
 														},
 														"required": [
-															"defaultRecipe",
-															"ingredients",
-															"steps",
-															"glass",
-															"skill",
-															"proofIcon",
-															"proof",
-															"base",
-															"enName",
+															"url",
 															"name",
 															"id"
 														],
 														"type": "object"
 													},
-													"type": "array"
-												}
+													"enName": {
+														"type": "string"
+													},
+													"name": {
+														"type": "string"
+													},
+													"id": {
+														"type": "string"
+													}
+												},
+												"required": [
+													"defaultRecipe",
+													"ingredients",
+													"steps",
+													"glass",
+													"skill",
+													"proofIcon",
+													"proof",
+													"base",
+													"enName",
+													"name",
+													"id"
+												],
+												"type": "object"
 											},
-											"required": [
-												"recipes"
-											],
-											"type": "object"
+											"type": "array"
 										}
-									]
+									},
+									"required": [
+										"recipes"
+									],
+									"type": "object"
 								}
 							}
 						}
