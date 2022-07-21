@@ -1,6 +1,7 @@
-import { Controller, Get, Path, Route, Security } from "tsoa";
-import ServiceInjector                            from "../service/ServiceInjector";
-import StatusCode                                 from "../utils/StatusCode";
+import { Controller, Get, Path, Post, Request, Route, Security } from "tsoa";
+import CreateTastingNoteParam                                    from "../dto/tastingnote/CreateTastingNoteParam";
+import ServiceInjector                                  from "../service/ServiceInjector";
+import StatusCode                                       from "../utils/StatusCode";
 
 @Route("note")
 export class TastingNoteController extends Controller {
@@ -19,5 +20,15 @@ export class TastingNoteController extends Controller {
   ) {
     this.setStatus(StatusCode.OK);
     return this.tastingNoteService.getTastingNote(tastingNoteId);
+  }
+
+  @Post("")
+  @Security("jwt", ["admin"])
+  public async postTastingNote(
+    @Request() request: any
+  ) {
+    const tastingNoteParam: CreateTastingNoteParam = request.body;
+    this.setStatus(StatusCode.CREATED);
+    return this.tastingNoteService.postTastingNote(tastingNoteParam);
   }
 }

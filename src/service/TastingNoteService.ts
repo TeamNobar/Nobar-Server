@@ -1,16 +1,18 @@
-import { Document, Model }   from "mongoose";
-import { RecipeDTO }         from "../dto/recipe/RecipeDTO";
-import TastingNoteDTO        from "../dto/tastingnote/TastingNoteDTO";
-import NobarError            from "../error/NobarError";
-import { NobarErrorCode }    from "../error/NobarErrorCode";
-import NobarErrorMessage     from "../error/NobarErrorMessage";
-import { Base }              from "../model/base/Base";
-import BaseEntity            from "../model/base/entity/BaseEntity";
-import { Ingredient }        from "../model/ingredient/Ingredient";
-import IngredientEntity      from "../model/ingredient/IngredientEntity";
-import RecipeEntity          from "../model/recipe/entity/RecipeEntity";
-import RecipeIngredientEmbed from "../model/recipe/mapper/RecipeIngredientEmbed";
-import RecipeMapper          from "../model/recipe/mapper/RecipeMapper";
+import { Document, Model }    from "mongoose";
+import { RecipeDTO }          from "../dto/recipe/RecipeDTO";
+import CreateTastingNoteParam from "../dto/tastingnote/CreateTastingNoteParam";
+import TastingNoteDTO         from "../dto/tastingnote/TastingNoteDTO";
+import TastingNoteTagDTO      from "../dto/tastingnote/TastingNoteTagDTO";
+import NobarError             from "../error/NobarError";
+import { NobarErrorCode }     from "../error/NobarErrorCode";
+import NobarErrorMessage      from "../error/NobarErrorMessage";
+import { Base }               from "../model/base/Base";
+import BaseEntity             from "../model/base/entity/BaseEntity";
+import { Ingredient }         from "../model/ingredient/Ingredient";
+import IngredientEntity       from "../model/ingredient/IngredientEntity";
+import RecipeEntity           from "../model/recipe/entity/RecipeEntity";
+import RecipeIngredientEmbed  from "../model/recipe/mapper/RecipeIngredientEmbed";
+import RecipeMapper           from "../model/recipe/mapper/RecipeMapper";
 import { Recipe }            from "../model/recipe/Recipe";
 import RecipeIngredient      from "../model/recipe/RecipeIngredient";
 import TastingNoteEntity     from "../model/tastingNote/entity/TastingNoteEntity";
@@ -34,7 +36,7 @@ export default class TastingNoteService {
     );
   }
 
-  public async getTastingNote(tastingNoteId: string) {
+  public async getTastingNote(tastingNoteId: string):Promise<TastingNoteDTO> {
     const tastingNote: TastingNoteEntity = await this.findTastingNote(tastingNoteId);
     const recipe: RecipeEntity = await this.findRecipeById(tastingNote.recipe.valueOf().toString());
     const base: BaseEntity = await this.findBaseById(recipe.base.valueOf().toString());
@@ -42,6 +44,34 @@ export default class TastingNoteService {
     const recipeDTO: RecipeDTO = RecipeMapper.toRecipeDTO(recipe, base, embededIngredient);
     const tastingNoteDTO: TastingNoteDTO = TastingNoteMapper.toNoteDTO(tastingNote, recipeDTO)
     return tastingNoteDTO
+  }
+
+  public async postTastingNote(tastingNote: CreateTastingNoteParam): Promise<TastingNoteDTO> {
+    const note: TastingNoteEntity = await this.saveTastingNote(tastingNote);
+    return await this.getTastingNote(note._id.valueOf().toString());
+  }
+
+  private async saveTastingNote(noteParam: CreateTastingNoteParam) {
+    const recipe: RecipeEntity = await this.findRecipeById(noteParam.recipeId);
+    const note: TastingNote = {
+      rate: noteParam.rate,
+      recipe: recipe._id,
+      tastingTag: this.mappingTagForSave(noteParam.tagList),
+      tasteContent: noteParam.tasteContent,
+      experienceContent: noteParam.experienceContent,
+      createdAt: noteParam.createAt
+    }
+    return await this.tastingNoteDAO.create(note);
+  }
+
+  private mappingTagForSave(tagList: TastingNoteTagDTO[]): number[] {
+    const tastingTag: number[] = [];
+    tagList.forEach(value => {
+      if (value.isSelected) {
+        tastingTag.push(value.id);
+      }
+    })
+    return tastingTag;
   }
 
   private async findTastingNote(tastingNoteId: string):Promise<TastingNoteEntity> {
