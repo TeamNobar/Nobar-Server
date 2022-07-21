@@ -1,7 +1,7 @@
-import { Model }  from "mongoose";
-import UserEntity from "../model/user/entity/UserEntity";
-import User       from "../model/user/User";
-import userDAO    from "../model/user/UserDAO";
+import { Document, Model } from "mongoose";
+import CreateUserParam     from "../dto/user/CreateUserParam";
+import UserEntity          from "../model/user/entity/UserEntity";
+import User                from "../model/user/User";
 
 export default class AuthService {
   constructor(
@@ -9,10 +9,27 @@ export default class AuthService {
   ) {
   }
 
-  public async createUser(userNickName: string) {
-    const user: UserEntity | null = this.userDAO.findOne({nickname: userNickName});
+  public async authUser(userParam: CreateUserParam): Promise<UserEntity> {
+    const user: UserEntity | null = this.userDAO.findOne({nickname: userParam.nickname});
     if (!user) {
-
+      return await this.addUser(userParam);
+    } else {
+      return user
     }
+  }
+
+  private async findOneUser(nickName: string) {
+    return this.userDAO.find
+  }
+
+  private async addUser(userParam: CreateUserParam): Promise<UserEntity & Document> {
+    const user: User = {
+      nickname: userParam.nickname,
+      tastingNotes: [],
+      laterRecipe: [],
+      snsAuthToken: "",
+      deviceToken: ""
+    }
+    return await this.userDAO.create(user);
   }
 };
