@@ -13,10 +13,11 @@ export class TastingNoteController extends Controller {
   }
 
   @Get("{tastingNoteId}")
-  @Security("jwt", ["admin"])
+  //@Security("jwt", ["admin"])
   public async getTastingNote(
     @Path() tastingNoteId: string,
   ) {
+    this.setStatus(StatusCode.OK);
     return this.tastingNoteService.getTastingNote(tastingNoteId);
   }
 }
