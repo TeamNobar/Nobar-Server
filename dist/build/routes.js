@@ -19,8 +19,6 @@ const SearchRecipesByBaseController_1 = require("./../src/controller/SearchRecip
 const SearchRecipesByKeywordController_1 = require("./../src/controller/SearchRecipesByKeywordController");
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 const SearchTagsController_1 = require("./../src/controller/SearchTagsController");
-// @ts-ignore - no great way to install types from subpackage
-const promiseAny = require('promise.any');
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 const models = {
     "GuideDTO": {
