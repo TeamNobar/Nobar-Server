@@ -6,18 +6,10 @@
     "outputDirectory": "build",
     "specVersion": 3,
     "securityDefinitions": {
-      "api_key": {
-        "type": "apiKey",
-        "name": "access_token",
-        "in": "query"
-      },
-      "tsoa_auth": {
-        "type": "oauth2",
-        "flow": "implicit",
-        "scopes": {
-          "write:pets": "modify things",
-          "read:pets": "read things"
-        }
+      "jwt": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
       }
     }
   },
