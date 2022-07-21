@@ -10,8 +10,9 @@ const SERVER_START_MESSAGE = `
     ################################################
  `;
 
+export const app = express();
+
 async function startServer() {
-  const app = express();
   await ProjectLoader.initalize(app);
   app.listen(config.port, () => {
     Logger.info(SERVER_START_MESSAGE);

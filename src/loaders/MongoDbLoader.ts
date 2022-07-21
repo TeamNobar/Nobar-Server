@@ -7,8 +7,7 @@ export default class {
     try {
       await mongoose.connect(config.mongoURI);
       mongoose.set("autoCreate", true);
-      Logger.info("Mongoose Connected")
-
+      Logger.info("Mongoose Connected");
     } catch (error) {
       Logger.error(error);
       process.exit(1);
