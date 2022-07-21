@@ -9,5 +9,5 @@ export default interface TastingNoteDTO {
   tag: TastingNoteTagDTO[],
   tasteContent: string,
   experienceContent: string,
-  createdAt: number;
+  createdAt: string;
 }

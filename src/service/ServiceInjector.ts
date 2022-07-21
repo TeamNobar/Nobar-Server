@@ -24,8 +24,7 @@ export default class ServiceInjector {
 
   public static get tastingNote() {
     return new TastingNoteService(
-      TastingNoteDAO,
-      UserDAO
+      TastingNoteDAO
     )
   }
 }

@@ -21,11 +21,10 @@ const tastingNoteSchema = new mongoose.Schema({
   experienceContent: {
     type: String,
     default: ""
-  }
-}, {
-  timestamps: {
-    createdAt: "CreatedAt",
-    currentTime: () => Math.floor(Date.now() / 1000)
+  },
+  createdAt: {
+    type: String,
+    require: true
   }
 });
 

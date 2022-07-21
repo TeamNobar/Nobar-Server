@@ -6,5 +6,5 @@ export default interface TastingNote {
   tastingTag: number[],
   tasteContent: string,
   experienceContent: string,
-  createAt: number
+  createdAt:string
 }

@@ -1,5 +1,6 @@
 import { GlassDTO }          from "../../../dto/recipe/GlassDTO";
 import { RecipeDetailDTO }   from "../../../dto/recipe/RecipeDetailDTO";
+import { RecipeDTO }         from "../../../dto/recipe/RecipeDTO";
 import RecipeIngredientDTO   from "../../../dto/recipe/RecipeIngredientDTO";
 import { SkillDTO }          from "../../../dto/recipe/SkillDTO";
 import BaseEntity            from "../../base/entity/BaseEntity";
@@ -12,6 +13,31 @@ import RecipeIngredientEmbed from "./RecipeIngredientEmbed";
 import SkillMapper           from "./SkillMapper";
 
 export default class RecipeMapper {
+  public static toRecipeDTO(
+    recipe: RecipeEntity,
+    base: BaseEntity,
+    embededIngredient: RecipeIngredientEmbed[]
+  ) {
+    const skillDTO: SkillDTO = SkillMapper.toSkillDTO(
+      Skill.findSkillById(recipe.skill)
+    );
+    const glassDTO: GlassDTO = GlassMapper.toGlassDTO(
+      Glass.findGlassById(recipe.glass)
+    );
+    return <RecipeDTO>{
+      id: recipe._id.valueOf().toString(),
+      name: recipe.name,
+      enName: recipe.enName,
+      base: BaseMapper.toBaseDTO(base),
+      proof: recipe.proof,
+      proofIcon: recipe.proofIcon,
+      skill: skillDTO,
+      glass: glassDTO,
+      ingredients: this.mapRecipeIngredientDTO(embededIngredient),
+      steps: recipe.steps,
+      defaultRecipe: recipe.defaultRecipe?.valueOf().toString()
+    }
+  }
   public static toRecipeDetailDTO(
     recipe: RecipeEntity,
     base: BaseEntity,
