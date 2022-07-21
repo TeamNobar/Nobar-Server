@@ -256,21 +256,10 @@
 			}
 		},
 		"securitySchemes": {
-			"api_key": {
-				"type": "apiKey",
-				"name": "access_token",
-				"in": "query"
-			},
-			"tsoa_auth": {
-				"type": "oauth2",
-				"flows": {
-					"implicit": {
-						"scopes": {
-							"write:pets": "modify things",
-							"read:pets": "read things"
-						}
-					}
-				}
+			"jwt": {
+				"type": "http",
+				"scheme": "bearer",
+				"bearerFormat": "JWT"
 			}
 		}
 	},
