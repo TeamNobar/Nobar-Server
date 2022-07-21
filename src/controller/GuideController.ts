@@ -5,8 +5,6 @@ import {
   Route,
 } from "tsoa";
 import { GuideService } from "../service/GuideService";
-import StatusCode from "../utils/StatusCode";
-import { errorMessage } from "../utils/errorMessage";
 
 @Route("guide")
 export class GuideController extends Controller {
@@ -14,22 +12,9 @@ export class GuideController extends Controller {
  @Get("{guideId}")
  public async findGuide( @Path() guideId: string ) {
 
-  const data = await new GuideService().findGuide(guideId);
-  
-  if (data === null) {
-    
-    this.setStatus(StatusCode.BAD_REQUEST);
-    
-    const notFoundGuide =  {
-      status: StatusCode.BAD_REQUEST,
-      message: errorMessage.BAD_REQUEST
-    };
+    const data = await new GuideService().findGuide(guideId);
 
-    return notFoundGuide;
-  }
-
-  this.setStatus(StatusCode.OK);
-  return data;
+    return data;
 
   } 
 }

@@ -15,12 +15,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.SearchTagsService = void 0;
 const BaseDAO_1 = __importDefault(require("../model/base/BaseDAO"));
 const BaseMapper_1 = require("../mapper/BaseMapper");
+const NobarError_1 = __importDefault(require("../error/NobarError"));
+const NobarErrorCode_1 = require("../error/NobarErrorCode");
+const NobarErrorMessage_1 = __importDefault(require("../error/NobarErrorMessage"));
 class SearchTagsService {
     getSearchTags() {
         return __awaiter(this, void 0, void 0, function* () {
             const foundTags = yield BaseDAO_1.default.find({});
-            if (foundTags === null) {
-                return null;
+            if (!foundTags) {
+                throw new NobarError_1.default(NobarErrorCode_1.NobarErrorCode.BAD_REQUEST, NobarErrorMessage_1.default.NOT_FOUND_SEARCH_TAGS);
             }
             const base = BaseMapper_1.BaseMapper.toBaseDTO(foundTags);
             return {

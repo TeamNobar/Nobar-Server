@@ -20,28 +20,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GuideController = void 0;
 const tsoa_1 = require("tsoa");
 const GuideService_1 = require("../service/GuideService");
-const StatusCode_1 = __importDefault(require("../utils/StatusCode"));
-const errorMessage_1 = require("../utils/errorMessage");
 let GuideController = class GuideController extends tsoa_1.Controller {
     findGuide(guideId) {
         return __awaiter(this, void 0, void 0, function* () {
             const data = yield new GuideService_1.GuideService().findGuide(guideId);
-            if (data === null) {
-                this.setStatus(StatusCode_1.default.BAD_REQUEST);
-                const notFoundGuide = {
-                    status: StatusCode_1.default.BAD_REQUEST,
-                    message: errorMessage_1.errorMessage.BAD_REQUEST
-                };
-                return notFoundGuide;
-            }
-            this.setStatus(StatusCode_1.default.OK);
             return data;
         });
     }

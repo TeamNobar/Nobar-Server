@@ -293,27 +293,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"anyOf": [
-										{
-											"properties": {
-												"message": {
-													"type": "string"
-												},
-												"status": {
-													"type": "number",
-													"format": "double"
-												}
-											},
-											"required": [
-												"message",
-												"status"
-											],
-											"type": "object"
-										},
-										{
-											"$ref": "#/components/schemas/GuideDTO"
-										}
-									]
+									"$ref": "#/components/schemas/GuideDTO"
 								}
 							}
 						}
@@ -843,38 +823,18 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"anyOf": [
-										{
-											"properties": {
-												"messsage": {
-													"type": "string"
-												},
-												"status": {
-													"type": "number",
-													"format": "double"
-												}
+									"properties": {
+										"base": {
+											"items": {
+												"$ref": "#/components/schemas/BaseDTO"
 											},
-											"required": [
-												"messsage",
-												"status"
-											],
-											"type": "object"
-										},
-										{
-											"properties": {
-												"base": {
-													"items": {
-														"$ref": "#/components/schemas/BaseDTO"
-													},
-													"type": "array"
-												}
-											},
-											"required": [
-												"base"
-											],
-											"type": "object"
+											"type": "array"
 										}
-									]
+									},
+									"required": [
+										"base"
+									],
+									"type": "object"
 								}
 							}
 						}
