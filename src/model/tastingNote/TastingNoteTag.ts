@@ -2,9 +2,9 @@ import { Enum, EnumType } from "ts-jenum";
 
 @Enum("id")
 export class TastingNoteTag extends EnumType<TastingNoteTag>() {
-  static readonly Tag1 = new TastingNoteTag(0,"식도가활활");
-  static readonly Tag2 = new TastingNoteTag(1,"술맛이응애");
-  static readonly Tag3= new TastingNoteTag(2, "향기가향긋");
+  static readonly Tag1 = new TastingNoteTag(0, "식도가활활");
+  static readonly Tag2 = new TastingNoteTag(1, "술맛이응애");
+  static readonly Tag3 = new TastingNoteTag(2, "향기가향긋");
   static readonly Tag4 = new TastingNoteTag(3, "과일의상큼");
   static readonly Tag5 = new TastingNoteTag(4, "혀끝이달달");
   static readonly Tag6 = new TastingNoteTag(5, "탄산이톡톡");
@@ -17,5 +17,9 @@ export class TastingNoteTag extends EnumType<TastingNoteTag>() {
     readonly content: string
   ) {
     super();
+  }
+
+  public static getAllTags() {
+    return this.values()
   }
 }
