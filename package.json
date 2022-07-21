@@ -4,7 +4,7 @@
   "main": "build/src/index.js",
   "scripts": {
     "build": "tsoa spec-and-routes && tsc",
-    "start": "node build/src/index.js",
+    "start": "node dist/src/index.js",
     "dev": "concurrently \"nodemon\" \"nodemon -x tsoa spec-and-routes\"",
     "build1": "tsc && node dist"
   },
