@@ -28,7 +28,6 @@ let GuideController = class GuideController extends tsoa_1.Controller {
     findGuide(guideId) {
         return __awaiter(this, void 0, void 0, function* () {
             const data = yield new GuideService_1.GuideService().findGuide(guideId);
-            // this.setStatus(StatusCode.OK);
             return data;
         });
     }
