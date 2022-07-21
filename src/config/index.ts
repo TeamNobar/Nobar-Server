@@ -31,4 +31,6 @@ export default {
    * webhook URI
    */
   webhookURL: process.env.SLACK_WEBHOOK as string,
+  jwtSecret: process.env.JWT_SECRET as string,
+  jwtAlgo: process.env.JWT_ALGO as string
 };
