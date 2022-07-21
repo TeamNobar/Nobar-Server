@@ -6,7 +6,6 @@ import {
 } from "tsoa";
 import { SearchRecipesByBaseService } from "../service/SearchRecipesByBaseService";
 import StatusCode from "../utils/StatusCode";
-import { errorMessage } from "../utils/errorMessage";
 
 @Route("search")
 export class SearchRecipesByBaseController extends Controller {
