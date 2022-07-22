@@ -45,8 +45,8 @@ let HomeController = class HomeController extends tsoa_1.Controller {
             const guides = yield this.guideService.findAllGuide();
             this.setStatus(StatusCode_1.default.OK);
             return {
-                laterRecipeList: laterRecipes,
-                guideList: guides,
+                laterRecipeList: laterRecipes.slice(0, laterRecipes.length < 4 ? laterRecipes.length - 1 : 4),
+                guideList: guides.slice(0, guides.length > 5 ? 5 : guides.length - 1),
                 nickname: user.nickname
             };
         });
