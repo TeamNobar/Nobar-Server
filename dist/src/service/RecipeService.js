@@ -28,6 +28,13 @@ class RecipeService {
             return Promise.all(recipeIds.map((value) => __awaiter(this, void 0, void 0, function* () { return yield this.getOneRecipe(value); })));
         });
     }
+    getAllRecipes() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const recipes = yield this.findAllRecipe();
+            const recipeIds = recipes.map(value => value._id.valueOf().toString());
+            return yield this.getRecipes(recipeIds);
+        });
+    }
     getOneRecipe(recipeId) {
         return __awaiter(this, void 0, void 0, function* () {
             const recipe = yield this.findRecipeById(recipeId);
@@ -54,6 +61,15 @@ class RecipeService {
                 Logger_1.default.error(error);
                 throw error;
             }
+        });
+    }
+    findAllRecipe() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const recipes = yield this.recipeDAO.find({ defaultRecipe: null });
+            if (!recipes) {
+                return [];
+            }
+            return recipes;
         });
     }
     findRecipeById(recipeId) {

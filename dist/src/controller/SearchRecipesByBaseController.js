@@ -52,6 +52,7 @@ let SearchRecipesByBaseController = class SearchRecipesByBaseController extends 
 };
 __decorate([
     (0, tsoa_1.Get)("base"),
+    (0, tsoa_1.Security)("jwt", ["admin"]),
     __param(0, (0, tsoa_1.Query)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),

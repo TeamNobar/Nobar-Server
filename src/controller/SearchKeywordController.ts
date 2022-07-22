@@ -2,6 +2,7 @@ import {
   Get, 
   Route,
   Controller,
+  Security
 } from "tsoa";
 import { SearchKeywordService } from "../service/SearchKeywordService";
 import StatusCode from "../utils/StatusCode";
@@ -11,6 +12,7 @@ import { errorMessage } from "../utils/errorMessage";
 export class SearchKeywordController extends Controller {
   
   @Get("")
+  @Security("jwt", ["admin"])
   public async getSearchKeywords() {
 
     const keywords = await new SearchKeywordService().getSearchKeywords();

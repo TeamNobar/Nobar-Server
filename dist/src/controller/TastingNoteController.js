@@ -34,10 +34,8 @@ let TastingNoteController = class TastingNoteController extends tsoa_1.Controlle
         this.tastingNoteService = ServiceInjector_1.default.tastingNote;
     }
     getAllTags() {
-        return __awaiter(this, void 0, void 0, function* () {
-            this.setStatus(StatusCode_1.default.OK);
-            return this.tastingNoteService.getAllTag();
-        });
+        this.setStatus(StatusCode_1.default.OK);
+        return this.tastingNoteService.getAllTag();
     }
     getTastingNote(tastingNoteId) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -59,7 +57,7 @@ __decorate([
     (0, tsoa_1.Get)("tag"),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Promise)
+    __metadata("design:returntype", Array)
 ], TastingNoteController.prototype, "getAllTags", null);
 __decorate([
     (0, tsoa_1.Get)("{tastingNoteId}"),

@@ -41,6 +41,15 @@ class AuthService {
             return UserMapper_1.default.toUserDTO(user);
         });
     }
+    findUser(userId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const user = yield this.userDAO.findById(userId);
+            if (!user) {
+                throw new NobarError_1.default(NobarErrorCode_1.NobarErrorCode.BAD_REQUEST, NobarErrorMessage_1.default.NOT_FOUND_USER);
+            }
+            return UserMapper_1.default.toUserDTO(user);
+        });
+    }
     findOneUser(nickname) {
         return __awaiter(this, void 0, void 0, function* () {
             return this.userDAO.findOne({ nickname: nickname });

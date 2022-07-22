@@ -227,6 +227,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/guide/:guideId',
+            authenticateMiddleware([{"jwt":["admin"]}]),
             ...(fetchMiddlewares<RequestHandler>(GuideController)),
             ...(fetchMiddlewares<RequestHandler>(GuideController.prototype.findGuide)),
 
@@ -353,6 +354,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/search',
+            authenticateMiddleware([{"jwt":["admin"]}]),
             ...(fetchMiddlewares<RequestHandler>(SearchKeywordController)),
             ...(fetchMiddlewares<RequestHandler>(SearchKeywordController.prototype.getSearchKeywords)),
 
@@ -377,6 +379,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/search/base',
+            authenticateMiddleware([{"jwt":["admin"]}]),
             ...(fetchMiddlewares<RequestHandler>(SearchRecipesByBaseController)),
             ...(fetchMiddlewares<RequestHandler>(SearchRecipesByBaseController.prototype.findRecipesByBase)),
 
@@ -402,6 +405,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/search/keyword',
+            authenticateMiddleware([{"jwt":["admin"]}]),
             ...(fetchMiddlewares<RequestHandler>(SearchRecipesByKeywordController)),
             ...(fetchMiddlewares<RequestHandler>(SearchRecipesByKeywordController.prototype.searchRecipesByKeyword)),
 
@@ -427,6 +431,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/search/tag',
+            authenticateMiddleware([{"jwt":["admin"]}]),
             ...(fetchMiddlewares<RequestHandler>(SearchTagsController)),
             ...(fetchMiddlewares<RequestHandler>(SearchTagsController.prototype.getSearchTags)),
 

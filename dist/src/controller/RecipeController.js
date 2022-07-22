@@ -26,25 +26,38 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RecipeController = void 0;
 const tsoa_1 = require("tsoa");
-const RecipeDAO_1 = __importDefault(require("../model/recipe/RecipeDAO"));
-const RecipeService_1 = __importDefault(require("../service/RecipeService"));
+const ServiceInjector_1 = __importDefault(require("../service/ServiceInjector"));
 let RecipeController = class RecipeController extends tsoa_1.Controller {
-    getRecipe(recipeId) {
+    constructor() {
+        super(...arguments);
+        this.recipeDetailService = ServiceInjector_1.default.recipe;
+    }
+    getRecipeDetail(recipeId) {
         return __awaiter(this, void 0, void 0, function* () {
-            const service = new RecipeService_1.default(RecipeDAO_1.default);
-            const recipe = yield service.findRecipeById(recipeId);
-            console.log(recipe);
-            return recipe;
+            return yield this.recipeDetailService.getRecipeDetail(recipeId);
+        });
+    }
+    getAllRecipe() {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this.recipeDetailService.getAllRecipes();
         });
     }
 };
 __decorate([
     (0, tsoa_1.Get)("{recipeId}"),
+    (0, tsoa_1.Security)("jwt", ["admin"]),
     __param(0, (0, tsoa_1.Path)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
-], RecipeController.prototype, "getRecipe", null);
+], RecipeController.prototype, "getRecipeDetail", null);
+__decorate([
+    (0, tsoa_1.Get)(""),
+    (0, tsoa_1.Security)("jwt", ["admin"]),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], RecipeController.prototype, "getAllRecipe", null);
 RecipeController = __decorate([
     (0, tsoa_1.Route)("recipe")
 ], RecipeController);

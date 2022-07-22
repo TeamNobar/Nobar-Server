@@ -2,7 +2,7 @@ import { config as dotenvConfig }                   from "dotenv";
 import express, { NextFunction, Request, Response } from "express";
 import morgan                                       from "morgan";
 import { slackMessage } from "../utils/returnToSlackMessage";
-import { sendMessageToSlack } from "../utils/SlackAPI";
+import { sendMessageToSlack } from "../utils/SlackAPI"; 
 import { ValidateError }                            from "tsoa";
 import { RegisterRoutes }                           from "../../build/routes";
 import NobarError                                   from "../error/NobarError";

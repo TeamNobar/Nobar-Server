@@ -48,6 +48,7 @@ class ExpressLoader {
                 Logger_1.default.warn(`Caught Error for ${req.path}: \n ${err.message}`);
                 _res.status(Math.floor(err.status / 10))
                     .json(err);
+                return;
             }
             const errorMessageForSlack = (0, returnToSlackMessage_1.slackMessage)(req.method.toUpperCase(), req.originalUrl, err, (_b = req.body.user) === null || _b === void 0 ? void 0 : _b.id);
             (0, SlackAPI_1.sendMessageToSlack)(errorMessageForSlack);

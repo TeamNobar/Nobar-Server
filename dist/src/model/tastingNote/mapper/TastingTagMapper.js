@@ -5,6 +5,7 @@ class TastingTagMapper {
         return {
             id: tag.id,
             content: tag.content,
+            icon: tag.icon,
             isSelected: isSelected
         };
     }
