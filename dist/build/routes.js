@@ -135,7 +135,8 @@ const models = {
         "properties": {
             "id": { "dataType": "double", "required": true },
             "content": { "dataType": "string", "required": true },
-            "icon": { "dataType": "string", "required": true },
+            "activeIcon": { "dataType": "string", "required": true },
+            "inActiveIcon": { "dataType": "string", "required": true },
             "isSelected": { "dataType": "boolean", "required": true },
         },
         "additionalProperties": false,

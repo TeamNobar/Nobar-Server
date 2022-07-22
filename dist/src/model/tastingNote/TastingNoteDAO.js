@@ -19,7 +19,7 @@ const tastingNoteSchema = new mongoose_1.default.Schema({
     },
     tasteContent: {
         type: String,
-        defualt: ""
+        default: ""
     },
     experienceContent: {
         type: String,

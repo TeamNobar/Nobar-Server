@@ -228,7 +228,10 @@
 					"content": {
 						"type": "string"
 					},
-					"icon": {
+					"activeIcon": {
+						"type": "string"
+					},
+					"inActiveIcon": {
 						"type": "string"
 					},
 					"isSelected": {
@@ -238,7 +241,8 @@
 				"required": [
 					"id",
 					"content",
-					"icon",
+					"activeIcon",
+					"inActiveIcon",
 					"isSelected"
 				],
 				"type": "object",
