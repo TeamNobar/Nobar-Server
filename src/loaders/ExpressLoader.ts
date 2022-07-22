@@ -1,6 +1,8 @@
 import { config as dotenvConfig }                   from "dotenv";
 import express, { NextFunction, Request, Response } from "express";
 import morgan                                       from "morgan";
+import { slackMessage } from "../utils/returnToSlackMessage";
+import { sendMessageToSlack } from "../utils/SlackAPI";
 import { ValidateError }                            from "tsoa";
 import { RegisterRoutes }                           from "../../build/routes";
 import NobarError                                   from "../error/NobarError";
@@ -16,7 +18,8 @@ export default class ExpressLoader {
   private readonly morganFormat: string;
 
   private notFoundHandler = (
-    _req: Request,
+    err: unknown,
+    req: Request,
     _res: Response,
     next: NextFunction
   ): void => {
@@ -24,6 +27,8 @@ export default class ExpressLoader {
       status: StatusCode.NOT_FOUND,
       message: errorMessage.NOT_FOUND,
     };
+    const errorMessageForSlack: string = slackMessage(req.method.toUpperCase(), req.originalUrl, err, req.body.user?.id);
+    sendMessageToSlack(errorMessageForSlack);
     next(notFoundError);
     return;
   };
@@ -32,7 +37,7 @@ export default class ExpressLoader {
     err: unknown,
     req: Request,
     _res: Response,
-    next: NextFunction
+    next: NextFunction                 
   ): Response | void => {
     if (err instanceof ValidateError) {
       Logger.warn(`Caught Validation Error for ${req.path}: \n ${err.fields}`);
@@ -40,6 +45,8 @@ export default class ExpressLoader {
         status: StatusCode.VALIDATION_FAILED,
         message: err?.fields,
       };
+      const errorMessageForSlack: string = slackMessage(req.method.toUpperCase(), req.originalUrl, err, req.body.user?.id);
+      sendMessageToSlack(errorMessageForSlack);
       next(validateError);
       return;
     }
@@ -48,6 +55,8 @@ export default class ExpressLoader {
       _res.status(Math.floor(err.status / 10))
         .json(err);
     }
+    const errorMessageForSlack: string = slackMessage(req.method.toUpperCase(), req.originalUrl, err, req.body.user?.id);
+    sendMessageToSlack(errorMessageForSlack);
     next(err);
     return;
   };
@@ -66,6 +75,8 @@ export default class ExpressLoader {
     );
     res.status(err.status || StatusCode.INTERNAL_SERVER_ERROR)
       .json(responseData);
+    const errorMessageForSlack: string = slackMessage(req.method.toUpperCase(), req.originalUrl, err, req.body.user?.id);
+    sendMessageToSlack(errorMessageForSlack);   
     next(err);
   };
 
