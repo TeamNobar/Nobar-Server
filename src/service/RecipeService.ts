@@ -62,7 +62,7 @@ export default class RecipeService {
   }
 
   private async findAllRecipe(): Promise<RecipeEntity[]> {
-    const recipes: RecipeEntity | null = await this.recipeDAO.find({defaultRecipe: null})
+    const recipes: RecipeEntity[] | null = await this.recipeDAO.find({defaultRecipe: null})
     if (!recipes) {
       return []
     }

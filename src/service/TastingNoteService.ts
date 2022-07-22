@@ -69,7 +69,7 @@ export default class TastingNoteService {
     const note: TastingNote = {
       rate: noteParam.rate,
       recipe: recipe._id,
-      tastingTag: this.mappingTagForSave(noteParam.tagList),
+      tastingTags: this.mappingTagForSave(noteParam.tagList),
       tasteContent: noteParam.tasteContent,
       experienceContent: noteParam.experienceContent,
       createdAt: noteParam.createdAt
