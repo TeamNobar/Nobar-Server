@@ -6,7 +6,8 @@ export default class TastingTagMapper {
     return <TastingNoteTagDTO> {
       id: tag.id,
       content: tag.content,
-      icon: tag.icon,
+      activeIcon: tag.activeIcon,
+      inActiveIcon: tag.inActiveIcon,
       isSelected: isSelected
     }
   }

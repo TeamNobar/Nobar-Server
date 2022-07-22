@@ -1,6 +1,7 @@
 export default interface TastingNoteTagDTO {
-   id: number,
+  id: number,
   content: string,
-  icon: string,
+  activeIcon: string,
+  inActiveIcon: string
   isSelected: boolean
 }
