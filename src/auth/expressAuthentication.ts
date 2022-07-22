@@ -5,7 +5,7 @@ import config  from "../config";
 export function expressAuthentication(
   request: express.Request,
   securityName: string,
-  _scopes?: string[]
+  scopes?: string[]
 ): Promise<any> {
   if (securityName === "api_key") {
     let token;
@@ -38,15 +38,6 @@ export function expressAuthentication(
           reject(err);
         } else {
           // Check if JWT contains all required scopes
-          /*if (!scopes) {
-            resolve(decoded);
-            return;
-          }
-          for (const scope of scopes) {
-            if (!decoded.scopes.includes(scope)) {
-              reject(new Error("JWT does not contain required scope."));
-            }
-          }*/
           resolve(decoded);
         }
       });
