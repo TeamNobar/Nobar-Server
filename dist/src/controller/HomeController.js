@@ -46,7 +46,7 @@ let HomeController = class HomeController extends tsoa_1.Controller {
             this.setStatus(StatusCode_1.default.OK);
             return {
                 laterRecipeList: laterRecipes.slice(0, laterRecipes.length < 4 ? laterRecipes.length - 1 : 4),
-                guideList: guides.slice(0, guides.length > 5 ? 5 : guides.length - 1),
+                guideList: guides.slice(0, guides.length < 5 ? guides.length - 1 : 5),
                 nickname: user.nickname
             };
         });

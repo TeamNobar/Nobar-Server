@@ -1,6 +1,7 @@
 import { config as dotenvConfig }                   from "dotenv";
 import express, { NextFunction, Request, Response } from "express";
 import morgan                                       from "morgan";
+import swaggerUi                                    from "swagger-ui-express";
 import { ValidateError }                            from "tsoa";
 import { RegisterRoutes }                           from "../../build/routes";
 import NobarError                                   from "../error/NobarError";
@@ -86,11 +87,20 @@ export default class ExpressLoader {
     this.setUpMarganLogger();
     RegisterRoutes(this.app);
     this.setUpErrorHandler();
+    this.setUpSwagger();
   }
 
   private setUpDefaultMiddleware(): void {
     this.app.use(express.urlencoded({extended: true}));
     this.app.use(express.json());
+  }
+
+  private setUpSwagger(): void {
+    this.app.use("/docs", swaggerUi.serve, async (_req: Request, res: Response) => {
+      return res.send(
+        swaggerUi.generateHTML(await import("../../build/swagger.json"))
+      );
+    })
   }
 
   private setUpMarganLogger(): void {
