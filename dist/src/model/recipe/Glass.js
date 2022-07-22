@@ -38,14 +38,14 @@ let Glass = Glass_1 = class Glass extends (0, ts_jenum_1.EnumType)() {
     }
 };
 Glass.NotFound = new Glass_1(0, "", "");
-Glass.Cocktail = new Glass_1(1, "칵테일", "");
-Glass.Highball = new Glass_1(2, "하이볼", "");
-Glass.OnTheRock = new Glass_1(3, "온더락", "");
-Glass.Champagne = new Glass_1(4, "샴페인", "");
-Glass.Liqueur = new Glass_1(5, "리큐어", "");
-Glass.Margarita = new Glass_1(6, "마가리따", "");
-Glass.Pilsner = new Glass_1(7, "필스너", "");
-Glass.SaucerChampagne = new Glass_1(8, "소서샴페인", "");
+Glass.Cocktail = new Glass_1(1, "칵테일", "https://nobar-bucket.s3.ap-northeast-2.amazonaws.com/_icn_glass_cocktail.png");
+Glass.Highball = new Glass_1(2, "하이볼", "https://nobar-bucket.s3.ap-northeast-2.amazonaws.com/_icn_glass_highball.png");
+Glass.OnTheRock = new Glass_1(3, "온더락", "https://nobar-bucket.s3.ap-northeast-2.amazonaws.com/_icn_glass_ontherock.png");
+Glass.Champagne = new Glass_1(4, "샴페인", "https://nobar-bucket.s3.ap-northeast-2.amazonaws.com/_icn_glass_champagne.png");
+Glass.Liqueur = new Glass_1(5, "리큐어", "https://nobar-bucket.s3.ap-northeast-2.amazonaws.com/icn_glass_liquor.png");
+Glass.Margarita = new Glass_1(6, "마가리따", "https://nobar-bucket.s3.ap-northeast-2.amazonaws.com/_icn_glass_margarita.png");
+Glass.Pilsner = new Glass_1(7, "필스너", "https://nobar-bucket.s3.ap-northeast-2.amazonaws.com/icn_glass_pilsner.png");
+Glass.SaucerChampagne = new Glass_1(8, "소서샴페인", "https://nobar-bucket.s3.ap-northeast-2.amazonaws.com/icn_glass_saucerchampagne.png");
 Glass = Glass_1 = __decorate([
     (0, ts_jenum_1.Enum)("id"),
     __metadata("design:paramtypes", [Number, String, String])

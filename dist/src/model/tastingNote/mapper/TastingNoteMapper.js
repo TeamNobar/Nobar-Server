@@ -3,7 +3,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const debugLogger_1 = require("../../../loaders/debugLogger");
 const TastingNoteTag_1 = require("../TastingNoteTag");
 const TastingTagMapper_1 = __importDefault(require("./TastingTagMapper"));
 class TastingNoteMapper {
@@ -15,7 +14,6 @@ class TastingNoteMapper {
         });
     }
     static toNoteDTO(note, recipeDTO) {
-        (0, debugLogger_1.debugLogger)(note);
         return {
             id: note._id.valueOf().toString(),
             rate: note.rate,
