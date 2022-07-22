@@ -1,6 +1,7 @@
-import winston      from "winston";
-import winstonDaily from "winston-daily-rotate-file";
-import Environment  from "../utils/Environment";
+import winston         from "winston";
+import winstonDaily    from "winston-daily-rotate-file";
+import Environment     from "../utils/Environment";
+import { debugLogger } from "./debugLogger";
 
 const logStoragePath = "logs";
 const productTransportConsole = new winston.transports.Console();
@@ -48,8 +49,8 @@ const Logger = winston.createLogger({
 });
 
 Logger.stream({
-  write: (message: string) => {
-    Logger.info(message)
+  write: (message: any) => {
+    debugLogger(message);
   }
 })
 
