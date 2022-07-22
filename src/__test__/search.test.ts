@@ -53,10 +53,10 @@ describe("search", () => {
   
   describe("given the guide does not exist", () => {
     it("should return a 400 status", async () => {
-      const guideId = "잘못된 ID"; 
+      const guideId = "62d90d75e23956541f903471"; // 잘못된 ID
       const { statusCode } = await supertest(app)
         .get(`/guide/${guideId}`);
-      expect(statusCode).toBe(400);
+      expect(statusCode).toBe(404);
     })
   });
 
