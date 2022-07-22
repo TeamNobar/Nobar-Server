@@ -11,9 +11,9 @@ export class AuthController extends Controller {
   public async createUser(
     @Body() requestBody: CreateUserParam
   ) {
-    const userId: string = await this.authService.authUser(requestBody);
+    const token: string = await this.authService.authUser(requestBody);
     return {
-      accesstoken: getToken(userId)
+      accesstoken: token
     }
   }
 }

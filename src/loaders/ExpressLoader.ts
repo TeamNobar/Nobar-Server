@@ -112,4 +112,3 @@ export default class ExpressLoader {
     this.app.use(this.catchAllErrorHandler);
   }
 }
-

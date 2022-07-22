@@ -9,11 +9,9 @@ import TastingTagMapper   from "./TastingTagMapper";
 export default class TastingNoteMapper {
 
   private static mappingTastingTags(tags: number[]): TastingNoteTagDTO[] {
-    debugLogger(tags);
     return TastingNoteTag.getAllTags()
       .map(
         (value: TastingNoteTag): TastingNoteTagDTO => {
-          debugLogger(value);
           const isSelected: boolean = tags.includes(value.id);
           return TastingTagMapper.toTagDTO(value, isSelected);
         }
@@ -21,8 +19,6 @@ export default class TastingNoteMapper {
   }
 
   static toNoteDTO(note: TastingNoteEntity, recipeDTO: RecipeDTO) {
-    debugLogger("노트 태그");
-    debugLogger(note.tastingTags);
     return <TastingNoteDTO>{
       id: note._id.valueOf().toString(),
       rate: note.rate,

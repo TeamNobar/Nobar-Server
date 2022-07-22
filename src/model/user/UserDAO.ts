@@ -21,6 +21,9 @@ const userSchema = new mongoose.Schema({
   },
   deviceToken: {
     type: String
+  },
+  token: {
+    type: String
   }
 })
 

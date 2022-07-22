@@ -5,5 +5,6 @@ export default interface User {
   tastingNotes: mongoose.Schema.Types.ObjectId[],
   laterRecipe: mongoose.Schema.Types.ObjectId[],
   snsAuthToken: string,
-  deviceToken: string
+  deviceToken: string,
+  token: string
 }

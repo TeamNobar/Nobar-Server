@@ -1,4 +1,5 @@
 import { Document, Model } from "mongoose";
+import getToken            from "../auth/jwtHandler";
 import CreateUserParam     from "../dto/user/CreateUserParam";
 import UserDTO             from "../dto/user/UserDTO";
 import NobarError          from "../error/NobarError";
@@ -18,9 +19,9 @@ export default class AuthService {
     const user: UserEntity | null = await this.findOneUser(userParam.nickname);
     if (!user) {
       const createdUser = await this.addUser(userParam);
-      return createdUser._id.valueOf().toString()
+      return createdUser.token
     } else {
-      return user._id.valueOf().toString()
+      return user.token
     }
   }
 
@@ -44,14 +45,21 @@ export default class AuthService {
     return this.userDAO.findOne({nickname: nickname});
   }
 
-  private async addUser(userParam: CreateUserParam): Promise<UserEntity & Document> {
+  private async addUser(userParam: CreateUserParam): Promise<UserEntity> {
     const user: User = {
       nickname: userParam.nickname,
       tastingNotes: [],
       laterRecipe: [],
       snsAuthToken: "",
-      deviceToken: ""
+      deviceToken: "",
+      token: ""
     }
-    return await this.userDAO.create(user);
+    const createdUser: UserEntity = await this.userDAO.create(user);
+    const token = getToken(createdUser._id.valueOf().toString());
+    const hasTokenUser: UserEntity | null = await this.userDAO.findByIdAndUpdate(createdUser._id, {token: token});
+    if (!hasTokenUser) {
+      throw Error("방금 만든 유저가 사라진 이슈;;");
+    }
+    return hasTokenUser
   }
 };
