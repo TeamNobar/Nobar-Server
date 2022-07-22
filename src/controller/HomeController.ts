@@ -25,9 +25,9 @@ export class HomeController extends Controller {
     const laterRecipes: RecipeDTO[] = await this.recipeService.getRecipes(user.laterRecipes);
     const guides: GuideDTO[] = await this.guideService.findAllGuide();
     this.setStatus(StatusCode.OK);
-    return <HomeDTO> {
-      laterRecipeList: laterRecipes,
-      guideList: guides,
+    return <HomeDTO>{
+      laterRecipeList: laterRecipes.slice(0, laterRecipes.length < 4 ? laterRecipes.length - 1 : 4),
+      guideList: guides.slice(0, guides.length > 5 ? 5 : guides.length - 1),
       nickname: user.nickname
     }
   }
