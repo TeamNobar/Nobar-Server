@@ -115,7 +115,6 @@ const models: TsoaRoute.Models = {
         "properties": {
             "id": {"dataType":"double","required":true},
             "content": {"dataType":"string","required":true},
-            "icon": {"dataType":"string","required":true},
             "isSelected": {"dataType":"boolean","required":true},
         },
         "additionalProperties": false,
@@ -302,7 +301,6 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/recipe/:recipeId',
-            authenticateMiddleware([{"jwt":["admin"]}]),
             ...(fetchMiddlewares<RequestHandler>(RecipeDetailController)),
             ...(fetchMiddlewares<RequestHandler>(RecipeDetailController.prototype.getRecipeDetail)),
 

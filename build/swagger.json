@@ -202,9 +202,6 @@
 					"content": {
 						"type": "string"
 					},
-					"icon": {
-						"type": "string"
-					},
 					"isSelected": {
 						"type": "boolean"
 					}
@@ -212,7 +209,6 @@
 				"required": [
 					"id",
 					"content",
-					"icon",
 					"isSelected"
 				],
 				"type": "object",
@@ -575,13 +571,7 @@
 						}
 					}
 				},
-				"security": [
-					{
-						"jwt": [
-							"admin"
-						]
-					}
-				],
+				"security": [],
 				"parameters": [
 					{
 						"in": "path",
@@ -1063,18 +1053,8 @@
 			"get": {
 				"operationId": "GetAllTags",
 				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/TastingNoteTagDTO"
-									},
-									"type": "array"
-								}
-							}
-						}
+					"204": {
+						"description": "No content"
 					}
 				},
 				"security": [],
