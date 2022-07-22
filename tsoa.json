@@ -22,6 +22,16 @@
       }
     }
   },
+  "swagger": {
+    "outputDirectory": "./dist",
+    "entryFile": "./src/controllers",
+    "name": "api 이름",
+    "description": "api 설명",
+    "version": "0.0.1",
+    "produces": [
+      "application/json"
+    ]
+  },
   "routes": {
     "routesDir": "build",
     "authenticationModule": "./src/auth/expressAuthentication.ts"

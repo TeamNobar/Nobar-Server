@@ -83,11 +83,11 @@ export default class ExpressLoader {
   }
 
   private initialize(): void {
+    this.setUpSwagger();
     this.setUpDefaultMiddleware();
     this.setUpMarganLogger();
     RegisterRoutes(this.app);
     this.setUpErrorHandler();
-    this.setUpSwagger();
   }
 
   private setUpDefaultMiddleware(): void {
