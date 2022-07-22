@@ -40,6 +40,7 @@ class ExpressLoader {
                 Logger_1.default.warn(`Caught Error for ${req.path}: \n ${err.message}`);
                 _res.status(Math.floor(err.status / 10))
                     .json(err);
+                return;
             }
             next(err);
             return;

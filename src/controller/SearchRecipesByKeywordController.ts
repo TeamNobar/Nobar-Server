@@ -3,6 +3,7 @@ import {
   Get,
   Route,
   Query,
+  Security
 } from "tsoa";
 import { SearchRecipesByKeywordService } from "../service/SearchRecipesByKeywordService";
 import StatusCode from "../utils/StatusCode";
@@ -11,6 +12,7 @@ import StatusCode from "../utils/StatusCode";
 export class SearchRecipesByKeywordController extends Controller {
 
   @Get("keyword")
+  @Security("jwt", ["admin"])
   public async searchRecipesByKeyword (
     @Query() keyword?: string
   ) {

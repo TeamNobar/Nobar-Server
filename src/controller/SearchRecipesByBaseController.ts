@@ -3,6 +3,7 @@ import {
   Query,
   Route,
   Get,
+  Security
 } from "tsoa";
 import { SearchRecipesByBaseService } from "../service/SearchRecipesByBaseService";
 import StatusCode from "../utils/StatusCode";
@@ -11,6 +12,7 @@ import StatusCode from "../utils/StatusCode";
 export class SearchRecipesByBaseController extends Controller {
 
   @Get("base")
+  @Security("jwt", ["admin"])
   public async findRecipesByBase(
     @Query() base?: string
   ) {

@@ -45,6 +45,7 @@ let SearchKeywordController = class SearchKeywordController extends tsoa_1.Contr
 };
 __decorate([
     (0, tsoa_1.Get)(""),
+    (0, tsoa_1.Security)("jwt", ["admin"]),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)

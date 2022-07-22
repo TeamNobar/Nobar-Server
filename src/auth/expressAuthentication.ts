@@ -5,7 +5,7 @@ import config  from "../config";
 export function expressAuthentication(
   request: express.Request,
   securityName: string,
-  scopes?: string[]
+  _scopes?: string[]
 ): Promise<any> {
   if (securityName === "api_key") {
     let token;

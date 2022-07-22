@@ -28,9 +28,7 @@ class TastingNoteService {
         this.ingredientDAO = ingredientDAO;
     }
     getAllTag() {
-        return __awaiter(this, void 0, void 0, function* () {
-            TastingNoteTag_1.TastingNoteTag.getAllTags().map((value) => TastingTagMapper_1.default.toTagDTO(value, false));
-        });
+        return TastingNoteTag_1.TastingNoteTag.getAllTags().map((value) => TastingTagMapper_1.default.toTagDTO(value, false));
     }
     getTastingNotes(tastingNoteIds) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -44,8 +42,7 @@ class TastingNoteService {
             const base = yield this.findBaseById(recipe.base.valueOf().toString());
             const embededIngredient = yield this.embedAllIngredient(recipe.ingredients);
             const recipeDTO = RecipeMapper_1.default.toRecipeDTO(recipe, base, embededIngredient);
-            const tastingNoteDTO = TastingNoteMapper_1.default.toNoteDTO(tastingNote, recipeDTO);
-            return tastingNoteDTO;
+            return TastingNoteMapper_1.default.toNoteDTO(tastingNote, recipeDTO);
         });
     }
     postTastingNote(userId, tastingNote) {
@@ -67,10 +64,10 @@ class TastingNoteService {
             const note = {
                 rate: noteParam.rate,
                 recipe: recipe._id,
-                tastingTag: this.mappingTagForSave(noteParam.tagList),
+                tastingTags: this.mappingTagForSave(noteParam.tagList),
                 tasteContent: noteParam.tasteContent,
                 experienceContent: noteParam.experienceContent,
-                createdAt: noteParam.createAt
+                createdAt: noteParam.createdAt
             };
             return yield this.tastingNoteDAO.create(note);
         });

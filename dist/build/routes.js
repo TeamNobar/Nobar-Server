@@ -23,7 +23,7 @@ const MockController_1 = require("./../src/controller/MockController");
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 const MyPageController_1 = require("./../src/controller/MyPageController");
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-const RecipeDetailController_1 = require("./../src/controller/RecipeDetailController");
+const RecipeController_1 = require("./../src/controller/RecipeController");
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 const SearchKeywordController_1 = require("./../src/controller/SearchKeywordController");
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -123,6 +123,7 @@ const models = {
         "properties": {
             "id": { "dataType": "double", "required": true },
             "content": { "dataType": "string", "required": true },
+            "icon": { "dataType": "string", "required": true },
             "isSelected": { "dataType": "boolean", "required": true },
         },
         "additionalProperties": false,
@@ -223,7 +224,7 @@ function RegisterRoutes(app) {
         }
     });
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    app.get('/guide/:guideId', ...((0, runtime_1.fetchMiddlewares)(GuideController_1.GuideController)), ...((0, runtime_1.fetchMiddlewares)(GuideController_1.GuideController.prototype.findGuide)), function GuideController_findGuide(request, response, next) {
+    app.get('/guide/:guideId', authenticateMiddleware([{ "jwt": ["admin"] }]), ...((0, runtime_1.fetchMiddlewares)(GuideController_1.GuideController)), ...((0, runtime_1.fetchMiddlewares)(GuideController_1.GuideController.prototype.findGuide)), function GuideController_findGuide(request, response, next) {
         const args = {
             guideId: { "in": "path", "name": "guideId", "required": true, "dataType": "string" },
         };
@@ -272,7 +273,7 @@ function RegisterRoutes(app) {
         }
     });
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    app.get('/recipe/:recipeId', ...((0, runtime_1.fetchMiddlewares)(RecipeDetailController_1.RecipeDetailController)), ...((0, runtime_1.fetchMiddlewares)(RecipeDetailController_1.RecipeDetailController.prototype.getRecipeDetail)), function RecipeDetailController_getRecipeDetail(request, response, next) {
+    app.get('/recipe/:recipeId', authenticateMiddleware([{ "jwt": ["admin"] }]), ...((0, runtime_1.fetchMiddlewares)(RecipeController_1.RecipeController)), ...((0, runtime_1.fetchMiddlewares)(RecipeController_1.RecipeController.prototype.getRecipeDetail)), function RecipeController_getRecipeDetail(request, response, next) {
         const args = {
             recipeId: { "in": "path", "name": "recipeId", "required": true, "dataType": "string" },
         };
@@ -280,7 +281,7 @@ function RegisterRoutes(app) {
         let validatedArgs = [];
         try {
             validatedArgs = getValidatedArgs(args, request, response);
-            const controller = new RecipeDetailController_1.RecipeDetailController();
+            const controller = new RecipeController_1.RecipeController();
             const promise = controller.getRecipeDetail.apply(controller, validatedArgs);
             promiseHandler(controller, promise, response, undefined, next);
         }
@@ -289,7 +290,22 @@ function RegisterRoutes(app) {
         }
     });
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    app.get('/search', ...((0, runtime_1.fetchMiddlewares)(SearchKeywordController_1.SearchKeywordController)), ...((0, runtime_1.fetchMiddlewares)(SearchKeywordController_1.SearchKeywordController.prototype.getSearchKeywords)), function SearchKeywordController_getSearchKeywords(request, response, next) {
+    app.get('/recipe', authenticateMiddleware([{ "jwt": ["admin"] }]), ...((0, runtime_1.fetchMiddlewares)(RecipeController_1.RecipeController)), ...((0, runtime_1.fetchMiddlewares)(RecipeController_1.RecipeController.prototype.getAllRecipe)), function RecipeController_getAllRecipe(request, response, next) {
+        const args = {};
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        let validatedArgs = [];
+        try {
+            validatedArgs = getValidatedArgs(args, request, response);
+            const controller = new RecipeController_1.RecipeController();
+            const promise = controller.getAllRecipe.apply(controller, validatedArgs);
+            promiseHandler(controller, promise, response, undefined, next);
+        }
+        catch (err) {
+            return next(err);
+        }
+    });
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    app.get('/search', authenticateMiddleware([{ "jwt": ["admin"] }]), ...((0, runtime_1.fetchMiddlewares)(SearchKeywordController_1.SearchKeywordController)), ...((0, runtime_1.fetchMiddlewares)(SearchKeywordController_1.SearchKeywordController.prototype.getSearchKeywords)), function SearchKeywordController_getSearchKeywords(request, response, next) {
         const args = {};
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         let validatedArgs = [];
@@ -304,7 +320,7 @@ function RegisterRoutes(app) {
         }
     });
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    app.get('/search/base', ...((0, runtime_1.fetchMiddlewares)(SearchRecipesByBaseController_1.SearchRecipesByBaseController)), ...((0, runtime_1.fetchMiddlewares)(SearchRecipesByBaseController_1.SearchRecipesByBaseController.prototype.findRecipesByBase)), function SearchRecipesByBaseController_findRecipesByBase(request, response, next) {
+    app.get('/search/base', authenticateMiddleware([{ "jwt": ["admin"] }]), ...((0, runtime_1.fetchMiddlewares)(SearchRecipesByBaseController_1.SearchRecipesByBaseController)), ...((0, runtime_1.fetchMiddlewares)(SearchRecipesByBaseController_1.SearchRecipesByBaseController.prototype.findRecipesByBase)), function SearchRecipesByBaseController_findRecipesByBase(request, response, next) {
         const args = {
             base: { "in": "query", "name": "base", "dataType": "string" },
         };
@@ -321,7 +337,7 @@ function RegisterRoutes(app) {
         }
     });
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    app.get('/search/keyword', ...((0, runtime_1.fetchMiddlewares)(SearchRecipesByKeywordController_1.SearchRecipesByKeywordController)), ...((0, runtime_1.fetchMiddlewares)(SearchRecipesByKeywordController_1.SearchRecipesByKeywordController.prototype.searchRecipesByKeyword)), function SearchRecipesByKeywordController_searchRecipesByKeyword(request, response, next) {
+    app.get('/search/keyword', authenticateMiddleware([{ "jwt": ["admin"] }]), ...((0, runtime_1.fetchMiddlewares)(SearchRecipesByKeywordController_1.SearchRecipesByKeywordController)), ...((0, runtime_1.fetchMiddlewares)(SearchRecipesByKeywordController_1.SearchRecipesByKeywordController.prototype.searchRecipesByKeyword)), function SearchRecipesByKeywordController_searchRecipesByKeyword(request, response, next) {
         const args = {
             keyword: { "in": "query", "name": "keyword", "dataType": "string" },
         };
@@ -338,7 +354,7 @@ function RegisterRoutes(app) {
         }
     });
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    app.get('/search/tag', ...((0, runtime_1.fetchMiddlewares)(SearchTagsController_1.SearchTagsController)), ...((0, runtime_1.fetchMiddlewares)(SearchTagsController_1.SearchTagsController.prototype.getSearchTags)), function SearchTagsController_getSearchTags(request, response, next) {
+    app.get('/search/tag', authenticateMiddleware([{ "jwt": ["admin"] }]), ...((0, runtime_1.fetchMiddlewares)(SearchTagsController_1.SearchTagsController)), ...((0, runtime_1.fetchMiddlewares)(SearchTagsController_1.SearchTagsController.prototype.getSearchTags)), function SearchTagsController_getSearchTags(request, response, next) {
         const args = {};
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         let validatedArgs = [];

@@ -3,6 +3,7 @@ import {
   Get,
   Path,
   Route,
+  Security,
 } from "tsoa";
 import { GuideService } from "../service/GuideService";
 
@@ -10,6 +11,7 @@ import { GuideService } from "../service/GuideService";
 export class GuideController extends Controller {
 
  @Get("{guideId}")
+ @Security("jwt", ["admin"])
  public async findGuide( @Path() guideId: string ) {
 
     const data = await new GuideService().findGuide(guideId);

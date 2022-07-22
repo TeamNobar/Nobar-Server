@@ -26,6 +26,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MyPageController = void 0;
 const tsoa_1 = require("tsoa");
+const debugLogger_1 = require("../loaders/debugLogger");
 const ServiceInjector_1 = __importDefault(require("../service/ServiceInjector"));
 const StatusCode_1 = __importDefault(require("../utils/StatusCode"));
 let MyPageController = class MyPageController extends tsoa_1.Controller {
@@ -39,7 +40,8 @@ let MyPageController = class MyPageController extends tsoa_1.Controller {
         return __awaiter(this, void 0, void 0, function* () {
             const token = yield Promise.resolve(request.user);
             const userId = token.user.id;
-            const user = yield this.authService.getUser(userId);
+            (0, debugLogger_1.debugLogger)(userId);
+            const user = yield this.authService.findUser(userId);
             const laterRecipes = yield this.recipeService.getRecipes(user.laterRecipes);
             const tastingNotes = yield this.tastingNoteService.getTastingNotes(user.tastingNotes);
             this.setStatus(StatusCode_1.default.OK);

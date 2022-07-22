@@ -34,6 +34,7 @@ let GuideController = class GuideController extends tsoa_1.Controller {
 };
 __decorate([
     (0, tsoa_1.Get)("{guideId}"),
+    (0, tsoa_1.Security)("jwt", ["admin"]),
     __param(0, (0, tsoa_1.Path)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
