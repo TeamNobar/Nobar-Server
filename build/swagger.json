@@ -202,6 +202,9 @@
 					"content": {
 						"type": "string"
 					},
+					"icon": {
+						"type": "string"
+					},
 					"isSelected": {
 						"type": "boolean"
 					}
@@ -209,6 +212,7 @@
 				"required": [
 					"id",
 					"content",
+					"icon",
 					"isSelected"
 				],
 				"type": "object",
@@ -571,7 +575,13 @@
 						}
 					}
 				},
-				"security": [],
+				"security": [
+					{
+						"jwt": [
+							"admin"
+						]
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
@@ -582,6 +592,34 @@
 						}
 					}
 				]
+			}
+		},
+		"/recipe": {
+			"get": {
+				"operationId": "GetAllRecipe",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/RecipeDTO"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"jwt": [
+							"admin"
+						]
+					}
+				],
+				"parameters": []
 			}
 		},
 		"/search": {
@@ -1053,8 +1091,18 @@
 			"get": {
 				"operationId": "GetAllTags",
 				"responses": {
-					"204": {
-						"description": "No content"
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/TastingNoteTagDTO"
+									},
+									"type": "array"
+								}
+							}
+						}
 					}
 				},
 				"security": [],

@@ -29,6 +29,12 @@ export default class RecipeService {
     );
   }
 
+  public async getAllRecipes(): Promise<RecipeDTO[]> {
+    const recipes: RecipeEntity[] = await this.findAllRecipe()
+    const recipeIds: string[] = recipes.map(value => value._id.valueOf().toString())
+    return await this.getRecipes(recipeIds);
+  }
+
   public async getOneRecipe(recipeId: string): Promise<RecipeDTO> {
     const recipe: RecipeEntity = await this.findRecipeById(recipeId);
     const base: BaseEntity = await this.findBaseById(recipe.base.valueOf().toString());
@@ -53,6 +59,14 @@ export default class RecipeService {
       logger.error(error);
       throw error
     }
+  }
+
+  private async findAllRecipe(): Promise<RecipeEntity[]> {
+    const recipes: RecipeEntity | null = await this.recipeDAO.find({defaultRecipe: null})
+    if (!recipes) {
+      return []
+    }
+    return recipes;
   }
 
   private async findRecipeById(recipeId: string): Promise<RecipeEntity> {

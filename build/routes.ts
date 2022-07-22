@@ -11,7 +11,7 @@ import { MockController } from './../src/controller/MockController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { MyPageController } from './../src/controller/MyPageController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-import { RecipeDetailController } from './../src/controller/RecipeDetailController';
+import { RecipeController } from './../src/controller/RecipeController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { SearchKeywordController } from './../src/controller/SearchKeywordController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -115,6 +115,7 @@ const models: TsoaRoute.Models = {
         "properties": {
             "id": {"dataType":"double","required":true},
             "content": {"dataType":"string","required":true},
+            "icon": {"dataType":"string","required":true},
             "isSelected": {"dataType":"boolean","required":true},
         },
         "additionalProperties": false,
@@ -301,10 +302,11 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/recipe/:recipeId',
-            ...(fetchMiddlewares<RequestHandler>(RecipeDetailController)),
-            ...(fetchMiddlewares<RequestHandler>(RecipeDetailController.prototype.getRecipeDetail)),
+            authenticateMiddleware([{"jwt":["admin"]}]),
+            ...(fetchMiddlewares<RequestHandler>(RecipeController)),
+            ...(fetchMiddlewares<RequestHandler>(RecipeController.prototype.getRecipeDetail)),
 
-            function RecipeDetailController_getRecipeDetail(request: any, response: any, next: any) {
+            function RecipeController_getRecipeDetail(request: any, response: any, next: any) {
             const args = {
                     recipeId: {"in":"path","name":"recipeId","required":true,"dataType":"string"},
             };
@@ -315,10 +317,35 @@ export function RegisterRoutes(app: express.Router) {
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
 
-                const controller = new RecipeDetailController();
+                const controller = new RecipeController();
 
 
               const promise = controller.getRecipeDetail.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/recipe',
+            authenticateMiddleware([{"jwt":["admin"]}]),
+            ...(fetchMiddlewares<RequestHandler>(RecipeController)),
+            ...(fetchMiddlewares<RequestHandler>(RecipeController.prototype.getAllRecipe)),
+
+            function RecipeController_getAllRecipe(request: any, response: any, next: any) {
+            const args = {
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new RecipeController();
+
+
+              const promise = controller.getAllRecipe.apply(controller, validatedArgs as any);
               promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);

@@ -4,6 +4,7 @@ import MyPageDTO                                     from "../dto/mypage/MyPageD
 import { RecipeDTO }                                 from "../dto/recipe/RecipeDTO";
 import TastingNoteDTO                                from "../dto/tastingnote/TastingNoteDTO";
 import UserDTO                                       from "../dto/user/UserDTO";
+import { debugLogger }                               from "../loaders/debugLogger";
 import ServiceInjector                               from "../service/ServiceInjector";
 import StatusCode                                    from "../utils/StatusCode";
 
@@ -20,7 +21,8 @@ export class MyPageController extends Controller {
   ) {
     const token: JwtPayloadDTO = await Promise.resolve(request.user);
     const userId: string = token.user.id
-    const user: UserDTO = await this.authService.getUser(userId);
+    debugLogger(userId);
+    const user: UserDTO = await this.authService.findUser(userId);
     const laterRecipes: RecipeDTO[] = await this.recipeService.getRecipes(user.laterRecipes);
     const tastingNotes: TastingNoteDTO[] = await this.tastingNoteService.getTastingNotes(user.tastingNotes);
     this.setStatus(StatusCode.OK);

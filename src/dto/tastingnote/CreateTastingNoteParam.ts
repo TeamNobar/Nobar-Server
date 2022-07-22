@@ -6,5 +6,5 @@ export default interface CreateTastingNoteParam{
   tagList: TastingNoteTagDTO[],
   tasteContent: string | null,
   experienceContent: string | null,
-  createAt: string
+  createdAt: string
 }
