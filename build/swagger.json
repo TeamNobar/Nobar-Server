@@ -193,6 +193,32 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"HomeDTO": {
+				"properties": {
+					"laterRecipeList": {
+						"items": {
+							"$ref": "#/components/schemas/RecipeDTO"
+						},
+						"type": "array"
+					},
+					"guideList": {
+						"items": {
+							"$ref": "#/components/schemas/GuideDTO"
+						},
+						"type": "array"
+					},
+					"nickname": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"laterRecipeList",
+					"guideList",
+					"nickname"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"TastingNoteTagDTO": {
 				"properties": {
 					"id": {
@@ -520,6 +546,31 @@
 						}
 					}
 				]
+			}
+		},
+		"/home": {
+			"get": {
+				"operationId": "GetHome",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/HomeDTO"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"jwt": [
+							"admin"
+						]
+					}
+				],
+				"parameters": []
 			}
 		},
 		"/mock": {

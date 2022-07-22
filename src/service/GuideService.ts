@@ -18,5 +18,13 @@ export class GuideService {
     
     return data;
   }
+
+  public async findAllGuide(): Promise<GuideDTO[]> {
+    const guideList = await GuideDAO.find({}).exec();
+    if (!guideList) {
+      return []
+    }
+    return guideList.map(value => GuideMapper.toGuideDTO(value));
+  }
 }
     

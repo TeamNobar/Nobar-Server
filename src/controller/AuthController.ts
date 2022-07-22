@@ -1,5 +1,4 @@
 import { Body, Controller, Post, Route } from "tsoa";
-import getToken                          from "../auth/jwtHandler";
 import CreateUserParam                   from "../dto/user/CreateUserParam";
 import ServiceInjector                   from "../service/ServiceInjector";
 

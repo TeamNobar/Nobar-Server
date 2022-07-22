@@ -7,6 +7,8 @@ import { AuthController } from './../src/controller/AuthController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { GuideController } from './../src/controller/GuideController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { HomeController } from './../src/controller/HomeController';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { MockController } from './../src/controller/MockController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { MyPageController } from './../src/controller/MyPageController';
@@ -106,6 +108,16 @@ const models: TsoaRoute.Models = {
             "ingredients": {"dataType":"array","array":{"dataType":"refObject","ref":"IngredientDTO"},"required":true},
             "steps": {"dataType":"array","array":{"dataType":"string"},"required":true},
             "defaultRecipe": {"dataType":"string","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "HomeDTO": {
+        "dataType": "refObject",
+        "properties": {
+            "laterRecipeList": {"dataType":"array","array":{"dataType":"refObject","ref":"RecipeDTO"},"required":true},
+            "guideList": {"dataType":"array","array":{"dataType":"refObject","ref":"GuideDTO"},"required":true},
+            "nickname": {"dataType":"string","required":true},
         },
         "additionalProperties": false,
     },
@@ -246,6 +258,32 @@ export function RegisterRoutes(app: express.Router) {
 
 
               const promise = controller.findGuide.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/home',
+            authenticateMiddleware([{"jwt":["admin"]}]),
+            ...(fetchMiddlewares<RequestHandler>(HomeController)),
+            ...(fetchMiddlewares<RequestHandler>(HomeController.prototype.getHome)),
+
+            function HomeController_getHome(request: any, response: any, next: any) {
+            const args = {
+                    request: {"in":"request","name":"request","required":true,"dataType":"object"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new HomeController();
+
+
+              const promise = controller.getHome.apply(controller, validatedArgs as any);
               promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
