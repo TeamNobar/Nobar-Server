@@ -26,13 +26,28 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MyPageController = void 0;
 const tsoa_1 = require("tsoa");
+const ServiceInjector_1 = __importDefault(require("../service/ServiceInjector"));
 const StatusCode_1 = __importDefault(require("../utils/StatusCode"));
 let MyPageController = class MyPageController extends tsoa_1.Controller {
+    constructor() {
+        super(...arguments);
+        this.authService = ServiceInjector_1.default.auth;
+        this.recipeService = ServiceInjector_1.default.recipe;
+        this.tastingNoteService = ServiceInjector_1.default.tastingNote;
+    }
     getMypage(request) {
         return __awaiter(this, void 0, void 0, function* () {
+            const token = yield Promise.resolve(request.user);
+            const userId = token.user.id;
+            const user = yield this.authService.getUser(userId);
+            const laterRecipes = yield this.recipeService.getRecipes(user.laterRecipes);
+            const tastingNotes = yield this.tastingNoteService.getTastingNotes(user.tastingNotes);
             this.setStatus(StatusCode_1.default.OK);
-            const user = Promise.resolve(request.user);
-            return user;
+            return {
+                nickname: user.nickname,
+                laterRecipes: laterRecipes,
+                tastingNotes: tastingNotes
+            };
         });
     }
 };

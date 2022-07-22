@@ -9,6 +9,24 @@ const Skill_1 = require("../Skill");
 const GlassMapper_1 = __importDefault(require("./GlassMapper"));
 const SkillMapper_1 = __importDefault(require("./SkillMapper"));
 class RecipeMapper {
+    static toRecipeDTO(recipe, base, embededIngredient) {
+        var _a;
+        const skillDTO = SkillMapper_1.default.toSkillDTO(Skill_1.Skill.findSkillById(recipe.skill));
+        const glassDTO = GlassMapper_1.default.toGlassDTO(Glass_1.Glass.findGlassById(recipe.glass));
+        return {
+            id: recipe._id.valueOf().toString(),
+            name: recipe.name,
+            enName: recipe.enName,
+            base: BaseMapper_1.default.toBaseDTO(base),
+            proof: recipe.proof,
+            proofIcon: recipe.proofIcon,
+            skill: skillDTO,
+            glass: glassDTO,
+            ingredients: this.mapRecipeIngredientDTO(embededIngredient),
+            steps: recipe.steps,
+            defaultRecipe: (_a = recipe.defaultRecipe) === null || _a === void 0 ? void 0 : _a.valueOf().toString()
+        };
+    }
     static toRecipeDetailDTO(recipe, base, recipeVersions, embededIngredient) {
         const skillDTO = SkillMapper_1.default.toSkillDTO(Skill_1.Skill.findSkillById(recipe.skill));
         const glassDTO = GlassMapper_1.default.toGlassDTO(Glass_1.Glass.findGlassById(recipe.glass));

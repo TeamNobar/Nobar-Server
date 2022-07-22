@@ -24,11 +24,10 @@ const tastingNoteSchema = new mongoose_1.default.Schema({
     experienceContent: {
         type: String,
         default: ""
-    }
-}, {
-    timestamps: {
-        createdAt: "CreatedAt",
-        currentTime: () => Math.floor(Date.now() / 1000)
+    },
+    createdAt: {
+        type: String,
+        require: true
     }
 });
 exports.default = mongoose_1.default.model("TastingNote", tastingNoteSchema);

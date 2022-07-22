@@ -24,29 +24,60 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RecipeDetailController = void 0;
+exports.TastingNoteController = void 0;
 const tsoa_1 = require("tsoa");
 const ServiceInjector_1 = __importDefault(require("../service/ServiceInjector"));
-let RecipeDetailController = class RecipeDetailController extends tsoa_1.Controller {
+const StatusCode_1 = __importDefault(require("../utils/StatusCode"));
+let TastingNoteController = class TastingNoteController extends tsoa_1.Controller {
     constructor() {
         super(...arguments);
-        this.recipeDetailService = ServiceInjector_1.default.recipe;
+        this.tastingNoteService = ServiceInjector_1.default.tastingNote;
     }
-    getRecipeDetail(recipeId) {
+    getAllTags() {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.recipeDetailService.getRecipeDetail(recipeId);
+            this.setStatus(StatusCode_1.default.OK);
+            return this.tastingNoteService.getAllTag();
+        });
+    }
+    getTastingNote(tastingNoteId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            this.setStatus(StatusCode_1.default.OK);
+            return this.tastingNoteService.getTastingNote(tastingNoteId);
+        });
+    }
+    postTastingNote(request) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const token = yield Promise.resolve(request.user);
+            const userId = token.user.id;
+            const tastingNoteParam = request.body;
+            this.setStatus(StatusCode_1.default.CREATED);
+            return this.tastingNoteService.postTastingNote(userId, tastingNoteParam);
         });
     }
 };
 __decorate([
-    (0, tsoa_1.Get)("{recipeId}"),
+    (0, tsoa_1.Get)("tag"),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], TastingNoteController.prototype, "getAllTags", null);
+__decorate([
+    (0, tsoa_1.Get)("{tastingNoteId}"),
     __param(0, (0, tsoa_1.Path)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
-], RecipeDetailController.prototype, "getRecipeDetail", null);
-RecipeDetailController = __decorate([
-    (0, tsoa_1.Route)("recipe")
-], RecipeDetailController);
-exports.RecipeDetailController = RecipeDetailController;
-//# sourceMappingURL=RecipeDetailController.js.map
+], TastingNoteController.prototype, "getTastingNote", null);
+__decorate([
+    (0, tsoa_1.Post)(""),
+    (0, tsoa_1.Security)("jwt", ["admin"]),
+    __param(0, (0, tsoa_1.Request)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], TastingNoteController.prototype, "postTastingNote", null);
+TastingNoteController = __decorate([
+    (0, tsoa_1.Route)("note")
+], TastingNoteController);
+exports.TastingNoteController = TastingNoteController;
+//# sourceMappingURL=TastingNoteController.js.map

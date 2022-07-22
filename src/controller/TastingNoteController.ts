@@ -1,6 +1,7 @@
 import { Controller, Get, Path, Post, Request, Route, Security } from "tsoa";
 import { JwtPayloadDTO }                                         from "../dto/auth/JwtPayloadDTO";
 import CreateTastingNoteParam                                    from "../dto/tastingnote/CreateTastingNoteParam";
+import TastingNoteTagDTO                                         from "../dto/tastingnote/TastingNoteTagDTO";
 import ServiceInjector                                           from "../service/ServiceInjector";
 import StatusCode                                                from "../utils/StatusCode";
 
@@ -9,7 +10,7 @@ export class TastingNoteController extends Controller {
   private readonly tastingNoteService = ServiceInjector.tastingNote
 
   @Get("tag")
-  public async getAllTags() {
+  public getAllTags(): TastingNoteTagDTO[] {
     this.setStatus(StatusCode.OK);
     return this.tastingNoteService.getAllTag();
   }

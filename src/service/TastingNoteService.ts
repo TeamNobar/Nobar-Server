@@ -1,26 +1,27 @@
 import mongoose, { Document, Model } from "mongoose";
 import { RecipeDTO }                 from "../dto/recipe/RecipeDTO";
-import CreateTastingNoteParam from "../dto/tastingnote/CreateTastingNoteParam";
-import TastingNoteDTO         from "../dto/tastingnote/TastingNoteDTO";
-import TastingNoteTagDTO      from "../dto/tastingnote/TastingNoteTagDTO";
-import NobarError             from "../error/NobarError";
-import { NobarErrorCode }     from "../error/NobarErrorCode";
-import NobarErrorMessage      from "../error/NobarErrorMessage";
-import { Base }               from "../model/base/Base";
-import BaseEntity             from "../model/base/entity/BaseEntity";
-import { Ingredient }         from "../model/ingredient/Ingredient";
-import IngredientEntity      from "../model/ingredient/IngredientEntity";
-import RecipeEntity          from "../model/recipe/entity/RecipeEntity";
-import RecipeIngredientEmbed from "../model/recipe/mapper/RecipeIngredientEmbed";
-import RecipeMapper          from "../model/recipe/mapper/RecipeMapper";
-import { Recipe }            from "../model/recipe/Recipe";
-import RecipeIngredient      from "../model/recipe/RecipeIngredient";
-import TastingNoteEntity     from "../model/tastingNote/entity/TastingNoteEntity";
-import TastingNoteMapper     from "../model/tastingNote/mapper/TastingNoteMapper";
-import TastingTagMapper      from "../model/tastingNote/mapper/TastingTagMapper";
-import TastingNote           from "../model/tastingNote/TastingNote";
-import { TastingNoteTag }    from "../model/tastingNote/TastingNoteTag";
-import User                  from "../model/user/User";
+import CreateTastingNoteParam        from "../dto/tastingnote/CreateTastingNoteParam";
+import TastingNoteDTO                from "../dto/tastingnote/TastingNoteDTO";
+import TastingNoteTagDTO             from "../dto/tastingnote/TastingNoteTagDTO";
+import NobarError                    from "../error/NobarError";
+import { NobarErrorCode }            from "../error/NobarErrorCode";
+import NobarErrorMessage             from "../error/NobarErrorMessage";
+import logger                        from "../loaders/Logger";
+import { Base }                      from "../model/base/Base";
+import BaseEntity                    from "../model/base/entity/BaseEntity";
+import { Ingredient }                from "../model/ingredient/Ingredient";
+import IngredientEntity              from "../model/ingredient/IngredientEntity";
+import RecipeEntity                  from "../model/recipe/entity/RecipeEntity";
+import RecipeIngredientEmbed         from "../model/recipe/mapper/RecipeIngredientEmbed";
+import RecipeMapper                  from "../model/recipe/mapper/RecipeMapper";
+import { Recipe }                    from "../model/recipe/Recipe";
+import RecipeIngredient              from "../model/recipe/RecipeIngredient";
+import TastingNoteEntity             from "../model/tastingNote/entity/TastingNoteEntity";
+import TastingNoteMapper             from "../model/tastingNote/mapper/TastingNoteMapper";
+import TastingTagMapper              from "../model/tastingNote/mapper/TastingTagMapper";
+import TastingNote                   from "../model/tastingNote/TastingNote";
+import { TastingNoteTag }            from "../model/tastingNote/TastingNoteTag";
+import User                          from "../model/user/User";
 
 export default class TastingNoteService {
   constructor(
@@ -32,8 +33,8 @@ export default class TastingNoteService {
   ) {
   }
 
-  public async getAllTag() {
-    TastingNoteTag.getAllTags().map(
+  public getAllTag(): TastingNoteTagDTO[]{
+    return TastingNoteTag.getAllTags().map(
       (value) => TastingTagMapper.toTagDTO(value, false)
     );
   }
@@ -56,6 +57,7 @@ export default class TastingNoteService {
 
   public async postTastingNote(userId: string, tastingNote: CreateTastingNoteParam): Promise<TastingNoteDTO> {
     const note: TastingNoteEntity = await this.saveTastingNote(tastingNote);
+    logger.info(note.tastingTag);
     await this.saveUserTastingNote(userId, note._id);
     return await this.getTastingNote(note._id.valueOf().toString());
   }
@@ -65,7 +67,7 @@ export default class TastingNoteService {
       .exec()
   }
 
-  private async saveTastingNote(noteParam: CreateTastingNoteParam) {
+  private async saveTastingNote(noteParam: CreateTastingNoteParam): Promise<TastingNoteEntity> {
     const recipe: RecipeEntity = await this.findRecipeById(noteParam.recipeId);
     const note: TastingNote = {
       rate: noteParam.rate,

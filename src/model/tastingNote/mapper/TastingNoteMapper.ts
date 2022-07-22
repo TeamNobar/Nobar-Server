@@ -6,23 +6,28 @@ import { TastingNoteTag } from "../TastingNoteTag";
 import TastingTagMapper   from "./TastingTagMapper";
 
 export default class TastingNoteMapper {
+  private static mappingTag(tag: TastingNoteTag, tags: number[]): TastingNoteTagDTO {
+    const isSelected: boolean = tags.includes(0);
+    return TastingTagMapper.toTagDTO(tag, isSelected);
+  }
+
+  private static mappingTastingTags(tags: number[]): TastingNoteTagDTO[] {
+    return TastingNoteTag.getAllTags()
+      .map(
+        (value) => this.mappingTag(value, tags)
+      );
+  }
+
   static toNoteDTO(note: TastingNoteEntity, recipeDTO: RecipeDTO) {
-    return <TastingNoteDTO> {
+    return <TastingNoteDTO>{
       id: note._id.valueOf().toString(),
       rate: note.rate,
       title: recipeDTO.name,
       recipe: recipeDTO,
-      tag: this.mappingTastingTag(note.tastingTag),
+      tag: this.mappingTastingTags(note.tastingTag),
       tasteContent: note.tasteContent,
       experienceContent: note.experienceContent,
       createdAt: note.createdAt
     }
-  }
-
-  private static mappingTastingTag(tags: number[]): TastingNoteTagDTO[] {
-    return TastingNoteTag.getAllTags()
-      .map(
-        (value) => TastingTagMapper.toTagDTO(value, tags.includes(value.id))
-      );
   }
 };

@@ -32,6 +32,8 @@ const SearchRecipesByBaseController_1 = require("./../src/controller/SearchRecip
 const SearchRecipesByKeywordController_1 = require("./../src/controller/SearchRecipesByKeywordController");
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 const SearchTagsController_1 = require("./../src/controller/SearchTagsController");
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+const TastingNoteController_1 = require("./../src/controller/TastingNoteController");
 const expressAuthentication_1 = require("./../src/auth/expressAuthentication");
 // @ts-ignore - no great way to install types from subpackage
 const promiseAny = require('promise.any');
@@ -86,6 +88,71 @@ const models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "IngredientDTO": {
+        "dataType": "refObject",
+        "properties": {
+            "id": { "dataType": "string", "required": true },
+            "name": { "dataType": "string", "required": true },
+            "enName": { "dataType": "string", "required": true },
+            "proof": { "dataType": "double", "required": true },
+            "category": { "dataType": "string", "required": true },
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "RecipeDTO": {
+        "dataType": "refObject",
+        "properties": {
+            "id": { "dataType": "string", "required": true },
+            "name": { "dataType": "string", "required": true },
+            "enName": { "dataType": "string", "required": true },
+            "base": { "ref": "BaseDTO", "required": true },
+            "proof": { "dataType": "double", "required": true },
+            "proofIcon": { "dataType": "string", "required": true },
+            "skill": { "ref": "SkillDTO", "required": true },
+            "glass": { "ref": "GlassDTO", "required": true },
+            "ingredients": { "dataType": "array", "array": { "dataType": "refObject", "ref": "IngredientDTO" }, "required": true },
+            "steps": { "dataType": "array", "array": { "dataType": "string" }, "required": true },
+            "defaultRecipe": { "dataType": "string", "required": true },
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "TastingNoteTagDTO": {
+        "dataType": "refObject",
+        "properties": {
+            "id": { "dataType": "double", "required": true },
+            "content": { "dataType": "string", "required": true },
+            "isSelected": { "dataType": "boolean", "required": true },
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "TastingNoteDTO": {
+        "dataType": "refObject",
+        "properties": {
+            "id": { "dataType": "string", "required": true },
+            "rate": { "dataType": "double", "required": true },
+            "title": { "dataType": "string", "required": true },
+            "recipe": { "ref": "RecipeDTO", "required": true },
+            "tag": { "dataType": "array", "array": { "dataType": "refObject", "ref": "TastingNoteTagDTO" }, "required": true },
+            "tasteContent": { "dataType": "string", "required": true },
+            "experienceContent": { "dataType": "string", "required": true },
+            "createdAt": { "dataType": "string", "required": true },
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "MyPageDTO": {
+        "dataType": "refObject",
+        "properties": {
+            "nickname": { "dataType": "string", "required": true },
+            "laterRecipes": { "dataType": "array", "array": { "dataType": "refObject", "ref": "RecipeDTO" }, "required": true },
+            "tastingNotes": { "dataType": "array", "array": { "dataType": "refObject", "ref": "TastingNoteDTO" }, "required": true },
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "RecipeIngredientDTO": {
         "dataType": "refObject",
         "properties": {
@@ -127,18 +194,6 @@ const models = {
             "proof": { "dataType": "double", "required": true },
             "category": { "dataType": "string", "required": true },
             "quantity": { "dataType": "string", "required": true },
-        },
-        "additionalProperties": false,
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "IngredientDTO": {
-        "dataType": "refObject",
-        "properties": {
-            "id": { "dataType": "string", "required": true },
-            "name": { "dataType": "string", "required": true },
-            "enName": { "dataType": "string", "required": true },
-            "proof": { "dataType": "double", "required": true },
-            "category": { "dataType": "string", "required": true },
         },
         "additionalProperties": false,
     },
@@ -291,6 +346,55 @@ function RegisterRoutes(app) {
             validatedArgs = getValidatedArgs(args, request, response);
             const controller = new SearchTagsController_1.SearchTagsController();
             const promise = controller.getSearchTags.apply(controller, validatedArgs);
+            promiseHandler(controller, promise, response, undefined, next);
+        }
+        catch (err) {
+            return next(err);
+        }
+    });
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    app.get('/note/tag', ...((0, runtime_1.fetchMiddlewares)(TastingNoteController_1.TastingNoteController)), ...((0, runtime_1.fetchMiddlewares)(TastingNoteController_1.TastingNoteController.prototype.getAllTags)), function TastingNoteController_getAllTags(request, response, next) {
+        const args = {};
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        let validatedArgs = [];
+        try {
+            validatedArgs = getValidatedArgs(args, request, response);
+            const controller = new TastingNoteController_1.TastingNoteController();
+            const promise = controller.getAllTags.apply(controller, validatedArgs);
+            promiseHandler(controller, promise, response, undefined, next);
+        }
+        catch (err) {
+            return next(err);
+        }
+    });
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    app.get('/note/:tastingNoteId', ...((0, runtime_1.fetchMiddlewares)(TastingNoteController_1.TastingNoteController)), ...((0, runtime_1.fetchMiddlewares)(TastingNoteController_1.TastingNoteController.prototype.getTastingNote)), function TastingNoteController_getTastingNote(request, response, next) {
+        const args = {
+            tastingNoteId: { "in": "path", "name": "tastingNoteId", "required": true, "dataType": "string" },
+        };
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        let validatedArgs = [];
+        try {
+            validatedArgs = getValidatedArgs(args, request, response);
+            const controller = new TastingNoteController_1.TastingNoteController();
+            const promise = controller.getTastingNote.apply(controller, validatedArgs);
+            promiseHandler(controller, promise, response, undefined, next);
+        }
+        catch (err) {
+            return next(err);
+        }
+    });
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    app.post('/note', authenticateMiddleware([{ "jwt": ["admin"] }]), ...((0, runtime_1.fetchMiddlewares)(TastingNoteController_1.TastingNoteController)), ...((0, runtime_1.fetchMiddlewares)(TastingNoteController_1.TastingNoteController.prototype.postTastingNote)), function TastingNoteController_postTastingNote(request, response, next) {
+        const args = {
+            request: { "in": "request", "name": "request", "required": true, "dataType": "object" },
+        };
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        let validatedArgs = [];
+        try {
+            validatedArgs = getValidatedArgs(args, request, response);
+            const controller = new TastingNoteController_1.TastingNoteController();
+            const promise = controller.postTastingNote.apply(controller, validatedArgs);
             promiseHandler(controller, promise, response, undefined, next);
         }
         catch (err) {

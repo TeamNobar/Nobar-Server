@@ -15,45 +15,82 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const NobarError_1 = __importDefault(require("../error/NobarError"));
 const NobarErrorCode_1 = require("../error/NobarErrorCode");
 const NobarErrorMessage_1 = __importDefault(require("../error/NobarErrorMessage"));
-const Logger_1 = __importDefault(require("../loaders/Logger"));
 const RecipeMapper_1 = __importDefault(require("../model/recipe/mapper/RecipeMapper"));
-class RecipeService {
-    constructor(recipeDAO, baseDAO, ingredientDAO) {
+const TastingNoteMapper_1 = __importDefault(require("../model/tastingNote/mapper/TastingNoteMapper"));
+const TastingTagMapper_1 = __importDefault(require("../model/tastingNote/mapper/TastingTagMapper"));
+const TastingNoteTag_1 = require("../model/tastingNote/TastingNoteTag");
+class TastingNoteService {
+    constructor(userDAO, tastingNoteDAO, recipeDAO, baseDAO, ingredientDAO) {
+        this.userDAO = userDAO;
+        this.tastingNoteDAO = tastingNoteDAO;
         this.recipeDAO = recipeDAO;
         this.baseDAO = baseDAO;
         this.ingredientDAO = ingredientDAO;
     }
-    getRecipes(recipeIds) {
+    getAllTag() {
         return __awaiter(this, void 0, void 0, function* () {
-            return Promise.all(recipeIds.map((value) => __awaiter(this, void 0, void 0, function* () { return yield this.getOneRecipe(value); })));
+            TastingNoteTag_1.TastingNoteTag.getAllTags().map((value) => TastingTagMapper_1.default.toTagDTO(value, false));
         });
     }
-    getOneRecipe(recipeId) {
+    getTastingNotes(tastingNoteIds) {
         return __awaiter(this, void 0, void 0, function* () {
-            const recipe = yield this.findRecipeById(recipeId);
+            return Promise.all(tastingNoteIds.map((value) => __awaiter(this, void 0, void 0, function* () { return yield this.getTastingNote(value); })));
+        });
+    }
+    getTastingNote(tastingNoteId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const tastingNote = yield this.findTastingNote(tastingNoteId);
+            const recipe = yield this.findRecipeById(tastingNote.recipe.valueOf().toString());
             const base = yield this.findBaseById(recipe.base.valueOf().toString());
             const embededIngredient = yield this.embedAllIngredient(recipe.ingredients);
-            return RecipeMapper_1.default.toRecipeDTO(recipe, base, embededIngredient);
+            const recipeDTO = RecipeMapper_1.default.toRecipeDTO(recipe, base, embededIngredient);
+            const tastingNoteDTO = TastingNoteMapper_1.default.toNoteDTO(tastingNote, recipeDTO);
+            return tastingNoteDTO;
         });
     }
-    getRecipeDetail(recipeId) {
+    postTastingNote(userId, tastingNote) {
         return __awaiter(this, void 0, void 0, function* () {
-            try {
-                // DI 하고 싶어서 분리하고 싶은데 내부에서 DAO 그대로 하면 무슨 소용
-                /*const recipe: RecipeEntity | null = await this.recipeDAO.findById(recipeId)
-                  .populate({path: "base", model: BaseDAO})
-                  .populate({path: "ingredients.ingredient", model: IngredientDAO});*/
-                const recipe = yield this.findRecipeById(recipeId);
-                const base = yield this.findBaseById(recipe.base.valueOf().toString());
-                const recipeVersions = yield this.findRecipeVersionNames(recipeId);
-                const embededIngredient = yield this.embedAllIngredient(recipe.ingredients);
-                const recipeDetailDTO = RecipeMapper_1.default.toRecipeDetailDTO(recipe, base, recipeVersions, embededIngredient);
-                return recipeDetailDTO;
+            const note = yield this.saveTastingNote(tastingNote);
+            yield this.saveUserTastingNote(userId, note._id);
+            return yield this.getTastingNote(note._id.valueOf().toString());
+        });
+    }
+    saveUserTastingNote(userId, tastingNoteId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield this.userDAO.findByIdAndUpdate(userId, { $push: { tastingNotes: tastingNoteId } })
+                .exec();
+        });
+    }
+    saveTastingNote(noteParam) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const recipe = yield this.findRecipeById(noteParam.recipeId);
+            const note = {
+                rate: noteParam.rate,
+                recipe: recipe._id,
+                tastingTag: this.mappingTagForSave(noteParam.tagList),
+                tasteContent: noteParam.tasteContent,
+                experienceContent: noteParam.experienceContent,
+                createdAt: noteParam.createAt
+            };
+            return yield this.tastingNoteDAO.create(note);
+        });
+    }
+    mappingTagForSave(tagList) {
+        const tastingTag = [];
+        tagList.forEach(value => {
+            if (value.isSelected) {
+                tastingTag.push(value.id);
             }
-            catch (error) {
-                Logger_1.default.error(error);
-                throw error;
+        });
+        return tastingTag;
+    }
+    findTastingNote(tastingNoteId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const tastingNote = yield this.tastingNoteDAO.findById(tastingNoteId);
+            if (!tastingNote) {
+                throw new NobarError_1.default(NobarErrorCode_1.NobarErrorCode.BAD_REQUEST, NobarErrorMessage_1.default.NOT_FOUND_TASTING_NOTE);
             }
+            return tastingNote;
         });
     }
     findRecipeById(recipeId) {
@@ -72,11 +109,6 @@ class RecipeService {
                 throw new NobarError_1.default(NobarErrorCode_1.NobarErrorCode.BAD_REQUEST, NobarErrorMessage_1.default.NOT_FOUND_BASE);
             }
             return base;
-        });
-    }
-    findRecipeVersionNames(defaultRecipeId) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return this.recipeDAO.find({ defaultRecipe: defaultRecipeId });
         });
     }
     embedAllIngredient(ingredients) {
@@ -104,5 +136,6 @@ class RecipeService {
         });
     }
 }
-exports.default = RecipeService;
-//# sourceMappingURL=RecipeService.js.map
+exports.default = TastingNoteService;
+;
+//# sourceMappingURL=TastingNoteService.js.map

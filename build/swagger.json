@@ -105,6 +105,189 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"IngredientDTO": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"enName": {
+						"type": "string"
+					},
+					"proof": {
+						"type": "number",
+						"format": "double"
+					},
+					"category": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"id",
+					"name",
+					"enName",
+					"proof",
+					"category"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"RecipeDTO": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"enName": {
+						"type": "string"
+					},
+					"base": {
+						"$ref": "#/components/schemas/BaseDTO"
+					},
+					"proof": {
+						"type": "number",
+						"format": "double"
+					},
+					"proofIcon": {
+						"type": "string"
+					},
+					"skill": {
+						"$ref": "#/components/schemas/SkillDTO"
+					},
+					"glass": {
+						"$ref": "#/components/schemas/GlassDTO"
+					},
+					"ingredients": {
+						"items": {
+							"$ref": "#/components/schemas/IngredientDTO"
+						},
+						"type": "array"
+					},
+					"steps": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					},
+					"defaultRecipe": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"id",
+					"name",
+					"enName",
+					"base",
+					"proof",
+					"proofIcon",
+					"skill",
+					"glass",
+					"ingredients",
+					"steps",
+					"defaultRecipe"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"TastingNoteTagDTO": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"content": {
+						"type": "string"
+					},
+					"icon": {
+						"type": "string"
+					},
+					"isSelected": {
+						"type": "boolean"
+					}
+				},
+				"required": [
+					"id",
+					"content",
+					"icon",
+					"isSelected"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"TastingNoteDTO": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"rate": {
+						"type": "number",
+						"format": "double"
+					},
+					"title": {
+						"type": "string"
+					},
+					"recipe": {
+						"$ref": "#/components/schemas/RecipeDTO"
+					},
+					"tag": {
+						"items": {
+							"$ref": "#/components/schemas/TastingNoteTagDTO"
+						},
+						"type": "array"
+					},
+					"tasteContent": {
+						"type": "string"
+					},
+					"experienceContent": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"id",
+					"rate",
+					"title",
+					"recipe",
+					"tag",
+					"tasteContent",
+					"experienceContent",
+					"createdAt"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"MyPageDTO": {
+				"properties": {
+					"nickname": {
+						"type": "string"
+					},
+					"laterRecipes": {
+						"items": {
+							"$ref": "#/components/schemas/RecipeDTO"
+						},
+						"type": "array"
+					},
+					"tastingNotes": {
+						"items": {
+							"$ref": "#/components/schemas/TastingNoteDTO"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"nickname",
+					"laterRecipes",
+					"tastingNotes"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"RecipeIngredientDTO": {
 				"properties": {
 					"id": {
@@ -236,35 +419,6 @@
 				],
 				"type": "object",
 				"additionalProperties": false
-			},
-			"IngredientDTO": {
-				"properties": {
-					"id": {
-						"type": "string"
-					},
-					"name": {
-						"type": "string"
-					},
-					"enName": {
-						"type": "string"
-					},
-					"proof": {
-						"type": "number",
-						"format": "double"
-					},
-					"category": {
-						"type": "string"
-					}
-				},
-				"required": [
-					"id",
-					"name",
-					"enName",
-					"proof",
-					"category"
-				],
-				"type": "object",
-				"additionalProperties": false
 			}
 		},
 		"securitySchemes": {
@@ -390,7 +544,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"type": "string"
+									"$ref": "#/components/schemas/MyPageDTO"
 								}
 							}
 						}
@@ -421,7 +575,13 @@
 						}
 					}
 				},
-				"security": [],
+				"security": [
+					{
+						"jwt": [
+							"admin"
+						]
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
@@ -896,6 +1056,81 @@
 					}
 				},
 				"security": [],
+				"parameters": []
+			}
+		},
+		"/note/tag": {
+			"get": {
+				"operationId": "GetAllTags",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/TastingNoteTagDTO"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/note/{tastingNoteId}": {
+			"get": {
+				"operationId": "GetTastingNote",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/TastingNoteDTO"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "tastingNoteId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/note": {
+			"post": {
+				"operationId": "PostTastingNote",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/TastingNoteDTO"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"jwt": [
+							"admin"
+						]
+					}
+				],
 				"parameters": []
 			}
 		}
