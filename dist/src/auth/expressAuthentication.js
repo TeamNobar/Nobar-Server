@@ -36,15 +36,6 @@ function expressAuthentication(request, securityName, _scopes) {
                 }
                 else {
                     // Check if JWT contains all required scopes
-                    /*if (!scopes) {
-                      resolve(decoded);
-                      return;
-                    }
-                    for (const scope of scopes) {
-                      if (!decoded.scopes.includes(scope)) {
-                        reject(new Error("JWT does not contain required scope."));
-                      }
-                    }*/
                     resolve(decoded);
                 }
             });

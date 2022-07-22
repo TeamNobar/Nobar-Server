@@ -29,6 +29,15 @@ class GuideService {
             return data;
         });
     }
+    findAllGuide() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const guideList = yield GuideDAO_1.default.find({}).exec();
+            if (!guideList) {
+                return [];
+            }
+            return guideList.map(value => GuideMapper_1.GuideMapper.toGuideDTO(value));
+        });
+    }
 }
 exports.GuideService = GuideService;
 //# sourceMappingURL=GuideService.js.map

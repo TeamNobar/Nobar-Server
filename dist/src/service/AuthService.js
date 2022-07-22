@@ -12,6 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const jwtHandler_1 = __importDefault(require("../auth/jwtHandler"));
 const NobarError_1 = __importDefault(require("../error/NobarError"));
 const NobarErrorCode_1 = require("../error/NobarErrorCode");
 const NobarErrorMessage_1 = __importDefault(require("../error/NobarErrorMessage"));
@@ -25,10 +26,10 @@ class AuthService {
             const user = yield this.findOneUser(userParam.nickname);
             if (!user) {
                 const createdUser = yield this.addUser(userParam);
-                return createdUser._id.valueOf().toString();
+                return createdUser.token;
             }
             else {
-                return user._id.valueOf().toString();
+                return user.token;
             }
         });
     }
@@ -62,9 +63,16 @@ class AuthService {
                 tastingNotes: [],
                 laterRecipe: [],
                 snsAuthToken: "",
-                deviceToken: ""
+                deviceToken: "",
+                token: ""
             };
-            return yield this.userDAO.create(user);
+            const createdUser = yield this.userDAO.create(user);
+            const token = (0, jwtHandler_1.default)(createdUser._id.valueOf().toString());
+            const hasTokenUser = yield this.userDAO.findByIdAndUpdate(createdUser._id, { token: token });
+            if (!hasTokenUser) {
+                throw Error("방금 만든 유저가 사라진 이슈;;");
+            }
+            return hasTokenUser;
         });
     }
 }

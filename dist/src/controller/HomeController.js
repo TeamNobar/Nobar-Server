@@ -24,29 +24,30 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MyPageController = void 0;
+exports.HomeController = void 0;
 const tsoa_1 = require("tsoa");
+const GuideService_1 = require("../service/GuideService");
 const ServiceInjector_1 = __importDefault(require("../service/ServiceInjector"));
 const StatusCode_1 = __importDefault(require("../utils/StatusCode"));
-let MyPageController = class MyPageController extends tsoa_1.Controller {
+let HomeController = class HomeController extends tsoa_1.Controller {
     constructor() {
         super(...arguments);
         this.authService = ServiceInjector_1.default.auth;
         this.recipeService = ServiceInjector_1.default.recipe;
-        this.tastingNoteService = ServiceInjector_1.default.tastingNote;
+        this.guideService = new GuideService_1.GuideService();
     }
-    getMypage(request) {
+    getHome(request) {
         return __awaiter(this, void 0, void 0, function* () {
             const token = yield Promise.resolve(request.user);
             const userId = token.user.id;
             const user = yield this.authService.findUser(userId);
             const laterRecipes = yield this.recipeService.getRecipes(user.laterRecipes);
-            const tastingNotes = yield this.tastingNoteService.getTastingNotes(user.tastingNotes);
+            const guides = yield this.guideService.findAllGuide();
             this.setStatus(StatusCode_1.default.OK);
             return {
-                nickname: user.nickname,
-                laterRecipes: laterRecipes,
-                tastingNotes: tastingNotes
+                laterRecipeList: laterRecipes,
+                guideList: guides,
+                nickname: user.nickname
             };
         });
     }
@@ -58,9 +59,9 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
-], MyPageController.prototype, "getMypage", null);
-MyPageController = __decorate([
-    (0, tsoa_1.Route)("mypage")
-], MyPageController);
-exports.MyPageController = MyPageController;
-//# sourceMappingURL=MyPageController.js.map
+], HomeController.prototype, "getHome", null);
+HomeController = __decorate([
+    (0, tsoa_1.Route)("home")
+], HomeController);
+exports.HomeController = HomeController;
+//# sourceMappingURL=HomeController.js.map
