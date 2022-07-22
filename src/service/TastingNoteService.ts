@@ -6,7 +6,6 @@ import TastingNoteTagDTO             from "../dto/tastingnote/TastingNoteTagDTO"
 import NobarError                    from "../error/NobarError";
 import { NobarErrorCode }            from "../error/NobarErrorCode";
 import NobarErrorMessage             from "../error/NobarErrorMessage";
-import { debugLogger }               from "../loaders/debugLogger";
 import { Base }                      from "../model/base/Base";
 import BaseEntity                    from "../model/base/entity/BaseEntity";
 import { Ingredient }                from "../model/ingredient/Ingredient";
@@ -75,11 +74,7 @@ export default class TastingNoteService {
       experienceContent: noteParam.experienceContent,
       createdAt: noteParam.createdAt
     }
-    debugLogger(note);
-    debugLogger(this.tastingNoteDAO);
-    const a = await this.tastingNoteDAO.create(note);
-    debugLogger(a);
-    return a
+    return await this.tastingNoteDAO.create(note)
   }
 
   private mappingTagForSave(tagList: TastingNoteTagDTO[]): number[] {

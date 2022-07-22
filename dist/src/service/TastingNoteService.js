@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const NobarError_1 = __importDefault(require("../error/NobarError"));
 const NobarErrorCode_1 = require("../error/NobarErrorCode");
 const NobarErrorMessage_1 = __importDefault(require("../error/NobarErrorMessage"));
+const debugLogger_1 = require("../loaders/debugLogger");
 const RecipeMapper_1 = __importDefault(require("../model/recipe/mapper/RecipeMapper"));
 const TastingNoteMapper_1 = __importDefault(require("../model/tastingNote/mapper/TastingNoteMapper"));
 const TastingTagMapper_1 = __importDefault(require("../model/tastingNote/mapper/TastingTagMapper"));
@@ -69,7 +70,11 @@ class TastingNoteService {
                 experienceContent: noteParam.experienceContent,
                 createdAt: noteParam.createdAt
             };
-            return yield this.tastingNoteDAO.create(note);
+            (0, debugLogger_1.debugLogger)(note);
+            (0, debugLogger_1.debugLogger)(this.tastingNoteDAO);
+            const a = yield this.tastingNoteDAO.create(note);
+            (0, debugLogger_1.debugLogger)(a);
+            return a;
         });
     }
     mappingTagForSave(tagList) {
