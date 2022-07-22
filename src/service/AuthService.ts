@@ -32,6 +32,14 @@ export default class AuthService {
     return UserMapper.toUserDTO(user);
   }
 
+  public async findUser(userId: string) {
+    const user: UserEntity | null = await this.userDAO.findById(userId);
+    if (!user) {
+      throw new NobarError(NobarErrorCode.BAD_REQUEST, NobarErrorMessage.NOT_FOUND_USER);
+    }
+    return UserMapper.toUserDTO(user);
+  }
+
   private async findOneUser(nickname: string) {
     return this.userDAO.findOne({nickname: nickname});
   }
