@@ -1,8 +1,6 @@
 # Nobar
-<img src="https://nobar-bucket.s3.ap-northeast-2.amazonaws.com/logo.png">
-
+![Slide 16_9 - 12 (1)](https://user-images.githubusercontent.com/72644361/180468205-5ce6ea69-da86-4570-a4eb-b12baf4696ba.png)
 </br>
-
 ## 나를 위한 특별한 홈텐딩 레시피  
 
 - SOPT 30th APPJAM - Team Nobar  
@@ -11,6 +9,8 @@
 
 </br>
 </br>
+
+![Slide 16_9 - 13](https://user-images.githubusercontent.com/72644361/180468686-6260d497-1993-4795-ba68-76e2650f8c72.png)
 
 <div align="center">
 	<table>
@@ -49,6 +49,9 @@
 </br>
 </br>
 
+
+![Slide 16_9 - 14](https://user-images.githubusercontent.com/72644361/180468832-90c248f9-d5ae-4331-9231-1ed1b2eb07ca.png)
+
 ## 설계한 컬렉션
 - ![collectionImage](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/04f58ab4-5910-4a88-8e91-2d69ea84d1a2/Group_33682.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220713%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220713T133940Z&X-Amz-Expires=86400&X-Amz-Signature=674f2145108df6dbadb342546dfdea68af0855bda47338cd6d30937ec464ba0d&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Group%252033682.png%22&x-id=GetObject)
 - 자세한 내용은 여기서! [Click](https://www.notion.so/DB-collections-790950ea9cd94feba849571051be5f21)
@@ -56,6 +59,7 @@
 </br>
 </br>
 
+![Slide 16_9 - 15](https://user-images.githubusercontent.com/72644361/180468947-5543d38c-2108-409b-a84b-218331135b57.png)
 ## API 명세서
 ![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/944ee8dc-fc5d-4b0f-b549-a2af266bd682/image_12.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220713%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220713T134614Z&X-Amz-Expires=86400&X-Amz-Signature=e9fef5f8b0b12ad82466ff4d60c78c5721d41604b1e03dbd55bfd7e87669bb0d&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22image%252012.png%22&x-id=GetObject)
 
@@ -64,6 +68,8 @@ API 명세서에서 전체 API 로직 구현 진척도와 팀 별 역할 분담�
 
 </br>
 </br>
+
+![Slide 16_9 - 16](https://user-images.githubusercontent.com/72644361/180468988-96242073-91c2-4f51-b942-4f570a021ab8.png)
 
 ## Git Commit Message Convention
 - Git Commit Message Structure
@@ -74,6 +80,8 @@ API 명세서에서 전체 API 로직 구현 진척도와 팀 별 역할 분담�
 </br>
 </br>
 
+![Slide 16_9 - 17](https://user-images.githubusercontent.com/72644361/180469035-b9b2b9cb-c283-45ec-8caa-225c10988760.png)
+
 ## Branching Strategy
 - 기본적으로 git flow 전략을 사용합니다.
 - main, develop, feature 3가지 branch 를 기본으로 합니다.
@@ -83,11 +91,15 @@ API 명세서에서 전체 API 로직 구현 진척도와 팀 별 역할 분담�
 </br>
 </br>
 
+![Slide 16_9 - 18](https://user-images.githubusercontent.com/72644361/180469084-22dbba64-ee80-4568-8781-ee64d8f09b34.png)
+
 ## Coding Convention
 - 코드 컨벤션은 여기서 확인하세요![Click](https://www.notion.so/Coding-Convention-e17614fca75b4e2cb0c774428ae7c8ba)
 
 </br>
 </br>
+
+![Slide 16_9 - 19](https://user-images.githubusercontent.com/72644361/180469116-244ad075-bba5-4c86-89a3-a1b73309305b.png)
 
 ## Project Foldering
 
@@ -118,12 +130,16 @@ API 명세서에서 전체 API 로직 구현 진척도와 팀 별 역할 분담�
 </br>
 </br>
 
+![Slide 16_9 - 20](https://user-images.githubusercontent.com/72644361/180469151-8bc46c1c-e893-49b5-9122-1d07c55649f3.png)
+
 ## Server Architecture
 
 ![arch](https://user-images.githubusercontent.com/89137120/180420764-1afac15d-1ef5-4c47-b68e-90cb128c3d7c.png)
 
 </br>
 </br>
+
+![Slide 16_9 - 21](https://user-images.githubusercontent.com/72644361/180469190-41e5c4b1-ffc6-41f1-bbce-793659b84af7.png)
 
 ## package.json
 
