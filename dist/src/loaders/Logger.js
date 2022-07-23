@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const winston_1 = __importDefault(require("winston"));
 const winston_daily_rotate_file_1 = __importDefault(require("winston-daily-rotate-file"));
 const Environment_1 = __importDefault(require("../utils/Environment"));
+const debugLogger_1 = require("./debugLogger");
 const logStoragePath = "logs";
 const productTransportConsole = new winston_1.default.transports.Console();
 const devlopmentTransportConsole = new winston_1.default.transports.Console({
@@ -46,7 +47,7 @@ const Logger = winston_1.default.createLogger({
 });
 Logger.stream({
     write: (message) => {
-        Logger.info(message);
+        (0, debugLogger_1.debugLogger)(message);
     }
 });
 exports.default = Logger;

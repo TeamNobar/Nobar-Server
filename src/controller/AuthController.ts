@@ -1,5 +1,7 @@
 import { Body, Controller, Post, Route } from "tsoa";
+import getToken                          from "../auth/jwtHandler";
 import CreateUserParam                   from "../dto/user/CreateUserParam";
+import { debugLogger }                   from "../loaders/debugLogger";
 import ServiceInjector                   from "../service/ServiceInjector";
 
 @Route("auth")
@@ -12,7 +14,7 @@ export class AuthController extends Controller {
   ) {
     const token: string = await this.authService.authUser(requestBody);
     return {
-      accesstoken: token
+      accesstoken: getToken(token)
     }
   }
 }

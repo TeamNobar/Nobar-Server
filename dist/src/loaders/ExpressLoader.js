@@ -95,11 +95,11 @@ class ExpressLoader {
         return new ExpressLoader(app);
     }
     initialize() {
+        this.setUpSwagger();
         this.setUpDefaultMiddleware();
         this.setUpMarganLogger();
         (0, routes_1.RegisterRoutes)(this.app);
         this.setUpErrorHandler();
-        this.setUpSwagger();
     }
     setUpDefaultMiddleware() {
         this.app.use(express_1.default.urlencoded({ extended: true }));

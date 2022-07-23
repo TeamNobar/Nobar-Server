@@ -10,7 +10,6 @@ import { errorMessage }                             from "../utils/errorMessage"
 import ErrorType                                    from "../utils/ErrorType";
 import ResponseWrapper                              from "../utils/ResponseWrapper";
 import StatusCode                                   from "../utils/StatusCode";
-import { debugLogger }                              from "./debugLogger";
 import logger                                       from "./Logger";
 import Logger                                       from "./Logger";
 
@@ -109,8 +108,8 @@ export default class ExpressLoader {
       morgan(this.morganFormat, {
         skip: (_req, res) => res.statusCode < 400,
         stream: {
-          write(message: any) {
-            debugLogger(message);
+          write(message: string) {
+            Logger.info(message);
           },
         },
       })

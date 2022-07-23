@@ -16,6 +16,7 @@ const jwtHandler_1 = __importDefault(require("../auth/jwtHandler"));
 const NobarError_1 = __importDefault(require("../error/NobarError"));
 const NobarErrorCode_1 = require("../error/NobarErrorCode");
 const NobarErrorMessage_1 = __importDefault(require("../error/NobarErrorMessage"));
+const debugLogger_1 = require("../loaders/debugLogger");
 const UserMapper_1 = __importDefault(require("../model/user/mapper/UserMapper"));
 class AuthService {
     constructor(userDAO) {
@@ -24,8 +25,12 @@ class AuthService {
     authUser(userParam) {
         return __awaiter(this, void 0, void 0, function* () {
             const user = yield this.findOneUser(userParam.nickname);
+            (0, debugLogger_1.debugLogger)("이미 있는 유저 조회");
+            (0, debugLogger_1.debugLogger)(user);
             if (!user) {
                 const createdUser = yield this.addUser(userParam);
+                (0, debugLogger_1.debugLogger)("생성된 유저");
+                (0, debugLogger_1.debugLogger)(createdUser);
                 return createdUser.token;
             }
             else {
@@ -67,6 +72,7 @@ class AuthService {
                 token: ""
             };
             const createdUser = yield this.userDAO.create(user);
+            (0, debugLogger_1.debugLogger)(createdUser);
             const token = (0, jwtHandler_1.default)(createdUser._id.valueOf().toString());
             const hasTokenUser = yield this.userDAO.findByIdAndUpdate(createdUser._id, { token: token });
             if (!hasTokenUser) {
