@@ -12,11 +12,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const jwtHandler_1 = __importDefault(require("../auth/jwtHandler"));
 const NobarError_1 = __importDefault(require("../error/NobarError"));
 const NobarErrorCode_1 = require("../error/NobarErrorCode");
 const NobarErrorMessage_1 = __importDefault(require("../error/NobarErrorMessage"));
-const debugLogger_1 = require("../loaders/debugLogger");
 const UserMapper_1 = __importDefault(require("../model/user/mapper/UserMapper"));
 class AuthService {
     constructor(userDAO) {
@@ -25,16 +23,12 @@ class AuthService {
     authUser(userParam) {
         return __awaiter(this, void 0, void 0, function* () {
             const user = yield this.findOneUser(userParam.nickname);
-            (0, debugLogger_1.debugLogger)("이미 있는 유저 조회");
-            (0, debugLogger_1.debugLogger)(user);
             if (!user) {
                 const createdUser = yield this.addUser(userParam);
-                (0, debugLogger_1.debugLogger)("생성된 유저");
-                (0, debugLogger_1.debugLogger)(createdUser);
-                return createdUser.token;
+                return createdUser._id.valueOf().toString();
             }
             else {
-                return user.token;
+                return user._id.valueOf().toString();
             }
         });
     }
@@ -72,13 +66,10 @@ class AuthService {
                 token: ""
             };
             const createdUser = yield this.userDAO.create(user);
-            (0, debugLogger_1.debugLogger)(createdUser);
-            const token = (0, jwtHandler_1.default)(createdUser._id.valueOf().toString());
-            const hasTokenUser = yield this.userDAO.findByIdAndUpdate(createdUser._id, { token: token });
-            if (!hasTokenUser) {
+            if (!createdUser) {
                 throw Error("방금 만든 유저가 사라진 이슈;;");
             }
-            return hasTokenUser;
+            return createdUser;
         });
     }
 }
