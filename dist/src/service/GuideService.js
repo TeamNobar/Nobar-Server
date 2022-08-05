@@ -16,7 +16,7 @@ exports.GuideService = void 0;
 const GuideMapper_1 = require("../mapper/GuideMapper");
 const NobarError_1 = __importDefault(require("../error/NobarError"));
 const NobarErrorMessage_1 = __importDefault(require("../error/NobarErrorMessage"));
-const NobarErrorCode_1 = require("src/error/NobarErrorCode");
+const NobarErrorCode_1 = require("../error/NobarErrorCode");
 class GuideService {
     constructor(guideDAO) {
         this.guideDAO = guideDAO;

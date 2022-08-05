@@ -5,14 +5,14 @@ import {
   Security,
   Query
 } from "tsoa";
-import { SearchService } from "../service/SearchService";
 import StatusCode from "../utils/StatusCode";
 import { errorMessage } from "../utils/errorMessage";
+import ServiceInjector from "../service/ServiceInjector"
 
 @Route("search")
 export class SearchController extends Controller {
 
-  private readonly searchService = new SearchService();
+  private readonly searchService = ServiceInjector.search;
   
   @Get("tag") 
   @Security("jwt", ["admin"])

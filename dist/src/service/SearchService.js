@@ -13,17 +13,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SearchService = void 0;
-const BaseDAO_1 = __importDefault(require("../model/base/BaseDAO"));
 const BaseMapper_1 = require("../mapper/BaseMapper");
-const RecipeDAO_1 = __importDefault(require("../model/recipe/RecipeDAO"));
 const RecipeMapper_1 = require("../mapper/RecipeMapper");
-const IngredientDAO_1 = __importDefault(require("../model/ingredient/IngredientDAO"));
 const NobarError_1 = __importDefault(require("../error/NobarError"));
 const NobarErrorCode_1 = require("../error/NobarErrorCode");
 const NobarErrorMessage_1 = __importDefault(require("../error/NobarErrorMessage"));
-const RecommendDAO_1 = __importDefault(require("../model/recommend/RecommendDAO"));
 const IngredientsMapper_1 = require("../mapper/IngredientsMapper");
 class SearchService {
+    constructor(baseDAO, recipeDAO, recommendDAO, ingredientDAO) {
+        this.baseDAO = baseDAO;
+        this.recipeDAO = recipeDAO;
+        this.recommendDAO = recommendDAO;
+        this.ingredientDAO = ingredientDAO;
+    }
     /**
      *  @route GET /search/tag
      *  @desc 검색 태그(베이스 술 종류) 전부 조회
@@ -31,7 +33,7 @@ class SearchService {
      */
     getSearchTags() {
         return __awaiter(this, void 0, void 0, function* () {
-            const foundTags = yield BaseDAO_1.default.find({});
+            const foundTags = yield this.baseDAO.find({});
             const base = BaseMapper_1.BaseMapper.toBaseDTO(foundTags);
             return {
                 base: base
@@ -47,9 +49,9 @@ class SearchService {
         return __awaiter(this, void 0, void 0, function* () {
             const regex = (pattern) => new RegExp(`.*${pattern}.*`);
             const keywordRegex = regex(keyword);
-            const foundRecipes = yield RecipeDAO_1.default.find({ name: { $regex: keywordRegex } })
-                .populate({ path: "base", model: BaseDAO_1.default })
-                .populate({ path: "ingredients.ingredient", model: IngredientDAO_1.default });
+            const foundRecipes = yield this.recipeDAO.find({ name: { $regex: keywordRegex } })
+                .populate({ path: "base", model: this.baseDAO })
+                .populate({ path: "ingredients.ingredient", model: this.ingredientDAO });
             const recipesData = foundRecipes.map((foundRecipe) => {
                 const recipeData = RecipeMapper_1.RecipeMapper.toRecipeDTO(foundRecipe, foundRecipe.base, foundRecipe.ingredients);
                 return recipeData;
@@ -66,13 +68,13 @@ class SearchService {
      */
     findRecipesByBase(base) {
         return __awaiter(this, void 0, void 0, function* () {
-            const foundBase = yield BaseDAO_1.default.findOne({ name: base });
+            const foundBase = yield this.baseDAO.findOne({ name: base });
             if (!foundBase) {
                 throw new NobarError_1.default(NobarErrorCode_1.NobarErrorCode.BAD_REQUEST, NobarErrorMessage_1.default.NOT_FOUND_BASE);
             }
-            const foundRecipes = yield RecipeDAO_1.default.find({ base: foundBase._id })
-                .populate({ path: "base", model: BaseDAO_1.default })
-                .populate({ path: "ingredients.ingredient", model: IngredientDAO_1.default });
+            const foundRecipes = yield this.recipeDAO.find({ base: foundBase._id })
+                .populate({ path: "base", model: this.baseDAO })
+                .populate({ path: "ingredients.ingredient", model: this.ingredientDAO });
             const recipesData = foundRecipes.map((foundRecipe) => {
                 const recipeData = RecipeMapper_1.RecipeMapper.toRecipeDTO(foundRecipe, foundRecipe.base, foundRecipe.ingredients);
                 return recipeData;
@@ -90,8 +92,8 @@ class SearchService {
     getSearchKeywords() {
         return __awaiter(this, void 0, void 0, function* () {
             // 추천 검색어로 뜬 레시피 가져오기 - 일단 기본 레시피만 뜨도록
-            const recommendRecipes = yield RecommendDAO_1.default.find({})
-                .populate("recipeId", "_id name", RecipeDAO_1.default);
+            const recommendRecipes = yield this.recommendDAO.find({})
+                .populate("recipeId", "_id name", this.recipeDAO);
             const recommendsData = yield Promise.all(recommendRecipes.map((recommendRecipe) => {
                 const recommendData = {
                     recipeId: recommendRecipe.recipeId._id,
@@ -100,15 +102,15 @@ class SearchService {
                 return recommendData;
             }));
             // 자동완성으로 쓸 레시피 이름 전부 가져오기
-            const recipes = yield RecipeDAO_1.default.find({})
-                .populate({ path: "base", model: BaseDAO_1.default })
-                .populate({ path: "ingredients.ingredient", model: IngredientDAO_1.default });
+            const recipes = yield this.recipeDAO.find({})
+                .populate({ path: "base", model: this.baseDAO })
+                .populate({ path: "ingredients.ingredient", model: this.ingredientDAO });
             const recipesData = recipes.map((recipe) => {
                 const recipeData = RecipeMapper_1.RecipeMapper.toRecipeDTO(recipe, recipe.base, recipe.ingredients);
                 return recipeData;
             });
             // 자동완성으로 쓸 재료 이름 전부 가져오기
-            const ingredients = yield IngredientDAO_1.default.find({});
+            const ingredients = yield this.ingredientDAO.find({});
             const ingredientsData = IngredientsMapper_1.IngredientsMapper.toIngredientDTO(ingredients);
             // data 결합해서 최종적으로 반환
             return {

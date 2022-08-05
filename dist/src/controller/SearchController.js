@@ -26,13 +26,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SearchController = void 0;
 const tsoa_1 = require("tsoa");
-const SearchService_1 = require("../service/SearchService");
 const StatusCode_1 = __importDefault(require("../utils/StatusCode"));
 const errorMessage_1 = require("../utils/errorMessage");
+const ServiceInjector_1 = __importDefault(require("../service/ServiceInjector"));
 let SearchController = class SearchController extends tsoa_1.Controller {
     constructor() {
         super(...arguments);
-        this.searchService = new SearchService_1.SearchService();
+        this.searchService = ServiceInjector_1.default.search;
     }
     getSearchTags() {
         return __awaiter(this, void 0, void 0, function* () {
