@@ -15,13 +15,7 @@ import { MyPageController } from './../src/controller/MyPageController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { RecipeController } from './../src/controller/RecipeController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-import { SearchKeywordController } from './../src/controller/SearchKeywordController';
-// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-import { SearchRecipesByBaseController } from './../src/controller/SearchRecipesByBaseController';
-// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-import { SearchRecipesByKeywordController } from './../src/controller/SearchRecipesByKeywordController';
-// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-import { SearchTagsController } from './../src/controller/SearchTagsController';
+import { SearchController } from './../src/controller/SearchController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { TastingNoteController } from './../src/controller/TastingNoteController';
 import { expressAuthentication } from './../src/auth/expressAuthentication';
@@ -392,12 +386,12 @@ export function RegisterRoutes(app: express.Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.get('/search',
+        app.get('/search/tag',
             authenticateMiddleware([{"jwt":["admin"]}]),
-            ...(fetchMiddlewares<RequestHandler>(SearchKeywordController)),
-            ...(fetchMiddlewares<RequestHandler>(SearchKeywordController.prototype.getSearchKeywords)),
+            ...(fetchMiddlewares<RequestHandler>(SearchController)),
+            ...(fetchMiddlewares<RequestHandler>(SearchController.prototype.getSearchTags)),
 
-            function SearchKeywordController_getSearchKeywords(request: any, response: any, next: any) {
+            function SearchController_getSearchTags(request: any, response: any, next: any) {
             const args = {
             };
 
@@ -407,7 +401,32 @@ export function RegisterRoutes(app: express.Router) {
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
 
-                const controller = new SearchKeywordController();
+                const controller = new SearchController();
+
+
+              const promise = controller.getSearchTags.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/search',
+            authenticateMiddleware([{"jwt":["admin"]}]),
+            ...(fetchMiddlewares<RequestHandler>(SearchController)),
+            ...(fetchMiddlewares<RequestHandler>(SearchController.prototype.getSearchKeywords)),
+
+            function SearchController_getSearchKeywords(request: any, response: any, next: any) {
+            const args = {
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new SearchController();
 
 
               const promise = controller.getSearchKeywords.apply(controller, validatedArgs as any);
@@ -419,10 +438,10 @@ export function RegisterRoutes(app: express.Router) {
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/search/base',
             authenticateMiddleware([{"jwt":["admin"]}]),
-            ...(fetchMiddlewares<RequestHandler>(SearchRecipesByBaseController)),
-            ...(fetchMiddlewares<RequestHandler>(SearchRecipesByBaseController.prototype.findRecipesByBase)),
+            ...(fetchMiddlewares<RequestHandler>(SearchController)),
+            ...(fetchMiddlewares<RequestHandler>(SearchController.prototype.findRecipesByBase)),
 
-            function SearchRecipesByBaseController_findRecipesByBase(request: any, response: any, next: any) {
+            function SearchController_findRecipesByBase(request: any, response: any, next: any) {
             const args = {
                     base: {"in":"query","name":"base","dataType":"string"},
             };
@@ -433,7 +452,7 @@ export function RegisterRoutes(app: express.Router) {
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
 
-                const controller = new SearchRecipesByBaseController();
+                const controller = new SearchController();
 
 
               const promise = controller.findRecipesByBase.apply(controller, validatedArgs as any);
@@ -445,10 +464,10 @@ export function RegisterRoutes(app: express.Router) {
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/search/keyword',
             authenticateMiddleware([{"jwt":["admin"]}]),
-            ...(fetchMiddlewares<RequestHandler>(SearchRecipesByKeywordController)),
-            ...(fetchMiddlewares<RequestHandler>(SearchRecipesByKeywordController.prototype.searchRecipesByKeyword)),
+            ...(fetchMiddlewares<RequestHandler>(SearchController)),
+            ...(fetchMiddlewares<RequestHandler>(SearchController.prototype.searchRecipesByKeyword)),
 
-            function SearchRecipesByKeywordController_searchRecipesByKeyword(request: any, response: any, next: any) {
+            function SearchController_searchRecipesByKeyword(request: any, response: any, next: any) {
             const args = {
                     keyword: {"in":"query","name":"keyword","dataType":"string"},
             };
@@ -459,35 +478,10 @@ export function RegisterRoutes(app: express.Router) {
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
 
-                const controller = new SearchRecipesByKeywordController();
+                const controller = new SearchController();
 
 
               const promise = controller.searchRecipesByKeyword.apply(controller, validatedArgs as any);
-              promiseHandler(controller, promise, response, undefined, next);
-            } catch (err) {
-                return next(err);
-            }
-        });
-        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.get('/search/tag',
-            authenticateMiddleware([{"jwt":["admin"]}]),
-            ...(fetchMiddlewares<RequestHandler>(SearchTagsController)),
-            ...(fetchMiddlewares<RequestHandler>(SearchTagsController.prototype.getSearchTags)),
-
-            function SearchTagsController_getSearchTags(request: any, response: any, next: any) {
-            const args = {
-            };
-
-            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-
-            let validatedArgs: any[] = [];
-            try {
-                validatedArgs = getValidatedArgs(args, request, response);
-
-                const controller = new SearchTagsController();
-
-
-              const promise = controller.getSearchTags.apply(controller, validatedArgs as any);
               promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);

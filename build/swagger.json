@@ -683,6 +683,42 @@
 				"parameters": []
 			}
 		},
+		"/search/tag": {
+			"get": {
+				"operationId": "GetSearchTags",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"base": {
+											"items": {
+												"$ref": "#/components/schemas/BaseDTO"
+											},
+											"type": "array"
+										}
+									},
+									"required": [
+										"base"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"jwt": [
+							"admin"
+						]
+					}
+				],
+				"parameters": []
+			}
+		},
 		"/search": {
 			"get": {
 				"operationId": "GetSearchKeywords",
@@ -1134,42 +1170,6 @@
 						}
 					}
 				]
-			}
-		},
-		"/search/tag": {
-			"get": {
-				"operationId": "GetSearchTags",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"properties": {
-										"base": {
-											"items": {
-												"$ref": "#/components/schemas/BaseDTO"
-											},
-											"type": "array"
-										}
-									},
-									"required": [
-										"base"
-									],
-									"type": "object"
-								}
-							}
-						}
-					}
-				},
-				"security": [
-					{
-						"jwt": [
-							"admin"
-						]
-					}
-				],
-				"parameters": []
 			}
 		},
 		"/note/tag": {
