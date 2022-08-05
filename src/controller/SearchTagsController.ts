@@ -4,7 +4,7 @@ import {
   Controller,
   Security
 } from "tsoa";
-import { SearchTagsService } from "../service/SearchTagsService";
+import { SearchTagsService } from "../service/SearchService";
 
 @Route("search")
 export class SearchTagsController extends Controller {
