@@ -13,15 +13,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GuideService = void 0;
-const GuideDAO_1 = __importDefault(require("../model/guide/GuideDAO"));
 const GuideMapper_1 = require("../mapper/GuideMapper");
 const NobarError_1 = __importDefault(require("../error/NobarError"));
-const NobarErrorCode_1 = require("../error/NobarErrorCode");
 const NobarErrorMessage_1 = __importDefault(require("../error/NobarErrorMessage"));
+const NobarErrorCode_1 = require("src/error/NobarErrorCode");
 class GuideService {
+    constructor(guideDAO) {
+        this.guideDAO = guideDAO;
+    }
     findGuide(guideId) {
         return __awaiter(this, void 0, void 0, function* () {
-            const foundGuide = yield GuideDAO_1.default.findById(guideId);
+            const foundGuide = yield this.guideDAO.findById(guideId);
             if (!foundGuide) {
                 throw new NobarError_1.default(NobarErrorCode_1.NobarErrorCode.BAD_REQUEST, NobarErrorMessage_1.default.NOT_FOUND_GUIDE);
             }
@@ -31,7 +33,7 @@ class GuideService {
     }
     findAllGuide() {
         return __awaiter(this, void 0, void 0, function* () {
-            const guideList = yield GuideDAO_1.default.find({}).exec();
+            const guideList = yield this.guideDAO.find({}).exec();
             if (!guideList) {
                 return [];
             }

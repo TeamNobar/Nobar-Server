@@ -1,14 +1,19 @@
-import GuideDAO from "../model/guide/GuideDAO";
+import { Guide } from "../model/guide/Guide";
 import { GuideDTO } from "../dto/guide/GuideDTO";
 import { GuideMapper } from "../mapper/GuideMapper";
-import NobarError            from "../error/NobarError";
-import { NobarErrorCode }    from "../error/NobarErrorCode";
-import NobarErrorMessage     from "../error/NobarErrorMessage";
+import NobarError from "../error/NobarError";
+import NobarErrorMessage from "../error/NobarErrorMessage";
+import { NobarErrorCode } from "../error/NobarErrorCode";
+import mongoose, { Model } from "mongoose";
 
-export class GuideService {
+export class GuideService { 
+  constructor (
+    private readonly guideDAO: Model<Guide & mongoose.Document>
+  ) { 
+  }
   public async findGuide( guideId: string ): Promise< GuideDTO | null> {
 
-    const foundGuide = await GuideDAO.findById(guideId);
+    const foundGuide = await this.guideDAO.findById(guideId);
     
     if (!foundGuide) {
       throw new NobarError(NobarErrorCode.BAD_REQUEST, NobarErrorMessage.NOT_FOUND_GUIDE);
@@ -20,7 +25,7 @@ export class GuideService {
   }
 
   public async findAllGuide(): Promise<GuideDTO[]> {
-    const guideList = await GuideDAO.find({}).exec();
+    const guideList = await this.guideDAO.find({}).exec();
     if (!guideList) {
       return []
     }

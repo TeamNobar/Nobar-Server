@@ -5,16 +5,19 @@ import {
   Route,
   Security,
 } from "tsoa";
-import { GuideService } from "../service/GuideService";
+import ServiceInjector from "../service/ServiceInjector";
 
 @Route("guide")
 export class GuideController extends Controller {
 
- @Get("{guideId}")
- @Security("jwt", ["admin"])
- public async findGuide( @Path() guideId: string ) {
+  private readonly guideService = ServiceInjector.guide;
+   
 
-    const data = await new GuideService().findGuide(guideId);
+  @Get("{guideId}")
+  @Security("jwt", ["admin"])
+  public async findGuide( @Path() guideId: string ) {
+
+    const data = await this.guideService.findGuide(guideId);
 
     return data;
 

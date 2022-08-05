@@ -5,7 +5,9 @@ import RecipeDAO          from "../model/recipe/RecipeDAO";
 import TastingNoteDAO     from "../model/tastingNote/TastingNoteDAO";
 import userDAO            from "../model/user/UserDAO";
 import UserDAO            from "../model/user/UserDAO";
+import GuideDAO           from "../model/guide/GuideDAO";
 import AuthService        from "./AuthService";
+import { GuideService }   from "./GuideService";
 import RecipeService      from "./RecipeService";
 import TastingNoteService from "./TastingNoteService";
 
@@ -33,4 +35,11 @@ export default class ServiceInjector {
       IngredientDAO
     )
   }
+
+  public static get guide() {
+    return new GuideService(
+      GuideDAO,
+    )
+  }
+  
 }

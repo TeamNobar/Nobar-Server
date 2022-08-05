@@ -26,7 +26,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.HomeController = void 0;
 const tsoa_1 = require("tsoa");
-const GuideService_1 = require("../service/GuideService");
+// import { GuideService }                              from "../service/GuideService";
 const ServiceInjector_1 = __importDefault(require("../service/ServiceInjector"));
 const StatusCode_1 = __importDefault(require("../utils/StatusCode"));
 let HomeController = class HomeController extends tsoa_1.Controller {
@@ -34,7 +34,7 @@ let HomeController = class HomeController extends tsoa_1.Controller {
         super(...arguments);
         this.authService = ServiceInjector_1.default.auth;
         this.recipeService = ServiceInjector_1.default.recipe;
-        this.guideService = new GuideService_1.GuideService();
+        this.guideService = ServiceInjector_1.default.guide;
     }
     getHome(request) {
         return __awaiter(this, void 0, void 0, function* () {

@@ -4,7 +4,7 @@ import { GuideDTO }                                  from "../dto/guide/GuideDTO
 import HomeDTO                                       from "../dto/home/HomeDTO";
 import { RecipeDTO }                                 from "../dto/recipe/RecipeDTO";
 import UserDTO                                       from "../dto/user/UserDTO";
-import { GuideService }                              from "../service/GuideService";
+// import { GuideService }                              from "../service/GuideService";
 import ServiceInjector                               from "../service/ServiceInjector";
 import StatusCode                                    from "../utils/StatusCode";
 
@@ -12,7 +12,7 @@ import StatusCode                                    from "../utils/StatusCode";
 export class HomeController extends Controller {
   public readonly authService = ServiceInjector.auth;
   public readonly recipeService = ServiceInjector.recipe;
-  public readonly guideService = new GuideService();
+  public readonly guideService = ServiceInjector.guide;
 
   @Get("")
   @Security("jwt", ["admin"])
