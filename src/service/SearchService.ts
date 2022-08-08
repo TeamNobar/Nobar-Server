@@ -89,7 +89,7 @@ export class SearchService {
    *  @desc 기본 검색뷰에 필요한 데이터(추천레시피, 자동완성레시피, 자동완성재료) 조회
    *  @access public
    */
-  public async getSearchKeywords(): Promise<SearchViewWordsDTO> {
+  public async getSearchViewWords(): Promise<SearchViewWordsDTO> {
 
     // 추천 검색어로 뜬 레시피 가져오기 - 일단 기본 레시피만 뜨도록
     const recommendRecipes = await this.recommendDAO.find({})

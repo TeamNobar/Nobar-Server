@@ -26,12 +26,12 @@ export class SearchController extends Controller {
 
   @Get("")
   @Security("jwt", ["admin"])
-  public async getSearchKeywords() {
+  public async getSearchViewWords() {
 
-    const keywords = await this.searchService.getSearchKeywords();
+    const SearchViewWords = await this.searchService.getSearchViewWords();
 
     this.setStatus(StatusCode.OK);
-    return keywords;
+    return SearchViewWords;
   }
 
 
