@@ -11,7 +11,7 @@ export class GuideService {
     private readonly guideDAO: Model<Guide & mongoose.Document>
   ) { 
   }
-  public async findGuide( guideId: string ): Promise< GuideDTO | null> {
+  public async findGuide( guideId: string ): Promise<GuideDTO> {
 
     const foundGuide = await this.guideDAO.findById(guideId);
     
