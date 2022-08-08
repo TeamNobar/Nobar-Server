@@ -728,106 +728,71 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "anyOf": [
-                                        {
-                                            "properties": {
-                                                "messsage": {
-                                                    "type": "string"
-                                                },
-                                                "status": {
-                                                    "type": "number",
-                                                    "format": "double"
-                                                }
+                                    "properties": {
+                                        "ingredients": {
+                                            "items": {
+                                                "$ref": "#/components/schemas/IngredientDTO"
                                             },
-                                            "required": [
-                                                "messsage",
-                                                "status"
-                                            ],
-                                            "type": "object"
+                                            "type": "array"
                                         },
-                                        {
-                                            "properties": {
-                                                "ingredients": {
-                                                    "items": {
-                                                        "$ref": "#/components/schemas/IngredientDTO"
+                                        "recipes": {
+                                            "items": {
+                                                "properties": {
+                                                    "defaultRecipe": {
+                                                        "type": "string"
                                                     },
-                                                    "type": "array"
-                                                },
-                                                "recipes": {
-                                                    "items": {
+                                                    "ingredients": {
+                                                        "items": {
+                                                            "$ref": "#/components/schemas/IngredientDetailDTO"
+                                                        },
+                                                        "type": "array"
+                                                    },
+                                                    "steps": {
+                                                        "items": {
+                                                            "type": "string"
+                                                        },
+                                                        "type": "array"
+                                                    },
+                                                    "glass": {
                                                         "properties": {
-                                                            "defaultRecipe": {
+                                                            "url": {
                                                                 "type": "string"
                                                             },
-                                                            "ingredients": {
-                                                                "items": {
-                                                                    "$ref": "#/components/schemas/IngredientDetailDTO"
-                                                                },
-                                                                "type": "array"
-                                                            },
-                                                            "steps": {
-                                                                "items": {
-                                                                    "type": "string"
-                                                                },
-                                                                "type": "array"
-                                                            },
-                                                            "glass": {
-                                                                "properties": {
-                                                                    "url": {
-                                                                        "type": "string"
-                                                                    },
-                                                                    "name": {
-                                                                        "type": "string"
-                                                                    }
-                                                                },
-                                                                "required": [
-                                                                    "url",
-                                                                    "name"
-                                                                ],
-                                                                "type": "object"
-                                                            },
-                                                            "skill": {
-                                                                "properties": {
-                                                                    "url": {
-                                                                        "type": "string"
-                                                                    },
-                                                                    "name": {
-                                                                        "type": "string"
-                                                                    }
-                                                                },
-                                                                "required": [
-                                                                    "url",
-                                                                    "name"
-                                                                ],
-                                                                "type": "object"
-                                                            },
-                                                            "proofIcon": {
+                                                            "name": {
+                                                                "type": "string"
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "url",
+                                                            "name"
+                                                        ],
+                                                        "type": "object"
+                                                    },
+                                                    "skill": {
+                                                        "properties": {
+                                                            "url": {
                                                                 "type": "string"
                                                             },
-                                                            "proof": {
-                                                                "type": "number",
-                                                                "format": "double"
-                                                            },
-                                                            "base": {
-                                                                "properties": {
-                                                                    "url": {
-                                                                        "type": "string"
-                                                                    },
-                                                                    "name": {
-                                                                        "type": "string"
-                                                                    },
-                                                                    "id": {
-                                                                        "type": "string"
-                                                                    }
-                                                                },
-                                                                "required": [
-                                                                    "url",
-                                                                    "name",
-                                                                    "id"
-                                                                ],
-                                                                "type": "object"
-                                                            },
-                                                            "enName": {
+                                                            "name": {
+                                                                "type": "string"
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "url",
+                                                            "name"
+                                                        ],
+                                                        "type": "object"
+                                                    },
+                                                    "proofIcon": {
+                                                        "type": "string"
+                                                    },
+                                                    "proof": {
+                                                        "type": "number",
+                                                        "format": "double"
+                                                    },
+                                                    "base": {
+                                                        "properties": {
+                                                            "url": {
                                                                 "type": "string"
                                                             },
                                                             "name": {
@@ -838,45 +803,60 @@
                                                             }
                                                         },
                                                         "required": [
-                                                            "defaultRecipe",
-                                                            "ingredients",
-                                                            "steps",
-                                                            "glass",
-                                                            "skill",
-                                                            "proofIcon",
-                                                            "proof",
-                                                            "base",
-                                                            "enName",
+                                                            "url",
                                                             "name",
                                                             "id"
                                                         ],
                                                         "type": "object"
                                                     },
-                                                    "type": "array"
-                                                },
-                                                "recommends": {
-                                                    "items": {
-                                                        "properties": {
-                                                            "name": {},
-                                                            "recipeId": {}
-                                                        },
-                                                        "required": [
-                                                            "name",
-                                                            "recipeId"
-                                                        ],
-                                                        "type": "object"
+                                                    "enName": {
+                                                        "type": "string"
                                                     },
-                                                    "type": "array"
-                                                }
+                                                    "name": {
+                                                        "type": "string"
+                                                    },
+                                                    "id": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "required": [
+                                                    "defaultRecipe",
+                                                    "ingredients",
+                                                    "steps",
+                                                    "glass",
+                                                    "skill",
+                                                    "proofIcon",
+                                                    "proof",
+                                                    "base",
+                                                    "enName",
+                                                    "name",
+                                                    "id"
+                                                ],
+                                                "type": "object"
                                             },
-                                            "required": [
-                                                "ingredients",
-                                                "recipes",
-                                                "recommends"
-                                            ],
-                                            "type": "object"
+                                            "type": "array"
+                                        },
+                                        "recommends": {
+                                            "items": {
+                                                "properties": {
+                                                    "name": {},
+                                                    "recipeId": {}
+                                                },
+                                                "required": [
+                                                    "name",
+                                                    "recipeId"
+                                                ],
+                                                "type": "object"
+                                            },
+                                            "type": "array"
                                         }
-                                    ]
+                                    },
+                                    "required": [
+                                        "ingredients",
+                                        "recipes",
+                                        "recommends"
+                                    ],
+                                    "type": "object"
                                 }
                             }
                         }

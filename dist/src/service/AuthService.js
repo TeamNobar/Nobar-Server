@@ -74,5 +74,4 @@ class AuthService {
     }
 }
 exports.default = AuthService;
-;
 //# sourceMappingURL=AuthService.js.map

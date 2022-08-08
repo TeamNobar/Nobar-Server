@@ -9,6 +9,9 @@ import { Base } from "../model/base/Base";
 import { Recipe } from "../model/recipe/Recipe";
 import { Recommend } from "../model/recommend/Recommend";
 import { Ingredient } from "../model/ingredient/Ingredient";
+import { BaseDTO } from "../dto/base/BaseDTO";
+import { RecipeDTO } from "../dto/recipe/RecipeDTO";
+import { SearchViewWordsDTO } from "../dto/search/SearchViewWordsDTO";
 
 export class SearchService {
   constructor (
@@ -24,13 +27,11 @@ export class SearchService {
    *  @desc 검색 태그(베이스 술 종류) 전부 조회
    *  @access public
    */
-  public async getSearchTags () {
-    const foundTags = await this.baseDAO.find({});
+  public async getSearchTags (): Promise<BaseDTO[]> {
+    const bases = await this.baseDAO.find({});
   
-    const base = BaseMapper.toBaseDTO(foundTags);
-    return {
-      base: base
-    };
+    const tags = BaseMapper.toBaseDTO(bases);
+    return tags
   }
 
 
@@ -39,7 +40,7 @@ export class SearchService {
    *  @desc 검색어로 레시피 조회
    *  @access public
    */
-  public async searchRecipesByKeyword (keyword: string) {
+  public async searchRecipesByKeyword (keyword: string): Promise<RecipeDTO[]> {
 
     const regex = (pattern: string) => new RegExp(`.*${pattern}.*`);
 
@@ -54,9 +55,7 @@ export class SearchService {
       return recipeData;
     })
     
-    return {
-      recipes: recipesData 
-    };
+    return recipesData;
   }
   
 
@@ -65,7 +64,7 @@ export class SearchService {
    *  @desc 베이스 술로 레시피 조회
    *  @access public
    */
-  public async findRecipesByBase ( base: string ) {
+  public async findRecipesByBase ( base: string ): Promise<RecipeDTO[]> {
 
     const foundBase = await this.baseDAO.findOne({ name: base });
 
@@ -82,9 +81,7 @@ export class SearchService {
       return recipeData;
     });
 
-    return {
-      recipes: recipesData
-    };
+    return recipesData;
   }
 
   /**
@@ -92,7 +89,7 @@ export class SearchService {
    *  @desc 기본 검색뷰에 필요한 데이터(추천레시피, 자동완성레시피, 자동완성재료) 조회
    *  @access public
    */
-  public async getSearchKeywords() {
+  public async getSearchKeywords(): Promise<SearchViewWordsDTO> {
 
     // 추천 검색어로 뜬 레시피 가져오기 - 일단 기본 레시피만 뜨도록
     const recommendRecipes = await this.recommendDAO.find({})
@@ -126,7 +123,7 @@ export class SearchService {
       recommends: recommendsData,
       recipes: recipesData,
       ingredients: ingredientsData
-    };
+   };
 
   }
 

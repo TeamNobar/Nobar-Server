@@ -185,15 +185,21 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "IngredientDetailDTO": {
+    "RecommendDTO": {
         "dataType": "refObject",
         "properties": {
-            "id": {"dataType":"string","required":true},
+            "recipeId": {"dataType":"string","required":true},
             "name": {"dataType":"string","required":true},
-            "enName": {"dataType":"string","required":true},
-            "proof": {"dataType":"double","required":true},
-            "category": {"dataType":"string","required":true},
-            "quantity": {"dataType":"string","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "SearchViewWordsDTO": {
+        "dataType": "refObject",
+        "properties": {
+            "recommends": {"dataType":"array","array":{"dataType":"refObject","ref":"RecommendDTO"},"required":true},
+            "recipes": {"dataType":"array","array":{"dataType":"refObject","ref":"RecipeDTO"},"required":true},
+            "ingredients": {"dataType":"array","array":{"dataType":"refObject","ref":"IngredientDTO"},"required":true},
         },
         "additionalProperties": false,
     },

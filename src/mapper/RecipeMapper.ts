@@ -4,7 +4,7 @@ import { Base } from "../model/base/Base";
 import { Ingredient } from "../model/ingredient/Ingredient";
 import { Skill } from "../model/recipe/Skill";
 import { Glass } from "../model/recipe/Glass";
-
+import { RecipeDTO } from "../dto/recipe/RecipeDTO";
 
 interface BaseForMapper extends Base {
   _id: mongoose.Schema.Types.ObjectId;
@@ -40,7 +40,7 @@ export class RecipeMapper {
     recipe: RecipeForMapper, 
     base: BaseForMapper, 
     ingredients: IngredientsDetailForMapper[]
-  ) {
+  ): RecipeDTO {
 
     const ingredientData = IngredientsMapper.toIngredientDetailDTO(ingredients);
 

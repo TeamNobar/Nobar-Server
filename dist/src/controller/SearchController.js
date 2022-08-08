@@ -27,7 +27,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.SearchController = void 0;
 const tsoa_1 = require("tsoa");
 const StatusCode_1 = __importDefault(require("../utils/StatusCode"));
-const errorMessage_1 = require("../utils/errorMessage");
 const ServiceInjector_1 = __importDefault(require("../service/ServiceInjector"));
 let SearchController = class SearchController extends tsoa_1.Controller {
     constructor() {
@@ -42,14 +41,6 @@ let SearchController = class SearchController extends tsoa_1.Controller {
     getSearchKeywords() {
         return __awaiter(this, void 0, void 0, function* () {
             const keywords = yield this.searchService.getSearchKeywords();
-            if (keywords === null) {
-                this.setStatus(StatusCode_1.default.BAD_REQUEST);
-                const notFoundKeywords = {
-                    status: StatusCode_1.default.BAD_REQUEST,
-                    messsage: errorMessage_1.errorMessage.BAD_REQUEST
-                };
-                return notFoundKeywords;
-            }
             this.setStatus(StatusCode_1.default.OK);
             return keywords;
         });

@@ -6,7 +6,6 @@ import {
   Query
 } from "tsoa";
 import StatusCode from "../utils/StatusCode";
-import { errorMessage } from "../utils/errorMessage";
 import ServiceInjector from "../service/ServiceInjector"
 
 @Route("search")
@@ -17,7 +16,12 @@ export class SearchController extends Controller {
   @Get("tag") 
   @Security("jwt", ["admin"])
   public async getSearchTags() {
-    return await this.searchService.getSearchTags();
+
+    const searchTags = await this.searchService.getSearchTags();
+    return {
+      base: searchTags
+    };
+    
   }
 
   @Get("")
@@ -26,18 +30,6 @@ export class SearchController extends Controller {
 
     const keywords = await this.searchService.getSearchKeywords();
 
-    if (keywords === null){
-
-      this.setStatus(StatusCode.BAD_REQUEST);
-    
-      const notFoundKeywords = {
-        status: StatusCode.BAD_REQUEST,
-        messsage : errorMessage.BAD_REQUEST
-      };
-
-      return notFoundKeywords;
-    }
-
     this.setStatus(StatusCode.OK);
     return keywords;
   }
@@ -45,7 +37,7 @@ export class SearchController extends Controller {
 
   @Get("base")
   @Security("jwt", ["admin"])
-  public async findRecipesByBase(
+  public async findRecipesByBase (
     @Query() base?: string
   ) {
 
@@ -56,9 +48,12 @@ export class SearchController extends Controller {
       };
     }
       
-    const recipes = await this.searchService.findRecipesByBase(base);
+    const foundRecipes = await this.searchService.findRecipesByBase(base);
 
-    return recipes;
+    this.setStatus(StatusCode.OK);
+    return {
+      recipes: foundRecipes
+    };
   }
 
 
@@ -78,7 +73,9 @@ export class SearchController extends Controller {
     const foundRecipes = await this.searchService.searchRecipesByKeyword(keyword);
 
     this.setStatus(StatusCode.OK);
-    return foundRecipes;
+    return {
+      recipes: foundRecipes
+    };
   }
 
 
