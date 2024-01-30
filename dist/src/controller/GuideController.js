@@ -20,14 +20,21 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GuideController = void 0;
 const tsoa_1 = require("tsoa");
-const GuideService_1 = require("../service/GuideService");
+const ServiceInjector_1 = __importDefault(require("../service/ServiceInjector"));
 let GuideController = class GuideController extends tsoa_1.Controller {
+    constructor() {
+        super(...arguments);
+        this.guideService = ServiceInjector_1.default.guide;
+    }
     findGuide(guideId) {
         return __awaiter(this, void 0, void 0, function* () {
-            const data = yield new GuideService_1.GuideService().findGuide(guideId);
+            const data = yield this.guideService.findGuide(guideId);
             return data;
         });
     }

@@ -1,5 +1,5 @@
 import mongoose  from "mongoose";
-import Recommend from "./Recommend";
+import { Recommend } from "./Recommend";
 
 const recommendSchema = new mongoose.Schema({
   recipeId: {

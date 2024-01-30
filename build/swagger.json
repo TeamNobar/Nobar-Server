@@ -417,35 +417,47 @@
 				"type": "object",
 				"additionalProperties": false
 			},
-			"IngredientDetailDTO": {
+			"RecommendDTO": {
 				"properties": {
-					"id": {
+					"recipeId": {
 						"type": "string"
 					},
 					"name": {
 						"type": "string"
-					},
-					"enName": {
-						"type": "string"
-					},
-					"proof": {
-						"type": "number",
-						"format": "double"
-					},
-					"category": {
-						"type": "string"
-					},
-					"quantity": {
-						"type": "string"
 					}
 				},
 				"required": [
-					"id",
-					"name",
-					"enName",
-					"proof",
-					"category",
-					"quantity"
+					"recipeId",
+					"name"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"SearchViewWordsDTO": {
+				"properties": {
+					"recommends": {
+						"items": {
+							"$ref": "#/components/schemas/RecommendDTO"
+						},
+						"type": "array"
+					},
+					"recipes": {
+						"items": {
+							"$ref": "#/components/schemas/RecipeDTO"
+						},
+						"type": "array"
+					},
+					"ingredients": {
+						"items": {
+							"$ref": "#/components/schemas/IngredientDTO"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"recommends",
+					"recipes",
+					"ingredients"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -683,6 +695,42 @@
 				"parameters": []
 			}
 		},
+		"/search/tag": {
+			"get": {
+				"operationId": "GetSearchTags",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"base": {
+											"items": {
+												"$ref": "#/components/schemas/BaseDTO"
+											},
+											"type": "array"
+										}
+									},
+									"required": [
+										"base"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"jwt": [
+							"admin"
+						]
+					}
+				],
+				"parameters": []
+			}
+		},
 		"/search": {
 			"get": {
 				"operationId": "GetSearchKeywords",
@@ -692,155 +740,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"anyOf": [
-										{
-											"properties": {
-												"messsage": {
-													"type": "string"
-												},
-												"status": {
-													"type": "number",
-													"format": "double"
-												}
-											},
-											"required": [
-												"messsage",
-												"status"
-											],
-											"type": "object"
-										},
-										{
-											"properties": {
-												"ingredients": {
-													"items": {
-														"$ref": "#/components/schemas/IngredientDTO"
-													},
-													"type": "array"
-												},
-												"recipes": {
-													"items": {
-														"properties": {
-															"defaultRecipe": {
-																"type": "string"
-															},
-															"ingredients": {
-																"items": {
-																	"$ref": "#/components/schemas/IngredientDetailDTO"
-																},
-																"type": "array"
-															},
-															"steps": {
-																"items": {
-																	"type": "string"
-																},
-																"type": "array"
-															},
-															"glass": {
-																"properties": {
-																	"url": {
-																		"type": "string"
-																	},
-																	"name": {
-																		"type": "string"
-																	}
-																},
-																"required": [
-																	"url",
-																	"name"
-																],
-																"type": "object"
-															},
-															"skill": {
-																"properties": {
-																	"url": {
-																		"type": "string"
-																	},
-																	"name": {
-																		"type": "string"
-																	}
-																},
-																"required": [
-																	"url",
-																	"name"
-																],
-																"type": "object"
-															},
-															"proofIcon": {
-																"type": "string"
-															},
-															"proof": {
-																"type": "number",
-																"format": "double"
-															},
-															"base": {
-																"properties": {
-																	"url": {
-																		"type": "string"
-																	},
-																	"name": {
-																		"type": "string"
-																	},
-																	"id": {
-																		"type": "string"
-																	}
-																},
-																"required": [
-																	"url",
-																	"name",
-																	"id"
-																],
-																"type": "object"
-															},
-															"enName": {
-																"type": "string"
-															},
-															"name": {
-																"type": "string"
-															},
-															"id": {
-																"type": "string"
-															}
-														},
-														"required": [
-															"defaultRecipe",
-															"ingredients",
-															"steps",
-															"glass",
-															"skill",
-															"proofIcon",
-															"proof",
-															"base",
-															"enName",
-															"name",
-															"id"
-														],
-														"type": "object"
-													},
-													"type": "array"
-												},
-												"recommends": {
-													"items": {
-														"properties": {
-															"name": {},
-															"recipeId": {}
-														},
-														"required": [
-															"name",
-															"recipeId"
-														],
-														"type": "object"
-													},
-													"type": "array"
-												}
-											},
-											"required": [
-												"ingredients",
-												"recipes",
-												"recommends"
-											],
-											"type": "object"
-										}
-									]
+									"$ref": "#/components/schemas/SearchViewWordsDTO"
 								}
 							}
 						}
@@ -868,102 +768,7 @@
 									"properties": {
 										"recipes": {
 											"items": {
-												"properties": {
-													"defaultRecipe": {
-														"type": "string"
-													},
-													"ingredients": {
-														"items": {
-															"$ref": "#/components/schemas/IngredientDetailDTO"
-														},
-														"type": "array"
-													},
-													"steps": {
-														"items": {
-															"type": "string"
-														},
-														"type": "array"
-													},
-													"glass": {
-														"properties": {
-															"url": {
-																"type": "string"
-															},
-															"name": {
-																"type": "string"
-															}
-														},
-														"required": [
-															"url",
-															"name"
-														],
-														"type": "object"
-													},
-													"skill": {
-														"properties": {
-															"url": {
-																"type": "string"
-															},
-															"name": {
-																"type": "string"
-															}
-														},
-														"required": [
-															"url",
-															"name"
-														],
-														"type": "object"
-													},
-													"proofIcon": {
-														"type": "string"
-													},
-													"proof": {
-														"type": "number",
-														"format": "double"
-													},
-													"base": {
-														"properties": {
-															"url": {
-																"type": "string"
-															},
-															"name": {
-																"type": "string"
-															},
-															"id": {
-																"type": "string"
-															}
-														},
-														"required": [
-															"url",
-															"name",
-															"id"
-														],
-														"type": "object"
-													},
-													"enName": {
-														"type": "string"
-													},
-													"name": {
-														"type": "string"
-													},
-													"id": {
-														"type": "string"
-													}
-												},
-												"required": [
-													"defaultRecipe",
-													"ingredients",
-													"steps",
-													"glass",
-													"skill",
-													"proofIcon",
-													"proof",
-													"base",
-													"enName",
-													"name",
-													"id"
-												],
-												"type": "object"
+												"$ref": "#/components/schemas/RecipeDTO"
 											},
 											"type": "array"
 										}
@@ -1008,102 +813,7 @@
 									"properties": {
 										"recipes": {
 											"items": {
-												"properties": {
-													"defaultRecipe": {
-														"type": "string"
-													},
-													"ingredients": {
-														"items": {
-															"$ref": "#/components/schemas/IngredientDetailDTO"
-														},
-														"type": "array"
-													},
-													"steps": {
-														"items": {
-															"type": "string"
-														},
-														"type": "array"
-													},
-													"glass": {
-														"properties": {
-															"url": {
-																"type": "string"
-															},
-															"name": {
-																"type": "string"
-															}
-														},
-														"required": [
-															"url",
-															"name"
-														],
-														"type": "object"
-													},
-													"skill": {
-														"properties": {
-															"url": {
-																"type": "string"
-															},
-															"name": {
-																"type": "string"
-															}
-														},
-														"required": [
-															"url",
-															"name"
-														],
-														"type": "object"
-													},
-													"proofIcon": {
-														"type": "string"
-													},
-													"proof": {
-														"type": "number",
-														"format": "double"
-													},
-													"base": {
-														"properties": {
-															"url": {
-																"type": "string"
-															},
-															"name": {
-																"type": "string"
-															},
-															"id": {
-																"type": "string"
-															}
-														},
-														"required": [
-															"url",
-															"name",
-															"id"
-														],
-														"type": "object"
-													},
-													"enName": {
-														"type": "string"
-													},
-													"name": {
-														"type": "string"
-													},
-													"id": {
-														"type": "string"
-													}
-												},
-												"required": [
-													"defaultRecipe",
-													"ingredients",
-													"steps",
-													"glass",
-													"skill",
-													"proofIcon",
-													"proof",
-													"base",
-													"enName",
-													"name",
-													"id"
-												],
-												"type": "object"
+												"$ref": "#/components/schemas/RecipeDTO"
 											},
 											"type": "array"
 										}
@@ -1134,42 +844,6 @@
 						}
 					}
 				]
-			}
-		},
-		"/search/tag": {
-			"get": {
-				"operationId": "GetSearchTags",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"properties": {
-										"base": {
-											"items": {
-												"$ref": "#/components/schemas/BaseDTO"
-											},
-											"type": "array"
-										}
-									},
-									"required": [
-										"base"
-									],
-									"type": "object"
-								}
-							}
-						}
-					}
-				},
-				"security": [
-					{
-						"jwt": [
-							"admin"
-						]
-					}
-				],
-				"parameters": []
 			}
 		},
 		"/note/tag": {
